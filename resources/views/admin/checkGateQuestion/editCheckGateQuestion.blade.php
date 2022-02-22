@@ -1,0 +1,94 @@
+@extends('admin.include.layout')
+<!-- Project List -->
+
+@php
+    //$userSession=Session::get('user');
+    $checkgate=App\Helpers\UserHelper::checkgate();
+    //dd($userSession);
+@endphp
+
+@section('head')
+
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 font-weight-400 text-white d-inline-block mb-0">Edit Questions</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="{{url('admin/super-admin-dashboard')}}"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit Questions</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+@endsection
+
+@section('body')
+
+    <!-- Project List -->
+    <div class="card mb-4">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0">Please fill the form below</h3>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+            <!-- Form groups used in grid -->
+            <form method="post" action="{{url('admin/check-gate-question-edit-store')}}" enctype="multipart/form-data">
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id">Check Gate</label>
+                                <select name="check_gate_id" class="form-control">
+
+                                    @foreach($checkgate as $chg)
+
+                                        <option value="{{$chg->id}}" {{(old('check_gate_id')!=$ques->check_gate_id)?($chg->id==$ques->check_gate_id)?'selected=selected':'': 'selected=selected'}}>{{$chg->name}}</option>
+                                    @endforeach
+
+                                </select>
+                                @if($errors->has('check_gate_id'))
+                                    <div class="invalid-feedback" style="display:block;">{{$errors->first('check_gate_id')}}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="question">Questions</label>
+                                <input type="text" class="form-control" id="" placeholder="" name="inspection_criteria" value="{{old('inspection_criteria')?old('inspection_criteria'):$ques->inspection_criteria}}">
+                                @if($errors->has('inspection_criteria'))
+                                    <div class="invalid-feedback" style="display:block;">{{$errors->first('inspection_criteria')}}</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <!-- /row -->
+                <input type="hidden" name="id" value="{{$ques->id}}">
+                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-warning" type="cancel">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+
+
+@endsection
+@section('after_script')
+
+    <!-- Optional JS -->
+    <script src="{{URL::asset('public/assets/vendor/select2/dist/js/select2.min.js')}}"></script>
+
+@endsection
