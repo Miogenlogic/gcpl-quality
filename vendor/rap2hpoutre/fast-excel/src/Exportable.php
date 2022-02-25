@@ -2,15 +2,19 @@
 
 namespace Rap2hpoutre\FastExcel;
 
-use Box\Spout\Writer\Style\Style;
-use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Entity\Style\Style;
+use Box\Spout\Common\Type;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
 use Generator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 /**
  * Trait Exportable.
  *
- * @property bool $with_header
+ * @property bool                           $transpose
+ * @property bool                           $with_header
  * @property \Illuminate\Support\Collection $data
  */
 trait Exportable
@@ -19,13 +23,7 @@ trait Exportable
      * @var Style
      */
     private $header_style;
-
-    /**
-     * @param string $path
-     *
-     * @return string
-     */
-    abstract protected function getType($path);
+    private $rows_style;
 
     /**
      * @param \Box\Spout\Reader\ReaderInterface|\Box\Spout\Writer\WriterInterface $reader_or_writer
@@ -88,7 +86,14 @@ trait Exportable
      */
     private function exportOrDownload($path, $function, callable $callback = null)
     {
-        $writer = WriterFactory::create($this->getType($path));
+        if (Str::endsWith($path, Type::CSV)) {
+            $writer = WriterEntityFactory::createCSVWriter();
+        } elseif (Str::endsWith($path, Type::ODS)) {
+            $writer = WriterEntityFactory::createODSWriter();
+        } else {
+            $writer = WriterEntityFactory::createXLSXWriter();
+        }
+
         $this->setOptions($writer);
         /* @var \Box\Spout\Writer\WriterInterface $writer */
         $writer->$function($path);
@@ -96,15 +101,17 @@ trait Exportable
         $has_sheets = ($writer instanceof \Box\Spout\Writer\XLSX\Writer || $writer instanceof \Box\Spout\Writer\ODS\Writer);
 
         // It can export one sheet (Collection) or N sheets (SheetCollection)
-        $data = $this->data instanceof SheetCollection ? $this->data : collect([$this->data]);
+        $data = $this->transpose ? $this->transposeData() : ($this->data instanceof SheetCollection ? $this->data : collect([$this->data]));
 
         foreach ($data as $key => $collection) {
             if ($collection instanceof Collection) {
                 $this->writeRowsFromCollection($writer, $collection, $callback);
             } elseif ($collection instanceof Generator) {
-                $this->writeRowsFromGenerator($writer, $collection);
+                $this->writeRowsFromGenerator($writer, $collection, $callback);
             } elseif (is_array($collection)) {
                 $this->writeRowsFromArray($writer, $collection, $callback);
+            } else {
+                throw new InvalidArgumentException('Unsupported type for $data');
             }
             if (is_string($key)) {
                 $writer->getCurrentSheet()->setName($key);
@@ -116,7 +123,32 @@ trait Exportable
         $writer->close();
     }
 
-    private function writeRowsFromCollection($writer, Collection $collection, $callback)
+    /**
+     * Transpose data from rows to columns.
+     *
+     * @return SheetCollection
+     */
+    private function transposeData()
+    {
+        $data = $this->data instanceof SheetCollection ? $this->data : collect([$this->data]);
+        $transposedData = [];
+
+        foreach ($data as $key => $collection) {
+            foreach ($collection as $row => $columns) {
+                foreach ($columns as $column => $value) {
+                    data_set($transposedData, implode('.', [
+                        $key,
+                        $column,
+                        $row,
+                    ]), $value);
+                }
+            }
+        }
+
+        return new SheetCollection($transposedData);
+    }
+
+    private function writeRowsFromCollection($writer, Collection $collection, ?callable $callback = null)
     {
         // Apply callback
         if ($callback) {
@@ -130,25 +162,57 @@ trait Exportable
         if ($this->with_header) {
             $this->writeHeader($writer, $collection->first());
         }
-        // Write all rows
-        $writer->addRows($collection->toArray());
+
+        // createRowFromArray works only with arrays
+        if (!is_array($collection->first())) {
+            $collection = $collection->map(function ($value) {
+                return $value->toArray();
+            });
+        }
+
+        // is_array($first_row) ? $first_row : $first_row->toArray())
+        $all_rows = $collection->map(function ($value) {
+            return WriterEntityFactory::createRowFromArray($value);
+        })->toArray();
+        if ($this->rows_style) {
+            $this->addRowsWithStyle($writer, $all_rows, $this->rows_style);
+        } else {
+            $writer->addRows($all_rows);
+        }
     }
 
-    private function writeRowsFromGenerator($writer, Generator $generator)
+    private function addRowsWithStyle($writer, $all_rows, $rows_style)
+    {
+        $styled_rows = [];
+        // Style rows one by one
+        foreach ($all_rows as $row) {
+            $row = WriterEntityFactory::createRowFromArray($row->toArray(), $rows_style);
+            array_push($styled_rows, $row);
+        }
+        $writer->addRows($styled_rows);
+    }
+
+    private function writeRowsFromGenerator($writer, Generator $generator, ?callable $callback = null)
     {
         foreach ($generator as $key => $item) {
+            // Apply callback
+            if ($callback) {
+                $item = $callback($item);
+            }
+
             // Prepare row (i.e remove non-string)
             $item = $this->transformRow($item);
+
             // Add header row.
             if ($this->with_header && $key === 0) {
                 $this->writeHeader($writer, $item);
             }
             // Write rows (one by one).
-            $writer->addRow($item->toArray());
+            $writer->addRow(WriterEntityFactory::createRowFromArray($item->toArray(), $this->rows_style));
         }
     }
 
-    private function writeRowsFromArray($writer, array $array, $callback)
+    private function writeRowsFromArray($writer, array $array, ?callable $callback = null)
     {
         $collection = collect($array);
 
@@ -165,11 +229,8 @@ trait Exportable
         }
 
         $keys = array_keys(is_array($first_row) ? $first_row : $first_row->toArray());
-        if ($this->header_style) {
-            $writer->addRowWithStyle($keys, $this->header_style);
-        } else {
-            $writer->addRow($keys);
-        }
+
+        $writer->addRow(WriterEntityFactory::createRowFromArray($keys, $this->header_style));
     }
 
     /**
@@ -210,9 +271,9 @@ trait Exportable
     private function transformRow($data)
     {
         return collect($data)->map(function ($value) {
-            return is_int($value) || is_float($value) || is_null($value) ? (string) $value : $value;
+            return is_null($value) ? (string) $value : $value;
         })->filter(function ($value) {
-            return is_string($value);
+            return is_string($value) || is_int($value) || is_float($value);
         });
     }
 
@@ -224,6 +285,18 @@ trait Exportable
     public function headerStyle(Style $style)
     {
         $this->header_style = $style;
+
+        return $this;
+    }
+
+    /**
+     * @param Style $style
+     *
+     * @return Exportable
+     */
+    public function rowsStyle(Style $style)
+    {
+        $this->rows_style = $style;
 
         return $this;
     }

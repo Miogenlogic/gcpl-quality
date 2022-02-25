@@ -2,11 +2,11 @@
 
 namespace Spatie\Permission\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use Spatie\Permission\Contracts\Role;
-use Illuminate\Database\Eloquent\Builder;
 use Spatie\Permission\PermissionRegistrar;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 trait HasRoles
 {
@@ -37,7 +37,7 @@ trait HasRoles
     /**
      * A model may have multiple roles.
      */
-    public function roles(): MorphToMany
+    public function roles(): BelongsToMany
     {
         return $this->morphToMany(
             config('permission.models.role'),
@@ -78,12 +78,8 @@ trait HasRoles
             return $this->getRoleClass()->{$method}($role, $guard);
         }, $roles);
 
-        return $query->whereHas('roles', function ($query) use ($roles) {
-            $query->where(function ($query) use ($roles) {
-                foreach ($roles as $role) {
-                    $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
-                }
-            });
+        return $query->whereHas('roles', function (Builder $subQuery) use ($roles) {
+            $subQuery->whereIn(config('permission.table_names.roles').'.id', \array_column($roles, 'id'));
         });
     }
 
@@ -131,7 +127,8 @@ trait HasRoles
                     $object->roles()->sync($roles, false);
                     $object->load('roles');
                     $modelLastFiredOn = $object;
-                });
+                }
+            );
         }
 
         $this->forgetCachedPermissions();
@@ -214,11 +211,13 @@ trait HasRoles
     /**
      * Determine if the model has any of the given role(s).
      *
-     * @param string|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
+     * Alias to hasRole() but without Guard controls
+     *
+     * @param string|int|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
      *
      * @return bool
      */
-    public function hasAnyRole($roles): bool
+    public function hasAnyRole(...$roles): bool
     {
         return $this->hasRole($roles);
     }
@@ -226,7 +225,7 @@ trait HasRoles
     /**
      * Determine if the model has all of the given role(s).
      *
-     * @param  string|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection  $roles
+     * @param  string|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection  $roles
      * @param  string|null  $guard
      * @return bool
      */
@@ -253,7 +252,8 @@ trait HasRoles
         return $roles->intersect(
             $guard
                 ? $this->roles->where('guard_name', $guard)->pluck('name')
-                : $this->getRoleNames()) == $roles;
+                : $this->getRoleNames()
+        ) == $roles;
     }
 
     /**

@@ -181,7 +181,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -242,8 +242,8 @@
         'host' => 'localhost',
         'port' => '3306',
         'database' => 'gcpl_quality',
-        'username' => 'db',
-        'password' => 'EU59eUxKR8I6f1Ov',
+        'username' => 'root',
+        'password' => '',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -262,8 +262,8 @@
         'host' => 'localhost',
         'port' => '3306',
         'database' => 'gcpl_quality',
-        'username' => 'db',
-        'password' => 'EU59eUxKR8I6f1Ov',
+        'username' => 'root',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -277,8 +277,8 @@
         'host' => 'localhost',
         'port' => '3306',
         'database' => 'gcpl_quality',
-        'username' => 'db',
-        'password' => 'EU59eUxKR8I6f1Ov',
+        'username' => 'root',
+        'password' => '',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -370,12 +370,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\app/public',
         'url' => 'http://localhost/gcpl-quality//storage',
         'visibility' => 'public',
       ),
@@ -403,6 +403,10 @@
       'report_view_data' => true,
     ),
     'send_logs_as_events' => true,
+    'censor_request_body_fields' => 
+    array (
+      0 => 'password',
+    ),
   ),
   'hashing' => 
   array (
@@ -449,13 +453,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -524,7 +528,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Apache24\\htdocs\\gcpl-quality\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\gcpl-quality\\resources\\views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -549,6 +553,8 @@
       'model_morph_key' => 'model_id',
     ),
     'display_permission_in_exception' => false,
+    'display_role_in_exception' => false,
+    'enable_wildcard_permission' => false,
     'cache' => 
     array (
       'expiration_time' => 
@@ -649,7 +655,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -670,6 +676,9 @@
     'commands' => 
     array (
     ),
+    'alias' => 
+    array (
+    ),
     'dont_alias' => 
     array (
       0 => 'App\\Nova',
@@ -678,15 +687,15 @@
   'trustedproxy' => 
   array (
     'proxies' => NULL,
-    'headers' => 30,
+    'headers' => 94,
   ),
   'view' => 
   array (
     'paths' => 
     array (
-      0 => 'C:\\Apache24\\htdocs\\gcpl-quality\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\gcpl-quality\\resources\\views',
     ),
-    'compiled' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\framework\\views',
   ),
   'dompdf' => 
   array (
@@ -694,10 +703,10 @@
     'orientation' => 'portrait',
     'defines' => 
     array (
-      'font_dir' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\fonts/',
-      'font_cache' => 'C:\\Apache24\\htdocs\\gcpl-quality\\storage\\fonts/',
-      'temp_dir' => 'C:\\Users\\SysUsr1\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\Apache24\\htdocs\\gcpl-quality',
+      'font_dir' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\fonts/',
+      'font_cache' => 'C:\\xampp\\htdocs\\gcpl-quality\\storage\\fonts/',
+      'temp_dir' => 'C:\\Users\\SOMNATH\\AppData\\Local\\Temp',
+      'chroot' => 'C:\\xampp\\htdocs\\gcpl-quality',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',

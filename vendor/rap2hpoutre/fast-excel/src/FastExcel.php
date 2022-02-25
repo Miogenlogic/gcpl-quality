@@ -2,23 +2,22 @@
 
 namespace Rap2hpoutre\FastExcel;
 
-use Box\Spout\Common\Type;
 use Box\Spout\Reader\CSV\Reader as CSVReader;
 use Box\Spout\Reader\ReaderInterface;
 use Box\Spout\Writer\CSV\Writer as CSVWriter;
 use Box\Spout\Writer\WriterInterface;
+use Generator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 /**
  * Class FastExcel.
  */
 class FastExcel
 {
-    use Importable, Exportable;
-
+    use Importable;
+    use Exportable;
     /**
-     * @var Collection
+     * @var Collection|Generator|array
      */
     protected $data;
 
@@ -28,12 +27,26 @@ class FastExcel
     private $with_header = true;
 
     /**
+     * @var bool
+     */
+    private $with_sheets_names = false;
+
+    /**
+     * @var int
+     */
+    private $start_row = 1;
+
+    /**
+     * @var bool
+     */
+    private $transpose = false;
+
+    /**
      * @var
      */
     private $csv_configuration = [
         'delimiter' => ',',
         'enclosure' => '"',
-        'eol'       => "\n",
         'encoding'  => 'UTF-8',
         'bom'       => true,
     ];
@@ -51,7 +64,7 @@ class FastExcel
     /**
      * FastExcel constructor.
      *
-     * @param Collection $data
+     * @param Collection|Generator|array|null $data
      */
     public function __construct($data = null)
     {
@@ -61,7 +74,7 @@ class FastExcel
     /**
      * Manually set data apart from the constructor.
      *
-     * @param Collection $data
+     * @param Collection|Generator|array $data
      *
      * @return FastExcel
      */
@@ -70,22 +83,6 @@ class FastExcel
         $this->data = $data;
 
         return $this;
-    }
-
-    /**
-     * @param $path
-     *
-     * @return string
-     */
-    protected function getType($path)
-    {
-        if (Str::endsWith($path, Type::CSV)) {
-            return Type::CSV;
-        } elseif (Str::endsWith($path, Type::ODS)) {
-            return Type::ODS;
-        } else {
-            return Type::XLSX;
-        }
     }
 
     /**
@@ -111,17 +108,46 @@ class FastExcel
     }
 
     /**
+     * @return $this
+     */
+    public function withSheetsNames()
+    {
+        $this->with_sheets_names = true;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function startRow(int $row)
+    {
+        $this->start_row = $row;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function transpose()
+    {
+        $this->transpose = true;
+
+        return $this;
+    }
+
+    /**
      * @param string $delimiter
      * @param string $enclosure
-     * @param string $eol
      * @param string $encoding
      * @param bool   $bom
      *
      * @return $this
      */
-    public function configureCsv($delimiter = ',', $enclosure = '"', $eol = "\n", $encoding = 'UTF-8', $bom = false)
+    public function configureCsv($delimiter = ',', $enclosure = '"', $encoding = 'UTF-8', $bom = false)
     {
-        $this->csv_configuration = compact('delimiter', 'enclosure', 'eol', 'encoding', 'bom');
+        $this->csv_configuration = compact('delimiter', 'enclosure', 'encoding', 'bom');
 
         return $this;
     }
@@ -129,7 +155,7 @@ class FastExcel
     /**
      * Configure the underlying Spout Reader using a callback.
      *
-     * @param callable $callback
+     * @param callable|null $callback
      *
      * @return $this
      */
@@ -143,7 +169,7 @@ class FastExcel
     /**
      * Configure the underlying Spout Reader using a callback.
      *
-     * @param callable $callback
+     * @param callable|null $callback
      *
      * @return $this
      */
@@ -163,7 +189,6 @@ class FastExcel
             $reader_or_writer->setFieldDelimiter($this->csv_configuration['delimiter']);
             $reader_or_writer->setFieldEnclosure($this->csv_configuration['enclosure']);
             if ($reader_or_writer instanceof CSVReader) {
-                $reader_or_writer->setEndOfLineCharacter($this->csv_configuration['eol']);
                 $reader_or_writer->setEncoding($this->csv_configuration['encoding']);
             }
             if ($reader_or_writer instanceof CSVWriter) {
@@ -173,11 +198,13 @@ class FastExcel
 
         if ($reader_or_writer instanceof ReaderInterface && is_callable($this->reader_configurator)) {
             call_user_func(
-                $this->reader_configurator, $reader_or_writer
+                $this->reader_configurator,
+                $reader_or_writer
             );
         } elseif ($reader_or_writer instanceof WriterInterface && is_callable($this->writer_configurator)) {
             call_user_func(
-                $this->writer_configurator, $reader_or_writer
+                $this->writer_configurator,
+                $reader_or_writer
             );
         }
     }

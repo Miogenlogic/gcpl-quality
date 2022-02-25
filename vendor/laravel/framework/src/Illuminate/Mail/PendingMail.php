@@ -4,11 +4,13 @@ namespace Illuminate\Mail;
 
 use Illuminate\Contracts\Mail\Mailable as MailableContract;
 use Illuminate\Contracts\Mail\Mailer as MailerContract;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Support\Traits\Conditionable;
 
 class PendingMail
 {
+    use Conditionable;
+
     /**
      * The mailer instance.
      *
@@ -115,27 +117,11 @@ class PendingMail
      * Send a new mailable message instance.
      *
      * @param  \Illuminate\Contracts\Mail\Mailable  $mailable
-     *
-     * @return mixed
+     * @return void
      */
     public function send(MailableContract $mailable)
     {
-        if ($mailable instanceof ShouldQueue) {
-            return $this->queue($mailable);
-        }
-
-        return $this->mailer->send($this->fill($mailable));
-    }
-
-    /**
-     * Send a mailable message immediately.
-     *
-     * @param  \Illuminate\Contracts\Mail\Mailable  $mailable
-     * @return mixed
-     */
-    public function sendNow(MailableContract $mailable)
-    {
-        return $this->mailer->send($this->fill($mailable));
+        $this->mailer->send($this->fill($mailable));
     }
 
     /**
@@ -146,13 +132,7 @@ class PendingMail
      */
     public function queue(MailableContract $mailable)
     {
-        $mailable = $this->fill($mailable);
-
-        if (isset($mailable->delay)) {
-            return $this->mailer->later($mailable->delay, $mailable);
-        }
-
-        return $this->mailer->queue($mailable);
+        return $this->mailer->queue($this->fill($mailable));
     }
 
     /**
@@ -177,7 +157,7 @@ class PendingMail
     {
         return tap($mailable->to($this->to)
             ->cc($this->cc)
-            ->bcc($this->bcc), function ($mailable) {
+            ->bcc($this->bcc), function (MailableContract $mailable) {
                 if ($this->locale) {
                     $mailable->locale($this->locale);
                 }

@@ -3,6 +3,8 @@
 namespace Illuminate\Console\Scheduling;
 
 use Illuminate\Console\Command;
+use Illuminate\Console\Events\ScheduledBackgroundTaskFinished;
+use Illuminate\Contracts\Events\Dispatcher;
 
 class ScheduleFinishCommand extends Command
 {
@@ -11,7 +13,7 @@ class ScheduleFinishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'schedule:finish {id}';
+    protected $signature = 'schedule:finish {id} {code=0}';
 
     /**
      * The console command description.
@@ -37,6 +39,10 @@ class ScheduleFinishCommand extends Command
     {
         collect($schedule->events())->filter(function ($value) {
             return $value->mutexName() == $this->argument('id');
-        })->each->callAfterCallbacks($this->laravel);
+        })->each(function ($event) {
+            $event->callafterCallbacksWithExitCode($this->laravel, $this->argument('code'));
+
+            $this->laravel->make(Dispatcher::class)->dispatch(new ScheduledBackgroundTaskFinished($event));
+        });
     }
 }

@@ -44,7 +44,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-use Box\Spout\Writer\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 
 
 use Carbon\Carbon;
@@ -425,14 +425,13 @@ class ServiceController extends Controller
                     ->get();
             }
         }
-
-
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
         $path = 'C:/Apache24/htdocs/gcpl-quality/template files/BranchList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
+
             return [
                 'Sr No' => $table['id'],
                 'SERVICE  NO' => $table['service_request_no'],
