@@ -3922,8 +3922,11 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-
+                                                                            @if($showcylinderblock!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$frtmainrst[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
                                                                         </div>
                                                                     </div>
 
@@ -5273,8 +5276,12 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-
-                                                                            <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$rearremaryes[3]}}</textarea>
+                                                                            @if($showcylinderblock!=Null)
+                                                                            <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$rearremaryes[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                            
                                                                         </div>
                                                                     </div>
 
@@ -6709,8 +6716,13 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-
+                                                                            @if($showcylblklinear!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$linfrtmainrst[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                            
+                                                                            
                                                                         </div>
                                                                     </div>
 
@@ -8064,7 +8076,11 @@
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
 
-                                                                            <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$linrearremaryes[3]}}</textarea>
+                                                                            @if($showcylblklinear!=Null)
+                                                                            <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$linrearremaryes[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
                                                                         </div>
                                                                     </div>
 
@@ -9486,7 +9502,12 @@
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
 
+                                                                            @if($showcylblkcam!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$camfrtmainrst[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                            
                                                                         </div>
                                                                     </div>
 
@@ -10832,7 +10853,12 @@
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
 
+                                                                            @if($showcylblkcam!=Null)
                                                                             <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$camrearremaryes[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                        
                                                                         </div>
                                                                     </div>
 

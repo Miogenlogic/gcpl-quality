@@ -239,7 +239,7 @@
 
 
 
-                               <option value="{{$desig->id}}" {{old('chkonedept')==$desig->id?'Selected':$checkgateone->chkonedept == $desig->id?'Selected':''}}>{{$desig->name}}</option>
+                               <option value="{{$desig->id}}" {{(old('chkonedept')==$desig->id?'Selected':$checkgateone->chkonedept == $desig->id)?'Selected':''}}>{{$desig->name}}</option>
 
                             @endforeach
                             

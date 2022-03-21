@@ -1,0 +1,38 @@
+ $path ='C:\Apache24\htdocs\gcpl-quality\template files/BranchDetailsGCPL.xlsx';
+         //dd($path);
+         (new FastExcel)->import($path, function ($brances) {
+            
+                foreach ($brances as $key => $value) 
+                { 
+                   if (!$branch = MasterBranch::where('sales_ofc',$value)->first()) 
+                    $branch = new MasterBranch;
+                    $branch->sales_ofc = $value;
+                    $branch->save();
+                }
+                
+        });
+        $path ='C:\Apache24\htdocs\gcpl-quality\template files/EmployeeDetsilsList to delete.xlsx';
+        (new FastExcel)->import($path, function ($user) {
+
+               $user_delete = User::where('emp_code',$user['EMP CODE'])->delete();
+                
+        });
+
+        $path = 'C:\Apache24\htdocs\gcpl-quality\template files/GCPL Customer Details.xlsx';
+        
+         (new FastExcel)->import($path)->map(function ($item, $key) {
+
+                //dd($item);
+                if (MasterCustomer::where('name',$item['Customer Details'])->count() == 0)
+                {
+                    $cus = new MasterCustomer;
+                    $cus->name = $item['Customer Details'];
+                    $cus->customer_code  = $item['customer code'];
+                    $cus->address  = $item['Address'];
+                    $cus->branch  = $item['Branch Office'];
+                    $cus->company_code  = $item['Company Code'];
+
+                    $cus->save();
+                } 
+                
+        });

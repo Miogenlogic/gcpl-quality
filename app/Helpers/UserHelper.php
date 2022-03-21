@@ -689,6 +689,19 @@ class UserHelper extends HelperServiceProvider{
 
         return $sect;
     }
+    static function childsectionforchecksheet()
+    {
+        $ch_sect=ChecksheetChildSection::get();
+
+        return $ch_sect;
+    }
+    static function subchildsectionforchecksheet()
+    {
+        $sub_ch_sect=ChecksheetSubChildSection::get();
+
+
+        return $sub_ch_sect;
+    }
     //fan drive
     static function partsfandrive()
     {
@@ -755,17 +768,18 @@ class UserHelper extends HelperServiceProvider{
         //dd($childsection);
         return $subchildsection;
     }
-
+    
    static function subchildpopulate ()
     {
-        $subchildsecnew=ChecksheetSubChildSection::where(function($query) {
-            $query->where('child_id','1')
-                ->orWhere('child_id', '3')
-                ->orWhere('child_id', '19')
-                ->orWhere('child_id', '20');
-        })
+        // $subchildsecnew=ChecksheetSubChildSection::where(function($query) {
+        //     $query->where('child_id','1')
+        //         ->orWhere('child_id', '3')
+        //         ->orWhere('child_id', '19')
+        //         ->orWhere('child_id', '20');
+        // })
 
-            ->get();
+
+        $subchildsecnew=ChecksheetSubChildSection::get();
         //echo '<pre>';print_r($subchilddemo);exit;
         //dd($childsection);
         return $subchildsecnew;
@@ -773,9 +787,7 @@ class UserHelper extends HelperServiceProvider{
 
     static function childpopulate ()
     {
-        $subchildsecnew=ChecksheetChildSection::where('section_id','=',8)
-
-            ->get();
+        $subchildsecnew=ChecksheetChildSection::get();
         //echo '<pre>';print_r($subchilddemo);exit;
         //dd($childsection);
         return $subchildsecnew;

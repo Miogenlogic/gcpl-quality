@@ -41,7 +41,7 @@
     <div class="card mb-4">
         <!-- Card header -->
         <div class="card-header">
-            <h3 class="mb-0">Please fill the form below</h3>
+            <h3 class="mb-0">Please fill the form below </h3>
         </div>
         <!-- Card body -->
         <div class="card-body">
@@ -54,7 +54,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="id">Department</label>
                                 <select name="dept_id" class="form-control">
@@ -73,7 +73,7 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label for="id">Model No</label>
                                 <select name="model_id" class="form-control">
@@ -91,10 +91,12 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group " style="height: 335px;
-    overflow-x: scroll">
-                                <label for="section_id" class="form-control-label  originalsection">Section</label>
+                     </div>
+                     <div class="row" style="margin-top:40px;">
+                        <div class="col-md-4">
+                             <label >Section</label>
+                            <div class="form-group " style="height: 335px; overflow-x: scroll">
+                                <label for="section_id" class="form-control-label  originalsection"></label>
 
                                     @php
                                         $sect=App\Helpers\UserHelper::sectionforchecksheet();
@@ -133,16 +135,15 @@
                         </div>
 
 
-                        <div class="col-md-3 " >
-                            <div class="form-group"  style="height: 335px;
-        overflow-x: scroll">
-
-                                   <label for="" class="form-control-label  childsection">Child Section</label>
+                        <div class="col-md-4 " >
+                            <label>Child Section</label>
+                            <div class="form-group"  style="height: 335px; overflow-x: scroll">
+                                   <label for="" class="form-control-label  childsection"></label>
                                             <div id="childsectionContainer">
                                     {{--<input type="checkbox" class="check" id="childSection_2">--}}
                                            @if(!empty($errors['child_id']))
                                                 @php
-                                                    $childsecnew=App\Helpers\UserHelper::childpopulate();
+                                                    $childsecnew=App\Helpers\UserHelper::childsectionforchecksheet();
                                                     $did=(explode(',',$errors['child_id']));
                                                 $sub=1;
                                                 @endphp
@@ -163,23 +164,23 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="form-group" style="height: 335px;
-    overflow-x: scroll">
+                        <div class="col-md-4">
+                            <label>Sub child Section</label>
+                            <div class="form-group" style="height: 335px;overflow-x: scroll">
 
 
-                                <label for="subsection_id" class="form-control-label  subchildsection">Sub child Section</label>
+                                <label for="subsection_id" class="form-control-label  subchildsection"></label>
 
-                                    <div id="subchildsectionContainer1">
-
+                                    <div id="subchildsectionContainer">
+                                        @if(!empty($errors['subsection_id']))
                                         @php
-                                            $subchildsecnew=App\Helpers\UserHelper::subchildpopulate();
+                                            $subchildsecnew=App\Helpers\UserHelper::subchildsectionforchecksheet();
                                             $did=(explode(',',$errors['subsection_id']));
                                         $sub=1;
                                         @endphp
                                         @foreach ($subchildsecnew as $key => $value)
                                             <div class="custom-control form-control-lg custom-checkbox">
-                                            <input type="checkbox"  name="subsection_id[]" value="{{$value['id']}}" @foreach ($did as $val){{$value['id'] == $val ? 'checked' : '' }}@endforeach class="custom-control-input" id="subcustomCheck{{$key}}">
+                                            <input type="checkbox"  name="subchildSection[]" value="{{$value['id']}}" @foreach ($did as $val){{$value['id'] == $val ? 'checked' : '' }}@endforeach class="custom-control-input" id="subcustomCheck{{$key}}">
                                             <label class="custom-control-label" for="subcustomCheck{{$key}}">{{$value['sub_child_section']}}</label>
                                             </div>
 
@@ -188,7 +189,7 @@
                                             $sub++;
                                         //exit;
                                         @endphp
-
+                                        @endif
                                     </div>
 
 
@@ -301,7 +302,7 @@
                 {{--<!-- /row -->--}}
                 {{--<input type="hidden" name="_token" value="{{csrf_token()}}">--}}
                 {{--<button class="btn btn-primary" type="submit">Submit</button>--}}
-                {{--<button class="btn btn-warning" type="cancel">Cancel</button>--}}
+                {{--<button class="btn btn-warning" type="cancel">Canceltrete</button>--}}
             {{--</form>--}}
         {{--</div>--}}
     </div>
@@ -325,7 +326,7 @@
 
             //alert("section: " + favorite.join(", "));
 
-            //console.log(model);
+            console.log('checkshtchild',checkshtchild);
 
             $.ajax({
                 url: '{{ url("/admin/child-section-show") }}',
@@ -335,7 +336,7 @@
             })
 
                 .done(function(response) {
-                    //console.log(response);
+                    console.log(response);
 
 
 
@@ -374,16 +375,16 @@
 
     <script type="text/javascript">
         /*component model no*/
-       $('.childSection_1').click(function(event) {
+       $("body").on('change', '.childSection_1', function(){
         console.log(2);
         //$('#childSection').change(function(event) {
           //  var subsect = $(this).val();
             var subsect = [];
-            $.each($("input[name='child_id[]']:checked"), function(){
+            $.each($("input[name='childSection[]']:checked"), function(){
                 subsect.push($(this).val());
             });
             //alert("section: " + favorite.join(", "));
-
+            console.log('subsect',subsect);
             //console.log(model);
 
             $.ajax({

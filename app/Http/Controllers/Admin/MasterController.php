@@ -22,6 +22,8 @@ use App\Models\User;
 use App\Models\ModelWiseCheecksheet;
 use Illuminate\Http\Request;
 use App\Models\MasterCheckSheetSection;
+use App\Models\ChecksheetChildSection;
+use App\Models\ChecksheetSubChildSection;
 use App\Models\MasterRelationType;
 use App\Models\MasterCheckSheetMapping;
 use App\Models\MasterStdData;
@@ -70,35 +72,35 @@ class MasterController extends Controller
 
     public function checksheetsectionAddSave(Request $request)
     {
-        // $data = $request->input();
-        // dd($data);
+         //$data = $request->input();
+         //dd($data);
         $obj = new ModelWiseCheecksheet();
         $obj->dept_id = $request['dept_id'];
         $obj->model_id = $request['model_id'];
         $obj->section_id=implode(',',$request['section_id']);
 		
-		$sectionfind3= Str::contains($obj->section_id,'17');
-		 if($sectionfind3 === false){
-			$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
+		// $sectionfind3= Str::contains($obj->section_id,'17');
+		//  if($sectionfind3 === false){
+		// 	$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
 
-			if($sectionfind1 === false){
-				$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
-			}
+		// 	if($sectionfind1 === false){
+		// 		$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
+		// 	}
 
-			$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
+		// 	$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
 
-			if($sectionfind2 === false){
-				$obj->section_id = $obj->section_id . ','. '20';
-			}
-		 }
+		// 	if($sectionfind2 === false){
+		// 		$obj->section_id = $obj->section_id . ','. '20';
+		// 	}
+		//  }
         if(!empty($request['childSection'])){
             $obj->child_id = implode(',',$request['childSection']);
         }else {
             $obj->child_id = NULL;
         }
 
-        if(!empty($request['subsection_id'])) {
-            $obj->subsection_id = implode(',', $request['subsection_id']);
+        if(!empty($request['subchildSection'])) {
+            $obj->subsection_id = implode(',', $request['subchildSection']);
         }else {
             $obj->subsection_id = NULL;
         }
@@ -112,16 +114,15 @@ class MasterController extends Controller
     public function checksheetsectionEdit($id) {
 
         $errors = ModelWiseCheecksheet::find($id);
-
-
+        //dd($errors);
         return view('admin.checksheet.editchecksheetsection')
             ->with('errors',$errors);
     }
 
     public function checksheetsectionEditSave(Request $request)
-    {
-//         $data = $request->input();
-//        dd($data);
+    {         
+          //$data = $request->input();
+         // dd($data);
 
         $obj = ModelWiseCheecksheet::find($request['id']);
         //$obj = new ModelWiseCheecksheet();
@@ -129,20 +130,20 @@ class MasterController extends Controller
         $obj->model_id = $request['model_id'];
         $obj->section_id=implode(',',$request['section_id']);
 		
-		$sectionfind3= Str::contains($obj->section_id,'17');
-		 if($sectionfind3 === false){
-			$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
+		// $sectionfind3= Str::contains($obj->section_id,'17');
+		//  if($sectionfind3 === false){
+		// 	$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
 
-			if($sectionfind1 === false){
-				$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
-			}
+		// 	if($sectionfind1 === false){
+		// 		$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
+		// 	}
 
-			$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
+		// 	$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
 
-			if($sectionfind2 === false){
-				$obj->section_id = $obj->section_id . ','. '20';
-			}
-		 }
+		// 	if($sectionfind2 === false){
+		// 		$obj->section_id = $obj->section_id . ','. '20';
+		// 	}
+		//  }
 
         if(!empty($request['childSection'])){
             $obj->child_id = implode(',',$request['childSection']);
@@ -150,8 +151,8 @@ class MasterController extends Controller
             $obj->child_id = NULL;
         }
 
-        if(!empty($request['subsection_id'])) {
-            $obj->subsection_id = implode(',', $request['subsection_id']);
+        if(!empty($request['subchildSection'])) {
+            $obj->subsection_id = implode(',', $request['subchildSection']);
         }else{
             $obj->subsection_id = NULL;
         }
@@ -379,28 +380,31 @@ class MasterController extends Controller
 //json value show in checksheet section column selection
     public function childSectionShow(Request $request)
     {
-
+        //dd($request['checkshtchild']);
         $childSelection = '';
         // $checkshtchildArr=explode(',',$request['checkshtchild']);
         $i = 0;
-        foreach($request['checkshtchild'] as $checkshtchild){
-
+        if (count(array($request['checkshtchild'])) > 0 && $request['checkshtchild'] != null) 
+        {
+            foreach($request['checkshtchild'] as $checkshtchild){
 
             $compdet = UserHelper::childsectionchecksheet($checkshtchild);
+            //dd($compdet);
 
+                if (!isset($compdet->section_id)) {
 
-            if (!isset($compdet->section_id)) {
+                    foreach ($compdet as $key => $value) {
 
-                foreach ($compdet as $key => $value) {
+                        $childSelection .= '<div class="custom-control form-control-lg custom-checkbox childSection">
+                                                <input type="checkbox"  name="childSection[]" value="'.$value['id'].'" class="custom-control-input childSection_1" id="childSection'.$i.'">
+                                                <label class="custom-control-label" for="childSection'.$i.'">'.$value['child_section'].'</label></div>';
+                        $i++;
+                    }
 
-                    $childSelection .= '<div class="custom-control form-control-lg custom-checkbox childSection">
-                                            <input type="checkbox"  name="childSection[]" value="'.$value['id'].'" class="custom-control-input childSection_1" id="childSection'.$i.'">
-                                            <label class="custom-control-label" for="childSection'.$i.'">'.$value['child_section'].'</label></div>';
-                    $i++;
                 }
-
             }
         }
+        
 
         echo $childSelection;
 
@@ -412,26 +416,27 @@ class MasterController extends Controller
         $subchildSelection = '';
 
         $i = 0;
-        foreach($request['subsect'] as $subsect){
+        if (count(array($request['subsect'])) > 0 && $request['subsect'] != null){
+            foreach($request['subsect'] as $subsect){
 
-//print_r($subsect);
-            $compdet = UserHelper::subChildsectionchecksheet($subsect);
-    //echo'<pre>';print_r($compdet);exit;
+             //print_r($subsect);
+                $compdet = UserHelper::subChildsectionchecksheet($subsect);
+                //echo'<pre>';print_r($compdet);exit;
 
-            if (!isset($compdet->child_id)) {
+                if (!isset($compdet->child_id)) {
 
 
-                foreach ($compdet as $key => $value) {
+                    foreach ($compdet as $key => $value) {
 
-                    $subchildSelection .= '<div class="custom-control form-control-lg custom-checkbox">
-                                            <input type="checkbox"  name="subchildSection[]" value="'.$value['id'].'" class="custom-control-input childSection2" id="subchildSection'.$i.'">
-                                            <label class="custom-control-label" for="subchildSection'.$i.'">'.$value['sub_child_section'].'</label></div>';
-                    $i++;
+                        $subchildSelection .= '<div class="custom-control form-control-lg custom-checkbox">
+                                                <input type="checkbox"  name="subchildSection[]" value="'.$value['id'].'" class="custom-control-input childSection2" id="subchildSection'.$i.'">
+                                                <label class="custom-control-label" for="subchildSection'.$i.'">'.$value['sub_child_section'].'</label></div>';
+                        $i++;
+                    }
+
                 }
-
             }
         }
-
         echo $subchildSelection;
 
 
@@ -2657,5 +2662,299 @@ public function userEdit($id)
     }
 
 
+    //component engine models
 
+    public function componentModelsAdd()
+    {
+        return view('admin.master.addComponentEngineModels');
+
+
+    }
+
+   
+    public function componentModelsAddSave(Request $request)
+    {
+        // $data = $request->input();
+        // dd($data);
+        $obj = new User();
+        $obj->name = $request['name'];
+        $obj->location_id = $request['location_id'];
+        $obj->emp_code = $request['emp_code'];
+        $obj->email = $request['email'];
+        $obj->section_id = $request['section_id'];
+        $obj->designation_id = $request['designation_id'];
+        $obj->role_id = $request['role_id'];
+
+        $obj->password=Hash::make($request['password']);
+        $obj->save();
+        // echo '<pre>';print_r($obj);exit;
+        return redirect('admin/component-models-list');
+
+    }
+
+    public function componentModelsEdit($id)
+    {
+        $title='Edit Component Model';
+
+        $user=User::find($id);
+
+        return view('admin.master.editComponentEngineModel')
+            ->with('user',$user);
+    }
+    public function componentModelsEditStore(Request $request)
+    {
+        //  $myrequest=$request->all();
+        //dd($request);
+
+        $obj = User::find($request['id']);
+        $obj->name = $request['name'];
+        $obj->location_id = $request['location_id'];
+        $obj->emp_code = $request['emp_code'];
+        $obj->email = $request['email'];
+        $obj->section_id = $request['section_id'];
+        $obj->designation_id = $request['designation_id'];
+        $obj->role_id = $request['role_id'];
+
+
+             $obj->password = Hash::make($request['password']);
+
+        $obj->save();
+        return redirect('admin/component-models-list');
+    }
+    public function componentmodelsdelete($user_id)
+    {
+        $sr = User::find($user_id);
+
+
+        $sr->delete();
+
+        return redirect('admin/component-models-list');
+    }
+
+    public function componentModelsList()
+    {
+        return view('admin.master.listComponentEngineModels');
+
+
+    }
+
+   
+    public function componentModelsGetTableDownload(){
+       
+       $table = User::select('users.*','users.name as username','gw_master_department.name as dept_name','gw_master_designation.designation as desg_name','roles.name as jobrole')
+            ->join('gw_master_department','gw_master_department.id','=','users.section_id')
+            ->join('gw_master_designation','gw_master_designation.id','=','users.designation_id')
+            ->join('roles','roles.id','=','users.role_id')
+            //->groupby('gw_master_employee.section_id')
+            ->get();
+
+        $style = (new StyleBuilder())
+            ->setFontBold()
+            ->build();
+        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/EmployeeDetsilsList.xlsx';
+
+        (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
+            return [
+                'Sr No' => $table['id'],
+                'USERNAME' => $table['username'],
+                'EMP CODE' => $table['emp_code'],                       
+                'DEPARTMENT' => $table['dept_name'],
+                'DESIGNATION' => $table['desg_name'],
+                'ROLE' => $table['jobrole'],
+                
+            ];
+        });
+        $file = $path;
+        $name = basename($file);
+        return response()->download($file, $name);    
+
+
+    }
+
+    public function componentModelsGetTable(Request $request)
+    {
+        //$table = User::select('*')->get();
+       $table = MasterComponentModelNo::select('*')->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/fetchdata/' . $table->id) . '">Edit</a>
+                                 <a class="dropdown-item" href="' . url('admin/model-delete/') . "/". "$table->id" . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>                              </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
+
+     //component model section
+
+    public function componentSectionAdd()
+    {
+        return view('admin.master.addComponentEngineSection');
+
+
+    }
+
+   
+    public function componentSectionAddSave(Request $request)
+    {
+         $data = $request->input();
+        // dd($data);
+            $section = new MasterCheckSheetSection;
+            $section->name = $data['name'];
+            $section->status = 'Active';
+            if($section->save()==TRUE)
+            {
+                if (count( $data['parent'] ) > 0) 
+                {
+
+                    foreach ($data['parent'] as $p_sec)
+                    {
+                        $child = new ChecksheetChildSection;
+                        $child->section_id = $section->id;
+                        $child->child_section = $p_sec['name'];
+                        if($child->save() == TRUE)
+                        {
+                             foreach ($p_sec['child'] as $pc_sec)
+                             {
+                                $sub_child = new ChecksheetSubChildSection;
+                                $sub_child->section_id = $section->id;
+                                $sub_child->child_id = $child->id;
+                                $sub_child->sub_child_section = $pc_sec;
+                                $sub_child->save();
+                            }
+                        }
+                    }
+                }
+            }
+        return redirect('admin/component-section-list');
+
+    }
+
+    public function componentSectionEdit($id)
+    {
+        $title='Edit Component Section';
+
+        $section=MasterCheckSheetSection::with('child_section.sub_child_section')->find($id);
+        return view('admin.master.editComponentEngineSection')
+            ->with('section',$section);
+    }
+    public function componentSectionEditStore(Request $request)
+    {
+        $data = $request->input();
+        // dd($data);
+        $section = MasterCheckSheetSection::find($request['id']);
+        $section->name = $data['name'];
+        $section->status = 'Active';
+        if($section->save()==TRUE)
+        {
+            if (count( $data['parent'] ) > 0) 
+            {
+               $ch = ChecksheetChildSection::where('section_id',$request['id'])->delete();
+               $sub_ch = ChecksheetSubChildSection::where('section_id',$request['id'])->delete();
+                foreach ($data['parent'] as $p_sec)
+                {
+                    $child = new ChecksheetChildSection;
+                    $child->section_id = $section->id;
+                    $child->child_section = $p_sec['name'];
+                    if($child->save() == TRUE)
+                    {
+                         foreach ($p_sec['child'] as $pc_sec)
+                         {
+                            $sub_child = new ChecksheetSubChildSection;
+                            $sub_child->section_id = $section->id;
+                            $sub_child->child_id = $child->id;
+                            $sub_child->sub_child_section = $pc_sec;
+                            $sub_child->save();
+                        }
+                    }
+                }
+            }
+        }
+        return redirect('admin/component-section-list');
+    }
+    public function componentSectiondelete($user_id)
+    {
+        $sr = MasterCheckSheetSection::find($user_id);
+        $sr->delete();
+        $ch = ChecksheetChildSection::where('section_id',$user_id)->delete();
+        $sub_ch = ChecksheetSubChildSection::where('section_id',$user_id)->delete();
+
+        return redirect('admin/component-section-list');
+    }
+
+    public function componentSectionList()
+    {
+        return view('admin.master.listComponentEngineSection');
+
+
+    }
+
+   
+    public function componentSectionGetTableDownload(){
+       
+       $table = User::select('users.*','users.name as username','gw_master_department.name as dept_name','gw_master_designation.designation as desg_name','roles.name as jobrole')
+            ->join('gw_master_department','gw_master_department.id','=','users.section_id')
+            ->join('gw_master_designation','gw_master_designation.id','=','users.designation_id')
+            ->join('roles','roles.id','=','users.role_id')
+            //->groupby('gw_master_employee.section_id')
+            ->get();
+
+        $style = (new StyleBuilder())
+            ->setFontBold()
+            ->build();
+        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/EmployeeDetsilsList.xlsx';
+
+        (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
+            return [
+                'Sr No' => $table['id'],
+                'USERNAME' => $table['username'],
+                'EMP CODE' => $table['emp_code'],                       
+                'DEPARTMENT' => $table['dept_name'],
+                'DESIGNATION' => $table['desg_name'],
+                'ROLE' => $table['jobrole'],
+                
+            ];
+        });
+        $file = $path;
+        $name = basename($file);
+        return response()->download($file, $name);    
+
+
+    }
+
+    public function componentSectionGetTable(Request $request)
+    {
+        //$table = User::select('*')->get();
+       $table = MasterCheckSheetSection::select('*')->orderBy('created_at','DESC')->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/component-section-edit/' . $table->id) . '">Edit</a>
+                                 <a class="dropdown-item" href="' . url('admin/componentsectiondelete/') . "/". "$table->id" . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>                              </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
 }

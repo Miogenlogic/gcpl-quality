@@ -165,7 +165,7 @@
 													@endphp
 													@foreach( $customer as $key=> $cus)
 														
-														<option value="{{$cus->id}}" {{old('cust_name')==$cus->id?'Selected':$timesheet[0]['cust_name'] == $cus->id?'Selected':''}}>{{$cus->name}}</option>
+														<option value="{{$cus->id}}" {{(old('cust_name')==$cus->id?'Selected':$timesheet[0]['cust_name'] == $cus->id)?'Selected':''}}>{{$cus->name}}</option>
 																
 
 															

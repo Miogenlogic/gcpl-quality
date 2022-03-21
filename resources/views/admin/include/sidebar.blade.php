@@ -106,6 +106,12 @@
                                     <li class="nav-item">
                                         <a href="{{url('admin/employee-detsils-list')}}" class="nav-link {{((Request::is('admin/employee-detsils-list')) || (Request::is('admin/employee-detsils-list')) )?'active':''}}">Employee Details</a>
                                     </li>
+                                     <li class="nav-item">
+                                        <a href="{{url('admin/component-models-list')}}" class="nav-link {{((Request::is('admin/component-models-list')) || (Request::is('admin/component-models-list')) )?'active':''}}">Model List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/component-section-list')}}" class="nav-link {{((Request::is('admin/component-section-list')) || (Request::is('admin/component-section-list')) )?'active':''}}">Section List</a>
+                                    </li>
                                     <li class="nav-item">
                                         <a href="{{url('admin/fetchmodelwisetask')}}" class="nav-link {{((Request::is('admin/fetchmodelwisetask')) || (Request::is('admin/fetchmodelwisetask')) )?'active':''}}">Task Details</a>
                                     </li>

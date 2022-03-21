@@ -138,6 +138,7 @@
                                     <th scope="col" class="sort" data-sort="name">START Time</th>
                                     <th scope="col" class="sort" data-sort="name">END Time</th>
 									<th scope="col" class="sort" data-sort="name">Total Hour</th>
+                                    <th scope="col" class="sort" data-sort="name">Created At</th>
                                     <th scope="col" class="notexport" data-sort="name">Action</th>
                                 </tr>
                                 </thead>
@@ -213,7 +214,7 @@
                     {data: 'start_time', name: 'start_time'},
                     {data: 'end_time', name: 'end_time'},
 					{data: 'hours', name: 'hours'},
-
+                    {data: 'datetimeformat', name: 'datetimeformat'},
 
                     {data: 'action', name: 'action', orderable: false, searchable: false} ,
                 ],
@@ -309,8 +310,6 @@
                     {data: 'start_time', name: 'start_time'},
                     {data: 'end_time', name: 'end_time'},
                     {data: 'hours', name: 'hours'},
-
-
                     {data: 'action', name: 'action', orderable: false, searchable: false} ,
                 ],
                 // pageLength: 25,

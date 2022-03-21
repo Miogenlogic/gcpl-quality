@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 class MasterCheckSheetSection extends Model
 {
 
@@ -18,12 +17,16 @@ class MasterCheckSheetSection extends Model
         // 'name', 'email', 'password',
     ];
 
-
     /*
         protected $primaryKey = "";
         public $incrementing = false;
         public $timestamps = false;
     */
+
+        public function child_section()
+        {
+            return $this->hasMany('App\Models\ChecksheetChildSection','section_id','id');
+        }
 }
 
 

@@ -6937,6 +6937,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 
     public function timeSheetlisting()
     {
+
         return view('admin.report.timeSheetList');
     }
 
@@ -6949,7 +6950,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         $location=$data['user']['location_id'];
 
         if($location == '1' || $location == '2') {
-            $table = TimeSheetEntry::select('time_sheet_entry.emp_name', 'emp_id', 'id', 'shift', 'dated', 'work_order', 'start_time', 'end_time','hours')
+            $table = TimeSheetEntry::select('time_sheet_entry.emp_name', 'emp_id', 'id', 'shift', 'dated', 'work_order', 'start_time', 'end_time','hours','created_at')
                 //select('gw_project_plan_master.id', 'machine_modelno', 'gw_master_mc_model.model_no')
                 //->leftjoin('gw_project_plan_master','gw_project_plan_master.service_id', '=', 'service_request.id')
                 // ->leftjoin('gw_master_customer','gw_master_customer.id', '=', 'service_request.customer')
@@ -7000,8 +7001,15 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 return $formatted_dt1;
 
             })
+            ->addColumn('datetimeformat', function ($table) {
 
-            ->rawColumns(['action','roles','dateformat']);
+                
+                $formatted_dt1=Carbon::parse($table['created_at'])->format('d/m/Y H:i:s');
+
+                return $formatted_dt1;
+
+            })
+            ->rawColumns(['action','roles','dateformat','datetimeformat']);
 
 
         return $datatables->make(true);

@@ -53,7 +53,7 @@
                                 @foreach($location as $loc)
 
                                     {{--<option value="{{$loc->id}}">{{$loc->description}}</option>--}}
-                                    <option value="{{$loc->id}}" {{old('location_id')==$loc->id?'Selected':$user->location_id == $loc->id?'Selected':''}}>{{$loc->description}}</option>
+                                    <option value="{{$loc->id}}" {{(old('location_id')==$loc->id?'Selected':$user->location_id == $loc->id)?'Selected':''}}>{{$loc->description}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('section_id'))
@@ -100,7 +100,7 @@
                                 @foreach($section as $sec)
 
                                     {{--<option value="{{$sec->id}}">{{$sec->name}}</option>--}}
-                                    <option value="{{$sec->id}}" {{old('section_id')==$sec->id?'Selected':$user->section_id == $sec->id?'Selected':''}}>{{$sec->name}}</option>
+                                    <option value="{{$sec->id}}" {{(old('section_id')==$sec->id?'Selected':$user->section_id == $sec->id)?'Selected':''}}>{{$sec->name}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('section_id'))
@@ -120,7 +120,7 @@
                                 @foreach($designation as $desig)
 
                                     {{--<option value="{{$desig->id}}">{{$desig->designation}}</option>--}}
-                                    <option value="{{$desig->id}}" {{old('designation_id')==$desig->id?'Selected':$user->designation_id == $desig->id?'Selected':''}}>{{$desig->designation}}</option>
+                                    <option value="{{$desig->id}}" {{(old('designation_id')==$desig->id?'Selected':$user->designation_id == $desig->id)?'Selected':''}}>{{$desig->designation}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('designation_id'))
@@ -140,7 +140,7 @@
                                 @foreach($jobrole as $jrole)
 
                                     {{--<option value="{{$jrole->id}}">{{$jrole->name}}</option>--}}
-                                    <option value="{{$jrole->id}}" {{old('role_id')==$jrole->id?'Selected':$user->role_id == $jrole->id?'Selected':''}}>{{$jrole->name}}</option>
+                                    <option value="{{$jrole->id}}" {{(old('role_id')==$jrole->id?'Selected':$user->role_id == $jrole->id)?'Selected':''}}>{{$jrole->name}}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('jobrole_id'))

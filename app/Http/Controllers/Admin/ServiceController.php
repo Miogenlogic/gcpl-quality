@@ -1289,12 +1289,34 @@ public function serviceRequestGetTable(Request $request)
 
     public function serviceRequestAdd()
     {
+         /*$path = 'C:\xampp\htdocs\gcpl-quality\template files/BranchDetailsGCPL.xlsx';
+         //dd($path);
+         (new FastExcel)->import($path, function ($brances) {
+            
+                foreach ($brances as $key => $value) 
+                { 
+                   if (!$branch = MasterBranch::where('sales_ofc',$value)->first()) 
+                    $branch = new MasterBranch;
+                    $branch->sales_ofc = $value;
+                    $branch->save();
+                }
+                
+        });*/
+       /* $path = 'C:\xampp\htdocs\gcpl-quality\template files/EmployeeDetsilsList to delete.xlsx';
+         
+         (new FastExcel)->import($path, function ($user) {
+
+               $user_delete = User::where('emp_code',$user['EMP CODE'])->delete();
+                
+        });*/
+       
         $status = MasterStatus::select('gw_master_status.*')->get();
         //$employee = MasterEmployee::select('gw_master_employee.*')->get();
          $employee = User::select('*')->get();
         return view('admin.branchengineer.newserviceRequest')
             ->with('employee',$employee)
             ->with('status',$status);
+
     }
 
     public function serviceRequestAddSave(BranchServiceRequest $request)
@@ -1410,7 +1432,7 @@ public function serviceRequestGetTable(Request $request)
             $incre=1;
             $serviceID = $getServiceId[0]['serviceID'] + $incre;
             //dd($serviceID);exit;
-            if ($line[' Arrange no']) {
+            if (isset($line[' Arrange no'])) {
                 $mcModel = MasterPreHistoryDis::get();
                 if (!isset($mcModel->id)) {
                     $mcModel = new MasterPreHistoryDis();
@@ -1518,16 +1540,18 @@ public function serviceRequestGetTable(Request $request)
         if(!empty($mailsend)){
 			
 			foreach ($mailsend as $mailone){
-				$tomail = $mailone['email'];
+				//$tomail = $mailone['email'];
+                $tomail = 'sd.dev94@gmail.com';
+
 				//echo '<pre>';print_r($tomail);exit;
             $data=['subject'=>'Service Create Mail','email'=>$tomail,'serviceno' => $obj->service_request_no,'url'=>$url];
 
 
             Mail::send('admin.mail.serviceNotificationMail', $data, function($message) use ($data) {
-
+                //dd($data);
                 $message->to($data['email'])->subject($data['subject']);
-                //dd($message);
                 $message->from(env('service_mail'),'QMS');
+                
                 //$message->from(\Config::get('env.service_mail'),'loyalty@gainwellindia.com');
              });
            }

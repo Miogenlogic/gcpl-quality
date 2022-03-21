@@ -464,11 +464,31 @@ Route::group(['prefix' => 'admin'], function(){
         Route::post('/employee-detsils-get-table-download', ['uses' => 'MasterController@employeeDetailsGetTableDownload']);
         Route::get('/employee-detsils-add', ['uses' => 'MasterController@employeeDetailsAdd']);
         Route::post('/employee-detsils-add-save', ['uses' => 'MasterController@employeeDetailsAddSave']);
-    Route::get('/employee-edit/{id}', ['uses' => 'MasterController@userEdit']);
+        Route::get('/employee-edit/{id}', ['uses' => 'MasterController@userEdit']);
         Route::post('/employee-edit-store', ['uses' => 'MasterController@userEditStore']);
         Route::get('/employeedelete/{id}', ['uses' =>'MasterController@employeedelete']);
+        //component models
 
-//serviiceengineerlisting and update
+        Route::get('/component-models-list', ['uses' => 'MasterController@componentModelsList']);
+        Route::get('/component-models-get-table', ['uses' => 'MasterController@componentModelsGetTable']);
+
+        Route::post('/component-models-get-table-download', ['uses' => 'MasterController@componentModelsGetTableDownload']);
+        Route::get('/component-models-add', ['uses' => 'MasterController@componentModelsAdd']);
+        Route::post('/component-models-add-save', ['uses' => 'MasterController@componentModelsAddSave']);
+        Route::get('/component-models-edit/{id}', ['uses' => 'MasterController@componentModelsEdit']);
+        Route::post('/component-models-edit-store', ['uses' => 'MasterController@componentModelsEditStore']);
+        Route::get('/componentmodelsdelete/{id}', ['uses' =>'MasterController@componentmodelsdelete']);
+        //component section
+        Route::get('/component-section-list', ['uses' => 'MasterController@componentSectionList']);
+        Route::get('/component-section-get-table', ['uses' => 'MasterController@componentSectionGetTable']);
+
+        Route::post('/component-section-get-table-download', ['uses' => 'MasterController@componentSectionGetTableDownload']);
+        Route::get('/component-section-add', ['uses' => 'MasterController@componentSectionAdd']);
+        Route::post('/component-section-add-save', ['uses' => 'MasterController@componentSectionAddSave']);
+        Route::get('/component-section-edit/{id}', ['uses' => 'MasterController@componentSectionEdit']);
+        Route::post('/component-section-edit-store', ['uses' => 'MasterController@componentSectionEditStore']);
+        Route::get('/componentsectiondelete/{id}', ['uses' =>'MasterController@componentSectiondelete']);
+        //serviiceengineerlisting and update
         Route::get('/service-request-list', ['uses' => 'ServiceController@serviceRequestList']);
         Route::get('/listing/{id}', ['uses' =>'ServiceController@servicerequestlisting']);
         Route::post('/update-servicerequest', ['uses' =>'ServiceController@updateservicerequest']);
@@ -652,7 +672,7 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/fetchservichecksheet-get-table',['uses' =>'MasterSuperAdminController@showchecksheetdetails']);
 
         //master section
-      Route::get('/checksheetsection-add', ['uses' => 'MasterController@checksheetsectionAdd']);
+        Route::get('/checksheetsection-add', ['uses' => 'MasterController@checksheetsectionAdd']);
         Route::post('/checksheetsection-add-save', ['uses' => 'MasterController@checksheetsectionAddSave']);
         Route::get('/checksheetsection-edit/{id}', ['uses' => 'MasterController@checksheetsectionEdit']);
         Route::post('/checksheetsection-edit-save', ['uses' => 'MasterController@checksheetsectionEditSave']);
