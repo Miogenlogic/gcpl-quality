@@ -87,10 +87,12 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group " style="height: 335px;
-    overflow-x: scroll">
-                                <label for="section_id" class="form-control-label  originalsection">Section</label>
+                    </div>
+                    <div class="row" style="margin-top:40px;">
+                         <div class="col-md-3">
+                            <label >Section</label>
+                            <div class="form-group " style="height: 335px; overflow-x: scroll">
+                                <label for="section_id" class="form-control-label  originalsection"></label>
 
                                     @php
                                         $sect=App\Helpers\UserHelper::sectionforchecksheet();
@@ -112,10 +114,10 @@
 
 
                         <div class="col-md-3 " >
-                            <div class="form-group"  style="height: 335px;
-        overflow-x: scroll">
+                             <label>Child Section</label>
+                            <div class="form-group"  style="height: 335px; overflow-x: scroll">
 
-                                   <label for="" class="form-control-label  childsection">Child Section</label>
+                                   <label for="" class="form-control-label  childsection"></label>
                                             <div id="childsectionContainer">
                                     {{--<input type="checkbox" class="check" id="childSection_2">--}}
                                     </div>
@@ -124,30 +126,13 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group" style="height: 335px;
-    overflow-x: scroll">
+                            <label>Sub child Section</label>
+                            <div class="form-group" style="height: 335px; overflow-x: scroll">
 
 
-                                <label for="subsection_id" class="form-control-label  subchildsection">Sub child Section</label>
+                                <label for="subsection_id" class="form-control-label  subchildsection"></label>
 
-                                    <div id="subchildsectionContainer1">
-
-                                        @php
-                                            $subchildsecnew=App\Helpers\UserHelper::subchildpopulate();
-                                            //echo '<pre>'; print_r($subchildsecnew);exit;
-                                        $sub=1;
-                                        @endphp
-                                        @foreach ($subchildsecnew as $key => $value)
-                                            <div class="custom-control form-control-lg custom-checkbox">
-                                            <input type="checkbox"  name="subsection_id[]" value="{{$value['id']}}" class="custom-control-input" id="subcustomCheck{{$key}}">
-                                            <label class="custom-control-label" for="subcustomCheck{{$key}}">{{$value['sub_child_section']}}</label>
-                                            </div>
-
-                                       @endforeach
-                                        @php
-                                            $sub++;
-                                        //exit;
-                                        @endphp
+                                    <div id="subchildsectionContainer">
 
                                     </div>
 
@@ -155,16 +140,12 @@
                             </div>
                         </div>
 
-
-
                     </div>
-
-
-
                 <!-- /row -->
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <button class="btn btn-primary" type="submit">Submit</button>
                 <button class="btn btn-warning" type="cancel">Cancel</button>
+                </div>
             </form>
         </div>
 
@@ -221,7 +202,7 @@
                 })
 
                 .fail(function() {
-
+                    $('.childsection').show();
                     console.log("error");
 
                 })
@@ -239,12 +220,12 @@
 
     <script type="text/javascript">
         /*component model no*/
-       $('.childSection_1').click(function(event) {
+       $("body").on('change', '.childSection_1', function(){
         console.log(2);
         //$('#childSection').change(function(event) {
           //  var subsect = $(this).val();
             var subsect = [];
-            $.each($("input[name='child_id[]']:checked"), function(){
+            $.each($("input[name='childSection[]']:checked"), function(){
                 subsect.push($(this).val());
             });
             //alert("section: " + favorite.join(", "));
@@ -276,7 +257,7 @@
                 })
 
                 .fail(function() {
-
+                    $('select').val('')
                     console.log("error");
 
                 })

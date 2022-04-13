@@ -8,6 +8,7 @@ use App\Http\Requests\DepartmentRequest;
 use App\Http\Requests\MasterTaskRequest;
 
 use App\Models\ChecksheetSectionWiseColumn;
+use App\Models\ChecksheetSectionWiseColumnnew;
 use App\Models\ChecksheetColumnStore;
 use App\Models\ComponentInspectionReport;
 use App\Models\EngineAssembly;
@@ -454,21 +455,21 @@ class MasterController extends Controller
     {
 
         $columnSelection = '';
-        //print_r($request['columnchksht']);
+        // print_r($request['columnchksht']);
         $checkshtchildArr = $request['columnchksht'];
-
+        // echo "string";die();
         $i = 0;
         // foreach($request['columnchksht'] as $columnchksht){
         foreach($checkshtchildArr as $columnchksht){
             //
-
+            // echo "string1";die();
             // foreach(explode(',', $request->columnchksht) as $columnchksht){
 
             $compdet = UserHelper::columnforchecksheet($columnchksht);
 
-
+            // echo "string";die();
             if (!isset($compdet->section_id)) {
-                //echo "<pre>";print_r($compdet[0]['column_id']);echo "<br>";exit;
+                echo "<pre>";print_r($compdet[0]['column_id']);echo "<br>";exit;
                 foreach ($compdet as $key => $value) {
 
                     $columnSelection .= '<div class="custom-control form-control-lg custom-checkbox">
@@ -2656,6 +2657,77 @@ public function userEdit($id)
         return redirect('admin/fetch-assembly');
     }
 
+    public function checksheetcolumnlistingnew()
+    {
+        return view('admin.checksheet.listchecksheetcolumnnew');
+    }
 
+    public function fetchchecksheetcolumnnew(Request $request)
+    {
+        $table = ChecksheetSectionWiseColumnnew::select('gw_master_section_column_new.*','gw_master_department.name as Dept','gw_master_mc_model.model_no as Model')
+            ->leftjoin('gw_master_department','gw_master_department.id','=','gw_master_section_column_new.dept_id')
+            ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_section_column_new.model_id')
+            ->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+
+
+
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/checksheetcolumn-edit/' . $table->id) . '">Edit</a>
+                                <a href="' . url('admin/checksheetcolumn-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="dropdown-item">Delete</a>
+                                                             </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
+
+    public function checksheetcolumnAddnew()
+    {
+        return view('admin.checksheet.addchecksheetcolumnnew');
+
+
+    }
+
+    public function checksheetcolumnAddSavenew(Request $request)
+    {
+
+    //$data = $request->input();
+
+
+            //$obj1 = new ChecksheetColumnStore();
+            $obj1 = new ChecksheetSectionWiseColumn(); //remove comment and change columnSectionShow function's table name to ChecksheetColumnStore
+
+            $obj1->dept_id = $request['dept_id'];
+            $obj1->model_id = $request['model_id'];
+            $obj1->section_id=$request['section_id1'];
+        //dd($obj1->section_id);
+        if(!empty($request['columnSection'])){
+            $obj1->column_id = implode(',',$request['columnSection']);
+        }
+        else{
+            $obj1->column_id = Null;
+        }
+
+
+       //dd($obj1->section_id);
+            $obj1->save();
+
+
+
+        return redirect('admin/checksheetcolumn-listing-new');
+
+    }
 
 }

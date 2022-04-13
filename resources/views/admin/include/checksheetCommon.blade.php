@@ -3,7 +3,6 @@
 @php
     $i=0;
 
-
 @endphp
 
 
@@ -2030,7 +2029,7 @@
                                         <div class="missing-damaged-part-repeat">
                                         @php
                                             $columnsection_2=App\Helpers\UserHelper::columndynamic($deptid,$service->machine_modelno,7);
-
+                                            
                                             $cl = 0;
                                         @endphp
 									@if(!empty($columnsection_2))
@@ -2302,7 +2301,7 @@
                                                 <div class="row no-gutters">
                                                     <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="" class="form-control-label">Part NO</label>
+                                                            <label for="" class="form-control-label">Part NO dsf</label>
                                                             <span style="position: relative;top: -4px;"><i style="color: red;font-size: 5px;" class="fas fa-star"></i></span>
 
                                                             <textarea type="text" name="part_no[]" class="form-control" placeholder="Part Description" rows="1" required></textarea>
@@ -3885,7 +3884,7 @@
                                                                     <div class="col-3"><h4 class="mb-0">Center line of the bore checked</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($showcylinderblock!=Null && $myArray!=Null)
                                                                                 <input name="frontcenter[3]" class="custom-control-input" id="frcenyes{{$i}}" type="radio" value="yes"  {{$myArray[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="frontcenter[3]" class="custom-control-input" id="frcenyes{{$i}}" type="radio" value="yes">
@@ -3893,7 +3892,7 @@
                                                                             <label class="custom-control-label" for="frcenyes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($showcylinderblock!=Null && $myArray!=Null)
                                                                                 <input name="frontcenter[{{$i}}]" class="custom-control-input" id="frcenno{{$i}}" type="radio" value="no" {{$myArray[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="frontcenter[{{$i}}]" class="custom-control-input" id="frcenno{{$i}}" type="radio" value="no">
@@ -3904,7 +3903,7 @@
                                                                     <div class="col-1"><h4 class="mb-0">Results</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($showcylinderblock!=Null && $frntreslt!=Null)
                                                                                 <input name="frontresult[{{$i}}]" class="custom-control-input" id="ryes{{$i}}" type="radio" value="yes" {{$frntreslt[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="frontresult[{{$i}}]" class="custom-control-input" id="ryes{{$i}}" type="radio" value="yes" >
@@ -3912,7 +3911,7 @@
                                                                             <label class="custom-control-label" for="ryes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($showcylinderblock!=Null && $frntreslt!=Null)
                                                                                 <input name="frontresult[{{$i}}]" class="custom-control-input" id="rno{{$i}}" type="radio" value="no" {{$frntreslt[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="frontresult[{{$i}}]" class="custom-control-input" id="rno{{$i}}" type="radio" value="no">
@@ -3922,8 +3921,11 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-
+                                                                            @if($showcylinderblock!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$frtmainrst[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
                                                                         </div>
                                                                     </div>
 
@@ -5273,8 +5275,12 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-
-                                                                            <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$rearremaryes[3]}}</textarea>
+                                                                            @if($showcylinderblock!=Null)
+                                                                            <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$rearremaryes[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                            
                                                                         </div>
                                                                     </div>
 
@@ -6672,7 +6678,7 @@
                                                                     <div class="col-3"><h4 class="mb-0">Center line of the bore checked</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linArray !=Null)
                                                                                 <input name="linearfrontcenter[3]" class="custom-control-input" id="linfrcenyes{{$i}}" type="radio" value="yes"  {{$linArray[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="linearfrontcenter[3]" class="custom-control-input" id="linfrcenyes{{$i}}" type="radio" value="yes">
@@ -6680,7 +6686,7 @@
                                                                             <label class="custom-control-label" for="linfrcenyes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linArray !=Null)
                                                                                 <input name="linearfrontcenter[{{$i}}]" class="custom-control-input" id="linfrcenno{{$i}}" type="radio" value="no" {{$linArray[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="linearfrontcenter[{{$i}}]" class="custom-control-input" id="linfrcenno{{$i}}" type="radio" value="no">
@@ -6691,7 +6697,7 @@
                                                                     <div class="col-1"><h4 class="mb-0">Results</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linfrntreslt!=Null)
                                                                                 <input name="linfrontresult[{{$i}}]" class="custom-control-input" id="linryes{{$i}}" type="radio" value="yes" {{$linfrntreslt[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="linfrontresult[{{$i}}]" class="custom-control-input" id="linryes{{$i}}" type="radio" value="yes" >
@@ -6699,7 +6705,7 @@
                                                                             <label class="custom-control-label" for="linryes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linfrntreslt!=Null)
                                                                                 <input name="linfrontresult[{{$i}}]" class="custom-control-input" id="linrno{{$i}}" type="radio" value="no" {{$linfrntreslt[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="linfrontresult[{{$i}}]" class="custom-control-input" id="linrno{{$i}}" type="radio" value="no">
@@ -6709,8 +6715,13 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-
+                                                                            @if($showcylblklinear!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$linfrtmainrst[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                            
+                                                                            
                                                                         </div>
                                                                     </div>
 
@@ -8026,7 +8037,7 @@
                                                                     <div class="col-3"><h4 class="mb-0">Center line of the bore checked</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linrearcenteryes!=Null)
                                                                                 <input name="lincenterresult[{{$i}}]" class="custom-control-input" id="linrearyes{{$i}}" type="radio" value="yes" {{$linrearcenteryes[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="lincenterresult[{{$i}}]" class="custom-control-input" id="linrearyes{{$i}}" type="radio" value="yes">
@@ -8034,7 +8045,7 @@
                                                                             <label class="custom-control-label" for="linrearyes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linrearcenteryes!=Null)
                                                                                 <input name="lincenterresult[{{$i}}]" class="custom-control-input" id="linrearno{{$i}}" type="radio" value="no" {{$linrearcenteryes[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="lincenterresult[{{$i}}]" class="custom-control-input" id="linrearno{{$i}}" type="radio" value="no">
@@ -8045,7 +8056,7 @@
                                                                     <div class="col-1"><h4 class="mb-0">Results</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linrearresyes!=Null)
                                                                                 <input name="linrearresults[{{$i}}]" class="custom-control-input" id="linreresul{{$i}}" type="radio" value="yes" {{$linrearresyes[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="linrearresults[{{$i}}]" class="custom-control-input" id="linreresul{{$i}}" type="radio" value="yes" >
@@ -8053,7 +8064,7 @@
                                                                             <label class="custom-control-label" for="linreresul{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblklinear!=Null)
+                                                                            @if($showcylblklinear!=Null && $linrearresyes!=Null)
                                                                                 <input name="linrearresults[{{$i}}]" class="custom-control-input" id="linreresulno{{$i}}" type="radio" value="no" {{$linrearresyes[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="linrearresults[{{$i}}]" class="custom-control-input" id="linreresulno{{$i}}" type="radio" value="no" >
@@ -8064,7 +8075,11 @@
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
 
-                                                                            <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$linrearremaryes[3]}}</textarea>
+                                                                            @if($showcylblklinear!=Null && $linrearresyes!=Null)
+                                                                            <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$linrearremaryes[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
                                                                         </div>
                                                                     </div>
 
@@ -9448,7 +9463,7 @@
                                                                     <div class="col-3"><h4 class="mb-0">Center line of the bore checked</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camArray !=Null)
                                                                                 <input name="camfrontcenter[3]" class="custom-control-input" id="camfrcenyes{{$i}}" type="radio" value="yes"  {{$camArray[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camfrontcenter[3]" class="custom-control-input" id="camfrcenyes{{$i}}" type="radio" value="yes">
@@ -9456,7 +9471,7 @@
                                                                             <label class="custom-control-label" for="camfrcenyes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camArray !=Null)
                                                                                 <input name="camfrontcenter[{{$i}}]" class="custom-control-input" id="camfrcenno{{$i}}" type="radio" value="no" {{$camArray[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camfrontcenter[{{$i}}]" class="custom-control-input" id="camfrcenno{{$i}}" type="radio" value="no">
@@ -9467,7 +9482,7 @@
                                                                     <div class="col-1"><h4 class="mb-0">Results</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camfrntreslt!=Null)
                                                                                 <input name="camfrontresult[{{$i}}]" class="custom-control-input" id="camryes{{$i}}" type="radio" value="yes" {{$camfrntreslt[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camfrontresult[{{$i}}]" class="custom-control-input" id="camryes{{$i}}" type="radio" value="yes" >
@@ -9475,7 +9490,7 @@
                                                                             <label class="custom-control-label" for="camryes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camfrntreslt!=Null)
                                                                                 <input name="camfrontresult[{{$i}}]" class="custom-control-input" id="camrno{{$i}}" type="radio" value="no" {{$camfrntreslt[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camfrontresult[{{$i}}]" class="custom-control-input" id="camrno{{$i}}" type="radio" value="no">
@@ -9486,7 +9501,12 @@
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
 
+                                                                            @if($showcylblkcam!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$camfrtmainrst[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                            
                                                                         </div>
                                                                     </div>
 
@@ -10794,7 +10814,7 @@
                                                                     <div class="col-3"><h4 class="mb-0">Center line of the bore checked</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camrearcenteryes!=Null)
                                                                                 <input name="camcenterresult[{{$i}}]" class="custom-control-input" id="camrearyes{{$i}}" type="radio" value="yes" {{$camrearcenteryes[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camcenterresult[{{$i}}]" class="custom-control-input" id="camrearyes{{$i}}" type="radio" value="yes">
@@ -10802,7 +10822,7 @@
                                                                             <label class="custom-control-label" for="camrearyes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camrearcenteryes!=Null)
                                                                                 <input name="camcenterresult[{{$i}}]" class="custom-control-input" id="camrearno{{$i}}" type="radio" value="no" {{$camrearcenteryes[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camcenterresult[{{$i}}]" class="custom-control-input" id="camrearno{{$i}}" type="radio" value="no">
@@ -10813,7 +10833,7 @@
                                                                     <div class="col-1"><h4 class="mb-0">Results</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camrearresyes!=Null)
                                                                                 <input name="camrearresults[{{$i}}]" class="custom-control-input" id="camreresul{{$i}}" type="radio" value="yes" {{$camrearresyes[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camrearresults[{{$i}}]" class="custom-control-input" id="camreresul{{$i}}" type="radio" value="yes" >
@@ -10821,7 +10841,7 @@
                                                                             <label class="custom-control-label" for="camreresul{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylblkcam!=Null)
+                                                                            @if($showcylblkcam!=Null && $camrearresyes!=Null)
                                                                                 <input name="camrearresults[{{$i}}]" class="custom-control-input" id="camreresulno{{$i}}" type="radio" value="no" {{$camrearresyes[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="camrearresults[{{$i}}]" class="custom-control-input" id="camreresulno{{$i}}" type="radio" value="no" >
@@ -10832,7 +10852,12 @@
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
 
+                                                                            @if($showcylblkcam!=Null && $camrearresyes!=Null)
                                                                             <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$camrearremaryes[3]}}</textarea>
+                                                                            @else
+                                                                             <textarea placeholder="Remarks" name="mainrearremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>
+                                                                             @endif
+                                                                        
                                                                         </div>
                                                                     </div>
 

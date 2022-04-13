@@ -800,7 +800,7 @@ class UserHelper extends HelperServiceProvider{
     {
         //$colfrchksht=ChecksheetSectionWiseColumn::where('section_id','=',$chkshtcolumn)->get()->toArray();
 		 $colfrchksht=ChecksheetColumnStore::where('section_id','=',$chkshtcolumn)->get()->toArray();
-
+            
         /*$columnId = explode(',', $colfrchksht->section_id);
 
         $i=0;
@@ -818,8 +818,8 @@ class UserHelper extends HelperServiceProvider{
         $j=0;
         //foreach($sectionId as $sectionIdArr){
             $section=ChecksheetColumnStore::find($colfrchksht);
-
-           // echo '<pre>';print_r($section);exit;
+            
+           echo '<pre>';print_r($section);exit;
             $columnId = explode(',', $section[0]['column_id']);
 
             if(isset($section)) {
@@ -2011,6 +2011,41 @@ static function predicessorfind($task_id,$dept_id,$project_id)
 
 
         return $dept;
+    }
+
+    static function sectionforcolumnnew($dept_id,$model_id){
+      $dept = ModelWiseCheecksheet::select('model_wise_checksheet.*')
+            ->where('model_id','=',$model_id)
+            ->where('dept_id','=',$dept_id)
+            ->orderBy('id', 'DESC')
+            ->first();
+        if($dept->section_id!=''){
+            $section_id = explode(',', $dept->section_id); 
+        }else{
+            $section_id = array();
+        }
+        if($dept->child_id!=''){
+            $child_id = explode(',', $dept->child_id);
+        }else{
+            $child_id = array();
+        }
+        if($dept->subsection_id!=''){
+            $subsection_id = explode(',', $dept->subsection_id);
+        }else{
+            $subsection_id = array();
+        }   
+        $section = array_unique(array_merge($section_id, $child_id, $subsection_id));
+        $section_id_temp = implode(',', $section);
+        // echo "<pre>";    
+        // print_r($section_id_temp);die();    
+        
+        $section_data = MasterCheckSheetSection::select('gw_master_checksheet_section.*')
+            ->whereIn('id',$section)
+            // ->where('status','=','Active')
+            ->get();
+        // echo "<pre>";    
+        // print_r(sizeof($section_data));die();    
+        return $section_data;      
     }
 	
 	 static function viewstdData()

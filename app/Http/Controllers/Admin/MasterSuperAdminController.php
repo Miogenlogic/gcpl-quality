@@ -3372,6 +3372,100 @@ $dept_id1='';
                 }
             }
         });
-    }}
+    }
+
+    public function sectionselection() 
+    {
+        return view('admin.master.sectionselection');
+    }
+
+    public function fetchsectionselectionGetTable(Request $request)
+    {
+        $table = MasterCustomer::select('*')->get();
+        // print_r($table);die();
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/editcustomer/' . $table->id) . '">Edit</a>
+                                                             </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        // return $datatables->make(true);
+
+        $finalarr = array();
+        
+        $data = array();
+        $data['id'] = 1;
+        $data['name'] = 'Cylinder Block Inspection';
+        $data['parent_section'] = 'Aggregation Information';
+        $data['department'] = 'Engine Disassembly';
+        $data['model_no'] = '3805';
+
+        $data['created_at'] = '2022-04-08 12:38:51';
+
+        $finalarr[] = $data;
+
+        $data = array();
+        $data['id'] = 2;
+        $data['name'] = 'Crankshaft Inspection';
+        $data['parent_section'] = 'Aggregation Information';
+       $data['department'] = 'Engine Disassembly';
+        $data['model_no'] = '3805';
+        $data['created_at'] = '2022-04-08 12:39:51';
+
+        $finalarr[] = $data;
+
+        $data = array();
+        $data['id'] = 3;
+        $data['name'] = 'Connecting Rod Inspection';
+        $data['parent_section'] = 'Aggregation Information';
+        $data['department'] = 'Engine Disassembly';
+        $data['model_no'] = '3805';  
+        $data['created_at'] = '2022-04-08 12:30:51';
+
+        $finalarr[] = $data;
+
+        return json_encode(
+                        array(
+                            'draw'=>1,
+                            'recordsTotal' => sizeof($finalarr),
+                            'recordsFiltered' => sizeof($finalarr),
+                            'data'=>$finalarr
+                            )
+                        );
+
+    }
+
+        public function addsection()
+    {
+        return view('admin.master.addsection');
+
+    }
+
+    public function mastersectionStore(CustomerRequest $request)
+    {
+        $obj = new MasterCustomer();
+         $obj->name = $request['name'];
+        $obj->customer_code = $request['customer_code'];
+        $obj->address = $request['address'];
+        $obj->branch = $request['branch'];
+        $obj->company_code = $request['company_code'];
+        $obj->contact_details = $request['contact_details'];
+        $obj->cust_email = $request['cust_email'];
+
+        $obj->save();
+        return redirect('admin/master-customer');
+    }
+}
 
 
