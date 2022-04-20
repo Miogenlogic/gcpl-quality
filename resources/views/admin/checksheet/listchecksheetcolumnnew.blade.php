@@ -65,6 +65,7 @@
                                     <th scope="col" class="sort" data-sort="number">#</th>
                                     <th scope="col" class="sort" data-sort="name">Department</th>
                                     <th scope="col" class="sort" data-sort="name">Model</th>
+                                    <th scope="col" class="sort" data-sort="name">Section</th>
                                     <th scope="col" class="sort" data-sort="name">Action</th>
                                    {{--<th scope="col" class="sort" data-sort="name">Status</th>--}}
                                     {{--<th scope="col" class="sort" data-sort="name">Created At</th>--}}
@@ -98,7 +99,7 @@
                     {data: 'id', name: 'id',orderable: false, searchable: false},
                     {data: 'Dept', name: 'Dept'},
                     {data: 'Model', name: 'Model'},
-                    //{data: 'roles', name: 'roles'},
+                    {data: 'Section', name: 'Section'},
                     //{data: 'status', name: 'status'},
                     //{data: 'component_name', name: 'component_name'},
                     //{data: 'created_at', name: 'created_at'},

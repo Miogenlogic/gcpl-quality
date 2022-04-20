@@ -48,7 +48,7 @@
 
         <div class="card-body">
             <!-- Form groups used in grid -->
-            <form method="post" action="{{url('admin/checksheetcolumn-add-save')}}" enctype="multipart/form-data">
+            <form method="post" action="{{url('admin/checksheetcolumn-add-save-new')}}" enctype="multipart/form-data">
 
                   <h3>Columns Selection </h3>
 
@@ -136,7 +136,8 @@
                 <!-- /row -->
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <button class="btn btn-primary" type="submit">Submit</button>
-                <button class="btn btn-warning" type="cancel">Cancel</button>
+                <!-- <button class="btn btn-warning" type="cancel">Cancel</button> -->
+                <a class="btn btn-warning" href="{{url('admin/checksheetcolumn-listing-new')}}">Cancel</a>
             </form>
         </div>
     </div>
@@ -167,9 +168,9 @@
             // console.log(columnchksht);
 
             $.ajax({
-                url: '{{ url("/admin/column-section-show") }}',
+                url: '{{ url("/admin/column-section-show-new") }}',
                 type: 'POST',
-                data: {columnchksht:columnchksht,'_token':'{{csrf_token()}}'},
+                data: {edit:0,columnchksht:columnchksht,'_token':'{{csrf_token()}}'},
 
             })
 

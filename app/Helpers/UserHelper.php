@@ -819,7 +819,7 @@ class UserHelper extends HelperServiceProvider{
         //foreach($sectionId as $sectionIdArr){
             $section=ChecksheetColumnStore::find($colfrchksht);
             
-           echo '<pre>';print_r($section);exit;
+           // echo '<pre>';print_r($section);exit;
             $columnId = explode(',', $section[0]['column_id']);
 
             if(isset($section)) {
@@ -2129,6 +2129,69 @@ static function predicessorfind($task_id,$dept_id,$project_id)
         dd($mchserial);*/
 
         return $compse;
+    }
+
+    static function columnforchecksheetnew($chkshtcolumn)
+    {
+        //$colfrchksht=ChecksheetSectionWiseColumn::where('section_id','=',$chkshtcolumn)->get()->toArray();
+         $colfrchksht=ChecksheetColumnStore::where('section_id','=',$chkshtcolumn)->get()->toArray();
+            
+        /*$columnId = explode(',', $colfrchksht->section_id);
+
+        $i=0;
+        foreach($columnId as $columnIdArr){
+            $section=ChecksheetColumn::find($columnIdArr);
+            $column[$i]['column_id']=$section->id;
+            $column[$i]['column_name']=$section->columns;
+
+            $i++;
+        }
+        return $column;*/
+        //$sectionId = explode(',', $colfrchksht->section_id);
+
+       // $i=0;
+        $columnsection = array();
+        $j=0;
+        //foreach($sectionId as $sectionIdArr){
+            $section=ChecksheetColumnStore::find($colfrchksht);
+            
+           // echo '<pre>';print_r($section);exit;
+            
+
+            if(isset($section) && isset($section[0])) {
+                
+                $columnId = explode(',', $section[0]['column_id']);
+
+                foreach ($columnId as $columnIdArr) {
+
+                    $columnfind = ChecksheetColumn::find($columnIdArr);
+                    $columnsection[$j]['column_id'] = $columnfind['id'];
+                    $columnsection[$j]['column_name'] = $columnfind['columns'];
+                    $j++;
+                }
+                //echo '<pre>';print_r($columnsection);exit;
+            }else{
+
+                $allcolumns = ChecksheetColumn::get()->toArray();
+                // echo "<pre>";print_r($allcolumns); exit;
+                $k=0;
+
+                foreach ($allcolumns as $column_one) {
+
+                    $columnsection[$k]['column_id'] = $column_one['id'];
+                    $columnsection[$k]['column_name'] = $column_one['columns'];
+                    $k++;
+                }
+            }
+            //$i++;
+       // }
+
+
+        // echo "<pre>";print_r($columns); exit;
+        return $columnsection;
+
+
+
     }
 
 }

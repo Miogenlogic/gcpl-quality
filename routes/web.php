@@ -859,6 +859,8 @@ Route::group(['prefix' => 'admin'], function(){
         //code optimize component serial
         Route::post('/compserialdropdown-filter', ['uses' =>'ServiceController@compserialDropdownFilter']);
 
+        Route::post('/column-section-show-new', ['uses' => 'MasterController@columnSectionShowNew']);
+
 
 //sap
  Route::get('/sapresponse', ['uses' => 'ServiceController@sapresponse']);
