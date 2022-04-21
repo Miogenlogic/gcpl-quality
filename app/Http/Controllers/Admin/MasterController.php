@@ -2817,5 +2817,18 @@ public function userEdit($id)
         return redirect('admin/checksheetcolumn-listing-new');
     }
 
+    public function GetSectionForColumnNew(Request $request)
+    {
+        $sect=UserHelper::sectionforcolumnnew($request['dept_id'],$request['model_id']);
+        // print_r($sect);die();
+        $section_html = '<option value="">Select Section</option>';
+
+        foreach ($sect as $sect_one) {
+            $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->name.'</option>';            
+        }
+
+        return $section_html;
+    }
+
 
 }

@@ -2019,17 +2019,17 @@ static function predicessorfind($task_id,$dept_id,$project_id)
             ->where('dept_id','=',$dept_id)
             ->orderBy('id', 'DESC')
             ->first();
-        if($dept->section_id!=''){
+        if(@$dept->section_id!=''){
             $section_id = explode(',', $dept->section_id); 
         }else{
             $section_id = array();
         }
-        if($dept->child_id!=''){
+        if(@$dept->child_id!=''){
             $child_id = explode(',', $dept->child_id);
         }else{
             $child_id = array();
         }
-        if($dept->subsection_id!=''){
+        if(@$dept->subsection_id!=''){
             $subsection_id = explode(',', $dept->subsection_id);
         }else{
             $subsection_id = array();

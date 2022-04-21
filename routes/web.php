@@ -886,7 +886,9 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('/checksheetcolumn-get-table-new', ['uses' =>'MasterController@fetchchecksheetcolumnnew']);
    Route::post('/checksheetcolumn-get-table-download-new', ['uses' =>'MasterController@fetchchecksheetcolumnDownloadnew']);
 
-    Route::get('/checksheetcolumn-delete=new/{id}', ['uses' => 'MasterController@checksheetcolumnDeletenew']);    
+    Route::get('/checksheetcolumn-delete=new/{id}', ['uses' => 'MasterController@checksheetcolumnDeletenew']);
+
+    Route::post('/get-section-for-column-new', ['uses' => 'MasterController@GetSectionForColumnNew']);    
 
 
     });

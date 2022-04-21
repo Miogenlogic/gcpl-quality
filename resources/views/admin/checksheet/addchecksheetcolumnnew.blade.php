@@ -56,7 +56,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="id">Department</label>
-                            <select name="dept_id" class="form-control">
+                            <select name="dept_id" id="dept_id" class="form-control">
                                 @php
                                     $dept=App\Helpers\UserHelper::departmentforchecksheet();
                                 @endphp
@@ -74,7 +74,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="id">Model No</label>
-                            <select name="model_id" class="form-control">
+                            <select name="model_id" id="model_id" class="form-control">
                                 @php
                                     $mchmodel=App\Helpers\UserHelper::machinemodelno();
                                 @endphp
@@ -210,6 +210,39 @@
 
 
         });
+    $('#model_id').change(function(event) {
+        var model_id = $('#model_id').val();
+        var dept_id = $('#dept_id').val();
+        $.ajax({
+                url: '{{ url("/admin/get-section-for-column-new") }}',
+                type: 'POST',
+                data: {model_id:model_id,dept_id:dept_id,'_token':'{{csrf_token()}}'},
+
+            }).done(function(response) {
+                console.log(response);
+                // $('.childsection').show();
+
+                $('#section_id').html(response);
+
+                //$('.compserial').show();
+
+                // $('#compserial').html(response);
+
+                //mctype= jQuery.parseJSON(response);
+
+                console.log("success");
+
+            }).fail(function() {
+
+                console.log("error");
+
+            }).always(function() {
+
+                console.log("complete");
+
+            });
+        alert(model_id);
+    });    
     </script>
 
 @endsection
