@@ -147,7 +147,12 @@
 
                             </div>
                         </div>
-
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="section_id" class="form-control-label  originalsection">No of Row / Column</label>
+                                <input type="text" name="no_of_row_column" id="no_of_row_column" class="form-control" value="{{$errors['no_of_row_column']}}">
+                            </div>
+                        </div>
 
 
 

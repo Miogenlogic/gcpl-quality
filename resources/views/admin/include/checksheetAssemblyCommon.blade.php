@@ -283,7 +283,7 @@
                             @if(isset($agrregate->id))
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="customer">Service Request No</label>
+                                        <label class="form-control-label" for="customer">Service Request No 1</label>
                                         <input type="text" name="service_request_id" class="form-control" id="" value="{{$service->service_request_no}}" readonly>
                                     </div>
                                 </div>
@@ -307,7 +307,7 @@
 
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="customer">Serial No.</label>
+                                        <label class="form-control-label" for="customer">Serial 1 No.</label>
                                         <input type="text" class="form-control" name="machine_serialno" id="" value="{{$mcSerial[0]['serial_no']}}" readonly>
 
                                     </div>

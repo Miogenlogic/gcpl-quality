@@ -66,6 +66,7 @@
                                     <th scope="col" class="sort" data-sort="name">Department</th>
                                     <th scope="col" class="sort" data-sort="name">Model</th>
                                     <th scope="col" class="sort" data-sort="name">Section</th>
+                                    <th scope="col" class="sort" data-sort="name">No Of Row/Column</th>
                                     <th scope="col" class="sort" data-sort="name">Action</th>
                                    {{--<th scope="col" class="sort" data-sort="name">Status</th>--}}
                                     {{--<th scope="col" class="sort" data-sort="name">Created At</th>--}}
@@ -100,6 +101,7 @@
                     {data: 'Dept', name: 'Dept'},
                     {data: 'Model', name: 'Model'},
                     {data: 'Section', name: 'Section'},
+                    {data: 'no_of_row_column', name: 'No Of Row/Column'},
                     //{data: 'status', name: 'status'},
                     //{data: 'component_name', name: 'component_name'},
                     //{data: 'created_at', name: 'created_at'},

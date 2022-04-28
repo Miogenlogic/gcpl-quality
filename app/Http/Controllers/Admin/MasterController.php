@@ -2722,6 +2722,8 @@ public function userEdit($id)
         }
 
 
+        $obj1->no_of_row_column = $request['no_of_row_column'];
+        
        //dd($obj1->section_id);
             $obj1->save();
 
@@ -2799,7 +2801,7 @@ public function userEdit($id)
             $obj->column_id = NULL;
         }
 
-
+        $obj1->no_of_row_column = $request['no_of_row_column'];
 
         $obj->save();
 
