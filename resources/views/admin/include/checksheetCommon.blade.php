@@ -2533,12 +2533,23 @@
                                                 <h2 class="mb-0">
                                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                             data-target="#cylinderInspection" aria-expanded="false" aria-controls="cylinderInspection">
-                                                        @foreach($childsec as $dynamicchildname)
+                                                        <?php
+                                                        $child_section_id =7;
+                                                        foreach($childsec as $dynamicchildname)
+                                                        {        
+                                                            if($dynamicchildname['child_id']==1)
+                                                                {
+                                                                    echo $dynamicchildname['child_section'];
+                                                                    $child_section_id = $dynamicchildname['child_id'];
+                                                                }
+                                                        }
 
-                                                            @if($dynamicchildname['child_id']==1)
-                                                                {{$dynamicchildname['child_section']}}
-                                                            @endif
-                                                        @endforeach
+                                                        // $child_section_row_column = App\Models\ChecksheetSectionWiseColumnnew::find(array('child_section_id'=>$child_section_id));
+                                                        $child_section_row_column=App\Models\ChecksheetSectionWiseColumnnew::where('child_section_id','=',$child_section_id)->get()->toArray();
+                                                        $child_section_row_column_value = @$child_section_row_column[0]['no_of_row_column'];
+                                                        // print_r($child_section_row_column[0]['no_of_row_column']);die();    
+                                                        // $child_section_row_column_value = 5;
+                                                        ?>
                                                     </button>
                                                 </h2>
                                             </div>
@@ -2574,13 +2585,20 @@
                                                                 <thead class="thead-light">
                                                                 <tr>
                                                                     <th>Option</th>
-                                                                    <th>1</th>
-                                                                    <th>2</th>
-                                                                    <th>3</th>
-                                                                    <th>4</th>
-                                                                    <th>5</th>
-                                                                    <th>6</th>
-                                                                    <th>7</th>
+                                                                    <?php
+                                                                    for ($i=1; $i <=$child_section_row_column_value ; $i++) { 
+                                                                    ?>
+                                                                    <th><?php echo $i; ?></th>    
+                                                                    <?php
+                                                                    }
+                                                                    ?>
+                                                                    <!-- <th>1</th> -->
+                                                                    <!-- <th>2</th> -->
+                                                                    <!-- <th>3</th> -->
+                                                                    <!-- <th>4</th> -->
+                                                                    <!-- <th>5</th> -->
+                                                                    <!-- <th>6</th> -->
+                                                                    <!-- <th>7</th> -->
                                                                     <th>Remarks</th>
                                                                 </tr>
                                                                 </thead>
@@ -2634,7 +2652,7 @@
 
                                                                             </td>
 
-
+                                                                            <?php if($child_section_row_column_value >= 1){ ?>    
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
@@ -2643,42 +2661,55 @@
                                                                                     <input type="text" placeholder="AA" name="frontA1[{{$i}}]" class="form-control" onkeyup="cylinmainoneview({{$i}})" id="fronta1val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA1[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
+                                                                            <?php if($child_section_row_column_value >= 2){ ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
                                                                                     <input type="text" placeholder="AA" name="frontA2[{{$i}}]" class="form-control" onkeyup="cylinmainsecondview({{$i}})" id="front2val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA2[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
+                                                                            <?php if($child_section_row_column_value >= 3){ ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
                                                                                     <input type="text" placeholder="AA" name="frontA3[{{$i}}]" class="form-control" onkeyup="cylinmainthirdview({{$i}})" id="fronta3val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA3[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
+                                                                            <?php if($child_section_row_column_value >= 4){ ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
                                                                                     <input type="text" placeholder="AA" name="frontA4[{{$i}}]" class="form-control" onkeyup="cylinmainfourview({{$i}})" id="fronta4val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA4[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
+                                                                            <?php if($child_section_row_column_value >= 5){ ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
                                                                                     <input type="text" placeholder="AA" name="frontA5[{{$i}}]" class="form-control" onkeyup="cylinmainfiveview({{$i}})" id="fronta5val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA5[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
+                                                                            <?php if($child_section_row_column_value >= 6){ ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
                                                                                     <input type="text" placeholder="AA" name="frontA6[{{$i}}]" class="form-control" onkeyup="cylinmainsixview({{$i}})" id="fronta6val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA6[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
+                                                                            <?php if($child_section_row_column_value >= 7){ ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 
                                                                                     <input type="text" placeholder="AA" name="frontA7[{{$i}}]" class="form-control" onkeyup="cylinmainsevenview({{$i}})" id="fronta7val{{$i}}" value="@if($showcylinderblock!=Null){{$showcylinderblock->frontA7[$partcylinder]}}@endif">
                                                                                 </div>
                                                                             </td>
+                                                                            <?php } ?>
                                                                             <td>
                                                                                 <div class="form-group mb-0">
 

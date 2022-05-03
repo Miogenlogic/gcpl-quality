@@ -2664,10 +2664,12 @@ public function userEdit($id)
 
     public function fetchchecksheetcolumnnew(Request $request)
     {
-        $table = ChecksheetSectionWiseColumnnew::select('gw_master_section_column_new.*','gw_master_department.name as Dept','gw_master_mc_model.model_no as Model','gw_master_checksheet_section.name as Section')
+        $table = ChecksheetSectionWiseColumnnew::select('gw_master_section_column_new.*','gw_master_department.name as Dept','gw_master_mc_model.model_no as Model','gw_master_checksheet_section.name as Section','checksheet_section_child.child_section as ChildSection','checksheet_subchild_section.sub_child_section as SubChildSection')
             ->leftjoin('gw_master_department','gw_master_department.id','=','gw_master_section_column_new.dept_id')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_section_column_new.model_id')
             ->leftjoin('gw_master_checksheet_section','gw_master_checksheet_section.id','=','gw_master_section_column_new.section_id')
+            ->leftjoin('checksheet_section_child','checksheet_section_child.id','=','gw_master_section_column_new.child_section_id')
+            ->leftjoin('checksheet_subchild_section','checksheet_subchild_section.id','=','gw_master_section_column_new.sub_child_section_id')
             ->get();
 
         $datatables = Datatables::of($table)
@@ -2713,6 +2715,16 @@ public function userEdit($id)
             $obj1->dept_id = $request['dept_id'];
             $obj1->model_id = $request['model_id'];
             $obj1->section_id=$request['section_id'];
+            if($request['child_section_id']==''){
+                $obj1->child_section_id='';
+            }else{
+                $obj1->child_section_id=$request['child_section_id'];
+            }
+            if($request['sub_child_section_id']==''){
+                $obj1->sub_child_section_id='';
+            }else{
+                $obj1->sub_child_section_id=$request['sub_child_section_id'];
+            }
         //dd($obj1->section_id);
         if(!empty($request['columnSection'])){
             $obj1->column_id = implode(',',$request['columnSection']);
@@ -2786,14 +2798,14 @@ public function userEdit($id)
 
     public function checksheetcolumnEditSavenew(Request $request)
     {
-//         $data = $request->input();
-//        dd($data);
+        // $data = $request->input();
+       // dd($request['no_of_row_column']);
 
         $obj = ChecksheetSectionWiseColumnnew::find($request['id']);
         //$obj = new ModelWiseCheecksheet();
-        $obj->dept_id = $request['dept_id'];
-        $obj->model_id = $request['model_id'];
-        $obj->section_id=$request['section_id'];
+        // $obj->dept_id = $request['dept_id'];
+        // $obj->model_id = $request['model_id'];
+        // $obj->section_id=$request['section_id'];
 
         if(!empty($request['columnSection'])){
             $obj->column_id = implode(',',$request['columnSection']);
@@ -2801,7 +2813,7 @@ public function userEdit($id)
             $obj->column_id = NULL;
         }
 
-        $obj1->no_of_row_column = $request['no_of_row_column'];
+        $obj->no_of_row_column = $request['no_of_row_column'];
 
         $obj->save();
 
@@ -2831,6 +2843,33 @@ public function userEdit($id)
 
         return $section_html;
     }
+
+    public function GetChildSectionForColumnNew(Request $request)
+    {
+        $sect=UserHelper::childsectionforcolumnnew($request['dept_id'],$request['model_id']);
+        // print_r($sect);die();
+        $section_html = '<option value="">Select Section</option>';
+
+        foreach ($sect as $sect_one) {
+            $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->child_section.'</option>';            
+        }
+
+        return $section_html;
+    }
+
+
+    public function GetSubChildSectionForColumnNew(Request $request)
+    {
+        $sect=UserHelper::subchildsectionforcolumnnew($request['dept_id'],$request['model_id']);
+        // print_r($sect);die();
+        $section_html = '<option value="">Select Section</option>';
+
+        foreach ($sect as $sect_one) {
+            $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->sub_child_section.'</option>';            
+        }
+
+        return $section_html;
+    }        
 
 
 }
