@@ -8,6 +8,7 @@ use App\Http\Requests\DepartmentRequest;
 use App\Http\Requests\MasterTaskRequest;
 
 use App\Models\ChecksheetSectionWiseColumn;
+use App\Models\ChecksheetSectionWiseColumnnew;
 use App\Models\ChecksheetColumnStore;
 use App\Models\ComponentInspectionReport;
 use App\Models\EngineAssembly;
@@ -22,8 +23,6 @@ use App\Models\User;
 use App\Models\ModelWiseCheecksheet;
 use Illuminate\Http\Request;
 use App\Models\MasterCheckSheetSection;
-use App\Models\ChecksheetChildSection;
-use App\Models\ChecksheetSubChildSection;
 use App\Models\MasterRelationType;
 use App\Models\MasterCheckSheetMapping;
 use App\Models\MasterStdData;
@@ -72,35 +71,35 @@ class MasterController extends Controller
 
     public function checksheetsectionAddSave(Request $request)
     {
-         //$data = $request->input();
-         //dd($data);
+        // $data = $request->input();
+        // dd($data);
         $obj = new ModelWiseCheecksheet();
         $obj->dept_id = $request['dept_id'];
         $obj->model_id = $request['model_id'];
         $obj->section_id=implode(',',$request['section_id']);
 		
-		// $sectionfind3= Str::contains($obj->section_id,'17');
-		//  if($sectionfind3 === false){
-		// 	$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
+		$sectionfind3= Str::contains($obj->section_id,'17');
+		 if($sectionfind3 === false){
+			$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
 
-		// 	if($sectionfind1 === false){
-		// 		$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
-		// 	}
+			if($sectionfind1 === false){
+				$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
+			}
 
-		// 	$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
+			$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
 
-		// 	if($sectionfind2 === false){
-		// 		$obj->section_id = $obj->section_id . ','. '20';
-		// 	}
-		//  }
+			if($sectionfind2 === false){
+				$obj->section_id = $obj->section_id . ','. '20';
+			}
+		 }
         if(!empty($request['childSection'])){
             $obj->child_id = implode(',',$request['childSection']);
         }else {
             $obj->child_id = NULL;
         }
 
-        if(!empty($request['subchildSection'])) {
-            $obj->subsection_id = implode(',', $request['subchildSection']);
+        if(!empty($request['subsection_id'])) {
+            $obj->subsection_id = implode(',', $request['subsection_id']);
         }else {
             $obj->subsection_id = NULL;
         }
@@ -114,15 +113,16 @@ class MasterController extends Controller
     public function checksheetsectionEdit($id) {
 
         $errors = ModelWiseCheecksheet::find($id);
-        //dd($errors);
+
+
         return view('admin.checksheet.editchecksheetsection')
             ->with('errors',$errors);
     }
 
     public function checksheetsectionEditSave(Request $request)
-    {         
-          //$data = $request->input();
-         // dd($data);
+    {
+//         $data = $request->input();
+//        dd($data);
 
         $obj = ModelWiseCheecksheet::find($request['id']);
         //$obj = new ModelWiseCheecksheet();
@@ -130,20 +130,20 @@ class MasterController extends Controller
         $obj->model_id = $request['model_id'];
         $obj->section_id=implode(',',$request['section_id']);
 		
-		// $sectionfind3= Str::contains($obj->section_id,'17');
-		//  if($sectionfind3 === false){
-		// 	$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
+		$sectionfind3= Str::contains($obj->section_id,'17');
+		 if($sectionfind3 === false){
+			$sectionfind1= Str::contains($obj->section_id,'2'); //if pre history(2) exists or not check
 
-		// 	if($sectionfind1 === false){
-		// 		$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
-		// 	}
+			if($sectionfind1 === false){
+				$obj->section_id = $obj->section_id . ','. '2'; // then add id 2
+			}
 
-		// 	$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
+			$sectionfind2= Str::contains($obj->section_id,'20'); //if chkgate1follow(20) exists or not check
 
-		// 	if($sectionfind2 === false){
-		// 		$obj->section_id = $obj->section_id . ','. '20';
-		// 	}
-		//  }
+			if($sectionfind2 === false){
+				$obj->section_id = $obj->section_id . ','. '20';
+			}
+		 }
 
         if(!empty($request['childSection'])){
             $obj->child_id = implode(',',$request['childSection']);
@@ -151,8 +151,8 @@ class MasterController extends Controller
             $obj->child_id = NULL;
         }
 
-        if(!empty($request['subchildSection'])) {
-            $obj->subsection_id = implode(',', $request['subchildSection']);
+        if(!empty($request['subsection_id'])) {
+            $obj->subsection_id = implode(',', $request['subsection_id']);
         }else{
             $obj->subsection_id = NULL;
         }
@@ -380,31 +380,28 @@ class MasterController extends Controller
 //json value show in checksheet section column selection
     public function childSectionShow(Request $request)
     {
-        //dd($request['checkshtchild']);
+
         $childSelection = '';
         // $checkshtchildArr=explode(',',$request['checkshtchild']);
         $i = 0;
-        if (count(array($request['checkshtchild'])) > 0 && $request['checkshtchild'] != null) 
-        {
-            foreach($request['checkshtchild'] as $checkshtchild){
+        foreach($request['checkshtchild'] as $checkshtchild){
+
 
             $compdet = UserHelper::childsectionchecksheet($checkshtchild);
-            //dd($compdet);
 
-                if (!isset($compdet->section_id)) {
 
-                    foreach ($compdet as $key => $value) {
+            if (!isset($compdet->section_id)) {
 
-                        $childSelection .= '<div class="custom-control form-control-lg custom-checkbox childSection">
-                                                <input type="checkbox"  name="childSection[]" value="'.$value['id'].'" class="custom-control-input childSection_1" id="childSection'.$i.'">
-                                                <label class="custom-control-label" for="childSection'.$i.'">'.$value['child_section'].'</label></div>';
-                        $i++;
-                    }
+                foreach ($compdet as $key => $value) {
 
+                    $childSelection .= '<div class="custom-control form-control-lg custom-checkbox childSection">
+                                            <input type="checkbox"  name="childSection[]" value="'.$value['id'].'" class="custom-control-input childSection_1" id="childSection'.$i.'">
+                                            <label class="custom-control-label" for="childSection'.$i.'">'.$value['child_section'].'</label></div>';
+                    $i++;
                 }
+
             }
         }
-        
 
         echo $childSelection;
 
@@ -416,27 +413,26 @@ class MasterController extends Controller
         $subchildSelection = '';
 
         $i = 0;
-        if (count(array($request['subsect'])) > 0 && $request['subsect'] != null){
-            foreach($request['subsect'] as $subsect){
+        foreach($request['subsect'] as $subsect){
 
-             //print_r($subsect);
-                $compdet = UserHelper::subChildsectionchecksheet($subsect);
-                //echo'<pre>';print_r($compdet);exit;
+//print_r($subsect);
+            $compdet = UserHelper::subChildsectionchecksheet($subsect);
+    //echo'<pre>';print_r($compdet);exit;
 
-                if (!isset($compdet->child_id)) {
+            if (!isset($compdet->child_id)) {
 
 
-                    foreach ($compdet as $key => $value) {
+                foreach ($compdet as $key => $value) {
 
-                        $subchildSelection .= '<div class="custom-control form-control-lg custom-checkbox">
-                                                <input type="checkbox"  name="subchildSection[]" value="'.$value['id'].'" class="custom-control-input childSection2" id="subchildSection'.$i.'">
-                                                <label class="custom-control-label" for="subchildSection'.$i.'">'.$value['sub_child_section'].'</label></div>';
-                        $i++;
-                    }
-
+                    $subchildSelection .= '<div class="custom-control form-control-lg custom-checkbox">
+                                            <input type="checkbox"  name="subchildSection[]" value="'.$value['id'].'" class="custom-control-input childSection2" id="subchildSection'.$i.'">
+                                            <label class="custom-control-label" for="subchildSection'.$i.'">'.$value['sub_child_section'].'</label></div>';
+                    $i++;
                 }
+
             }
         }
+
         echo $subchildSelection;
 
 
@@ -459,21 +455,21 @@ class MasterController extends Controller
     {
 
         $columnSelection = '';
-        //print_r($request['columnchksht']);
+        // print_r($request['columnchksht']);
         $checkshtchildArr = $request['columnchksht'];
-
+        // echo "string";die();
         $i = 0;
         // foreach($request['columnchksht'] as $columnchksht){
         foreach($checkshtchildArr as $columnchksht){
             //
-
+            // echo "string1";die();
             // foreach(explode(',', $request->columnchksht) as $columnchksht){
 
             $compdet = UserHelper::columnforchecksheet($columnchksht);
 
-
+            // echo "string";die();
             if (!isset($compdet->section_id)) {
-                //echo "<pre>";print_r($compdet[0]['column_id']);echo "<br>";exit;
+                // echo "<pre>";print_r($compdet[0]['column_id']);echo "<br>";exit;
                 foreach ($compdet as $key => $value) {
 
                     $columnSelection .= '<div class="custom-control form-control-lg custom-checkbox">
@@ -2661,8 +2657,83 @@ public function userEdit($id)
         return redirect('admin/fetch-assembly');
     }
 
+    public function checksheetcolumnlistingnew()
+    {
+        return view('admin.checksheet.listchecksheetcolumnnew');
+    }
 
-    //component engine models
+    public function fetchchecksheetcolumnnew(Request $request)
+    {
+        $table = ChecksheetSectionWiseColumnnew::select('gw_master_section_column_new.*','gw_master_department.name as Dept','gw_master_mc_model.model_no as Model','gw_master_checksheet_section.name as Section')
+            ->leftjoin('gw_master_department','gw_master_department.id','=','gw_master_section_column_new.dept_id')
+            ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_section_column_new.model_id')
+            ->leftjoin('gw_master_checksheet_section','gw_master_checksheet_section.id','=','gw_master_section_column_new.section_id')
+            ->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+
+
+
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/checksheetcolumn-edit-new/' . $table->id) . '">Edit</a>
+                                <a href="' . url('admin/checksheetcolumn-delete-new/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="dropdown-item">Delete</a>
+                                                             </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
+
+    public function checksheetcolumnAddnew()
+    {
+        return view('admin.checksheet.addchecksheetcolumnnew');
+
+
+    }
+
+    public function checksheetcolumnAddSavenew(Request $request)
+    {
+
+    //$data = $request->input();
+
+            // print_r($request);die();
+            //$obj1 = new ChecksheetColumnStore();
+            $obj1 = new ChecksheetSectionWiseColumnnew(); //remove comment and change columnSectionShow function's table name to ChecksheetColumnStore
+
+            $obj1->dept_id = $request['dept_id'];
+            $obj1->model_id = $request['model_id'];
+            $obj1->section_id=$request['section_id'];
+        //dd($obj1->section_id);
+        if(!empty($request['columnSection'])){
+            $obj1->column_id = implode(',',$request['columnSection']);
+        }
+        else{
+            $obj1->column_id = Null;
+        }
+
+
+        $obj1->no_of_row_column = $request['no_of_row_column'];
+        
+       //dd($obj1->section_id);
+            $obj1->save();
+
+
+
+        return redirect('admin/checksheetcolumn-listing-new');
+
+    }
+
+        //component engine models
 
     public function componentModelsAdd()
     {
@@ -2957,4 +3028,105 @@ public function userEdit($id)
 
         return $datatables->make(true);
     }
+
+    public function columnSectionShowNew(Request $request)
+    {
+
+        $columnSelection = '';
+        // print_r($request['columnchksht']);
+        $checkshtchildArr = $request['columnchksht'];
+        // echo "string";die();
+        $i = 0;
+        // foreach($request['columnchksht'] as $columnchksht){
+        foreach($checkshtchildArr as $columnchksht){
+            //
+            // echo "string1";die();
+            // foreach(explode(',', $request->columnchksht) as $columnchksht){
+
+            $compdet = UserHelper::columnforchecksheetnew($columnchksht);
+
+            // print_r($compdet);die();
+            // echo "string";die();
+            if (!isset($compdet->section_id)) {
+                // echo "<pre>";print_r($compdet[0]['column_id']);echo "<br>";exit;
+                foreach ($compdet as $key => $value) {
+
+                    $columnSelection .= '<div class="custom-control form-control-lg custom-checkbox">
+                                            <input type="checkbox"  name="columnSection[]" value="'.$value['column_id'].'" class="custom-control-input mainsection" id="columnSection'.$i.'">
+                                            
+                                            <label class="custom-control-label" for="columnSection'.$i.'">'.$value['column_name'].'</label></div>';
+
+                    $i++;
+
+
+                }
+
+            }
+        }
+
+
+
+
+        echo $columnSelection ;
+
+    }
+
+    public function checksheetcolumnEditnew($id) {
+
+        $errors = ChecksheetSectionWiseColumnnew::find($id);
+
+
+        return view('admin.checksheet.editchecksheetcolumnnew')
+            ->with('errors',$errors);
+    }
+
+    public function checksheetcolumnEditSavenew(Request $request)
+    {
+//         $data = $request->input();
+//        dd($data);
+
+        $obj = ChecksheetSectionWiseColumnnew::find($request['id']);
+        //$obj = new ModelWiseCheecksheet();
+        $obj->dept_id = $request['dept_id'];
+        $obj->model_id = $request['model_id'];
+        $obj->section_id=$request['section_id'];
+
+        if(!empty($request['columnSection'])){
+            $obj->column_id = implode(',',$request['columnSection']);
+        }else {
+            $obj->column_id = NULL;
+        }
+
+        $obj1->no_of_row_column = $request['no_of_row_column'];
+
+        $obj->save();
+
+        return redirect('admin/checksheetcolumn-listing-new');
+
+    }
+
+    public function checksheetcolumnDeletenew($user_id)
+    {
+        $blog = ChecksheetSectionWiseColumnnew::find($user_id);
+
+
+        $blog->delete();
+
+        return redirect('admin/checksheetcolumn-listing-new');
+    }
+
+    public function GetSectionForColumnNew(Request $request)
+    {
+        $sect=UserHelper::sectionforcolumnnew($request['dept_id'],$request['model_id']);
+        // print_r($sect);die();
+        $section_html = '<option value="">Select Section</option>';
+
+        foreach ($sect as $sect_one) {
+            $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->name.'</option>';            
+        }
+
+        return $section_html;
+    }
+
+
 }

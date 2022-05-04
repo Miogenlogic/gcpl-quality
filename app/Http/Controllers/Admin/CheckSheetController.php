@@ -173,7 +173,7 @@ class CheckSheetController extends Controller
             //->setBackgroundColor(Color::YELLOW)
             ->build();
         //$path = '/home/vhruqiyfkeq2/public_html/gcpl-quality/ComponentStatusFacility.xlsx';
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/EngineDissList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/EngineDissList.xlsx';
        // $path = "{{URL::asset('public/assets/download/ComponentStatusFacility.xlsx')}}";
 
 
@@ -197,12 +197,12 @@ class CheckSheetController extends Controller
     public function engineDissgetTable(Request $request)
     {
 
-        $data = Session::all();
-        $dept_id=$data['user']['section_id'];
+    $data = Session::all();
+    $dept_id=$data['user']['section_id'];
         $location=$data['user']['location_id'];
          $emp_code=$data['user']['emp_code'];
-
-        if (request()->session()->get('user')['section_id'] == '4' || request()->session()->get('user')['section_id'] == '25') {
+        dd($data);
+        if (request()->session()->get('user')['section_id'] == '4') {
 
             if (request()->session()->get('user')['role_id'] == '2'){
                 $table = Service::select('service_request.*','checksheet_status.disassembly_status')
@@ -289,7 +289,7 @@ class CheckSheetController extends Controller
                                             </div>
                                         </div>';
                 }*/
-                if (request()->session()->get('user')['section_id'] == '4' || request()->session()->get('user')['section_id'] == '25') {
+                if (request()->session()->get('user')['section_id'] == '4') {
 
                     if (request()->session()->get('user')['role_id'] == '2'){
 
@@ -385,7 +385,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/EngineAssList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/EngineAssList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -411,7 +411,7 @@ class CheckSheetController extends Controller
        $dept_id=$data['user']['section_id'];
         $location=$data['user']['location_id'];
          $emp_code=$data['user']['emp_code'];
-        if (request()->session()->get('user')['section_id'] == '10' || request()->session()->get('user')['section_id'] == '26') {
+        if (request()->session()->get('user')['section_id'] == '10') {
 
             if (request()->session()->get('user')['role_id'] == '2'){
                  $table = Service::select('service_request.*','checksheet_status.assembly_status')
@@ -457,7 +457,7 @@ class CheckSheetController extends Controller
 
             ->addColumn('action', function ($table) {
 
-                if (request()->session()->get('user')['section_id'] == '10' || request()->session()->get('user')['section_id'] == '26') {
+                if (request()->session()->get('user')['section_id'] == '10') {
 
                     if (request()->session()->get('user')['role_id'] == '2'){
 
@@ -552,7 +552,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/TransDissList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/TransDissList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -708,7 +708,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/TransAssList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/TransAssList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -869,7 +869,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/HydDisAssList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/HydDisAssList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -1027,7 +1027,7 @@ class CheckSheetController extends Controller
        $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/HydAssList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/HydAssList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -1178,7 +1178,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/MorDissList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/MorDissList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -1339,11 +1339,12 @@ class CheckSheetController extends Controller
         $service_request_no = isset($obj['service_request_no']) ? $obj['service_request_no'] : '';
         $work_orderno =  isset($obj['work_orderno']) ? $obj['work_orderno'] : '';
 
-
         $morassign_dept1 = implode(',',$request['department']);
         if($dept_id == '6') {
             $obj->chkonedept =$morassign_dept1 . ',' . '6';
         }
+
+        
 
         $obj->mor_date  = Carbon::createFromFormat('d/m/Y', $request['mor_date'])->format('Y-m-d');
         // $obj->mor_date  =date("Y-m-d");
@@ -1398,6 +1399,8 @@ class CheckSheetController extends Controller
              
                 //send Notification
 
+                
+
                 if(!empty($request['department'])){
                     foreach ($request['department'] as $empcode) {
                         $mail = UserHelper::assigndept($empcode);
@@ -1410,6 +1413,8 @@ class CheckSheetController extends Controller
                         //$notification = UserHelper::mailnotification($to_email, $subject, $message);
                     }
                 }
+
+
                 //exit;
             }
 
@@ -2232,7 +2237,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/MorAssList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/MorAssList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -2383,7 +2388,7 @@ class CheckSheetController extends Controller
          $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/UndercargDissList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/UndercargDissList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -2543,7 +2548,7 @@ class CheckSheetController extends Controller
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/UndercargAssList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/UndercargAssList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -2694,7 +2699,7 @@ class CheckSheetController extends Controller
          $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
-        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/StoreList.xlsx';
+        $path = 'D:/GWApps/gcpl-quality/template files/StoreList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
             return [
@@ -6559,37 +6564,6 @@ class CheckSheetController extends Controller
 
     }
 
-    public function checkSheetAssemblyUsedpart($id){
-
-       
-
-        $data = Session::all();
-
-        $dept_id=$data['user']['section_id'];
-        $route_check =  request()->segment(2);
-
-        $service = Service::find($id);
-
-         $empCode =  isset($data['user']['emp_code']) ? $data['user']['emp_code'] : '';
-         $username =  isset($data['user']['username']) ? $data['user']['username'] : '';
-         
-        $getinsertVal = AssemblyChecksheetPermission::where('emp_code','=',$empCode)
-                        ->where('service_request_id','=',$service->id)
-                        ->get()->toArray();
-
-        if(isset($getinsertVal[0]['cc_value'])) 
-        $myData =  json_decode($getinsertVal[0]['cc_value'])->checkval;
-        else
-        $myData = array();
-
-        return view('admin.include.checksheetUsedpart')
-                ->with('service',$service) ;
-
-
-
-
-    }
-
 
     public function checkSheetAssemblyCommon($id)
     {
@@ -7790,7 +7764,7 @@ class CheckSheetController extends Controller
             }else{
                 $rearresyes=Null;
             }
-            if(isset($showcylinderblock->rearresults)) {
+            if(isset($showcylinderblock->rearresults) && isset($showcylinderblock->mainrearremarks)) {
                 $rearremaryes = json_decode(json_encode($showcylinderblock->mainrearremarks), true);
             }else{
                 $rearremaryes=Null;
@@ -13539,15 +13513,19 @@ $sec=8;
                 $failedpart->dept_id = $dept_id;
                 $failedpart->disassembly_status = isset($request['disassembly_status']) ? '1':null;
                 $failedpart->assembly_status = isset($request['assembly_status']) ? '1':null;
-
-                $failedpart->idler_no = $request['idler_no'][$key];
-                $failedpart->specification = $request['specification'][$key];
+				if(!empty($request['idler_no']))
+					$failedpart->idler_no = $request['idler_no'][$key];
+				if (!empty($request['specification']))
+                   $failedpart->specification = $request['specification'][$key];
                 $failedpart->description = $txt;
                  $failedpart->radio =  empty($request['radioclear'][$key]) ? $request['radioclrview'][$key]:$request['radioclear'][$key];
                 $failedpart->radio = empty($request['radioclrview'][$key]) ? $request['radioclear'][$key]:$request['radioclrview'][$key];
                // $failedpart->specification = $request['specification'][$key];
-                $failedpart->measured = $request['measured'][$key];
-                $failedpart->remarks = $request['remarks'][$key];
+			    if(!empty($request['measured']))
+                   $failedpart->measured = $request['measured'][$key];
+			    if(!empty($request['remarks']))
+				   $failedpart->remarks = $request['remarks'][$key];
+			
                 $failedpart->actual_start_date = Carbon::createFromFormat('d/m/Y', $request['actual_start_date'])->format('Y-m-d');
                 $failedpart->actual_end_date = Carbon::createFromFormat('d/m/Y', $request['actual_end_date'])->format('Y-m-d');
                 //$failedpart->actual_end_date = date("Y-m-d");
@@ -15668,7 +15646,14 @@ $sec=8;
                         ->get()->toArray();   
                         
                     
+
+          
+
+
         
+
+                 
+
                         //print_r(json_decode($getinsertVal[0]['cc_value'])->actval);
                         //die;
 
@@ -15750,11 +15735,10 @@ $sec=8;
 
             foreach ($engineassemblyreport['actval'] as $key => $value) {
 
-            if( $value !='')
-                $engineassemblyreport['username'][$key]=$username;
-            else
-                $engineassemblyreport['username'][$key]='';
-
+                if( $value !='')
+                    $engineassemblyreport['username'][$key]=$username;
+                else
+                    $engineassemblyreport['username'][$key]='';
 
             }
 
@@ -15835,6 +15819,7 @@ $sec=8;
             }
 
         }
+
 
 
         if(isset($service->id)) {
@@ -16878,7 +16863,6 @@ $sec=8;
         $objPHPExcel->getActiveSheet()->setCellValue('D1', 'ISO Document Number');
         $objPHPExcel->getActiveSheet()->setCellValue('E1', 'Date of arrival');
         $objPHPExcel->getActiveSheet()->setCellValue('F1', 'Date of dispatch');
-         $objPHPExcel->getActiveSheet()->setCellValue('G1', 'Emp Name');
         //$objPHPExcel->getActiveSheet()->setCellValue('G1', 'Actual Start Date');
         $i=2;
         foreach ($aggregate as $key=> $row){
@@ -16889,7 +16873,6 @@ $sec=8;
             $macsmu=$row['machine_smu'];
             $compsmu=$row['component_smu'];
             $iso=$row['iso_doc_no'];
-            $emp_responsible = $row['emp_responsible'];
             $datearrivl=Carbon::parse($row['date_arrival'])->format('d/m/Y');
             $datedispact=Carbon::parse($row['date_dispatch'])->format('d/m/Y');
             //$actualdt=$row['actual_start_date'];
@@ -16899,7 +16882,7 @@ $sec=8;
              $objPHPExcel->getActiveSheet()->setCellValue("D$i",$iso);
              $objPHPExcel->getActiveSheet()->setCellValue("E$i",$datearrivl);
              $objPHPExcel->getActiveSheet()->setCellValue("F$i",$datedispact);
-             $objPHPExcel->getActiveSheet()->setCellValue("G$i",$emp_responsible);
+             //$objPHPExcel->getActiveSheet()->setCellValue("G$i",$actualdt);
 
 
           $i++;
@@ -20523,7 +20506,8 @@ $sec=8;
         $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Description');
         $objPHPExcel->getActiveSheet()->setCellValue('B1', 'Specification');
         $objPHPExcel->getActiveSheet()->setCellValue('C1', 'Actual Value');
-        $objPHPExcel->getActiveSheet()->setCellValue('D1', 'Technician');
+         $objPHPExcel->getActiveSheet()->setCellValue('D1', 'Technician');
+
 
         $i=2;
         $ass=0;
@@ -20543,10 +20527,12 @@ $sec=8;
                 $front2 = $engassemb->actval[$ass];
                 $front3 = $engassemb->username[$ass];
 
+
                 $objPHPExcel->getActiveSheet()->setCellValue("A$i", $frontradio);
                 $objPHPExcel->getActiveSheet()->setCellValue("B$i", $front1);
                 $objPHPExcel->getActiveSheet()->setCellValue("C$i", $front2);
-                 $objPHPExcel->getActiveSheet()->setCellValue("D$i", $front3);
+                $objPHPExcel->getActiveSheet()->setCellValue("D$i", $front3);
+
 
 
 

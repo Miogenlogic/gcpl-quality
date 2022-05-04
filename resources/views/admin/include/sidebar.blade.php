@@ -121,6 +121,9 @@
 									<li class="nav-item">
                                         <a href="{{url('admin/checksheetcolumn-listing')}}" class="nav-link {{((Request::is('admin/fetch-othercomponent')) || (Request::is('admin/fetch-othercomponent')) )?'active':''}}">Checksheet Column Details</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="{{url('admin/checksheetcolumn-listing-new')}}" class="nav-link {{((Request::is('admin/fetch-othercomponent')) || (Request::is('admin/fetch-othercomponent')) )?'active':''}}">Checksheet Column Details New</a>
+                                    </li>
 									<li class="nav-item">
                                         <a href="{{url('admin/stddata-listing')}}" class="nav-link {{((Request::is('admin/fetch-othercomponent')) || (Request::is('admin/fetch-othercomponent')) )?'active':''}}">Standard Data Details</a>
                                     </li>

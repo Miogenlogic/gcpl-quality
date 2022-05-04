@@ -164,27 +164,20 @@ class UserHelper extends HelperServiceProvider{
 
     static function role()
     {
-        $role=Role::where('name','!=','super_admin')->get();
-
-        return $role;
+        return Role::where('name','!=','super_admin')->get();
     }
     static function checkgate()
     {
-        $checkgate=MasterCheckGate::get();
-
-        return $checkgate;
+        return MasterCheckGate::get();
     }
     static function checkgatejobtype()
     {
-        $checkjob=MasterJobType::select('*')->where('status','=','Active')->get();
-
-        return $checkjob;
+        return MasterJobType::select('*')->where('status','=','Active')->get();
     }
 
     static function customer()
     {
-        $custom = MasterCustomer::get();
-        return $custom;
+        return MasterCustomer::get();
     }
     static function componentserialno()
     {
@@ -195,8 +188,7 @@ class UserHelper extends HelperServiceProvider{
 
     static function componenttype()
     {
-        $comptype = MasterComponentType::get();
-        return $comptype;
+        return MasterComponentType::get();
     }
 
     static function componentmodelno()
@@ -208,117 +200,84 @@ class UserHelper extends HelperServiceProvider{
     }
     static function getComponentModelNoById($id)
     {
-        $compmodel=MasterComponentModelNo::find($id);
-        return $compmodel;
+        return MasterComponentModelNo::find($id);
     }
     
     
     static function bis()
     {
-        $bischeck=BisQuestion::get();
-
-        return $bischeck;
+        return BisQuestion::get();
     }
     
     static function departmentname()
 	  {
-      $deptname=MasterDepartment::select('*')->get();
-	  
-	  return $deptname;
+      return MasterDepartment::select('*')->get();
 	  }
 
     static function branchname()
     {
-        $branchnme=MasterBranch::get();
-
-        return $branchnme;
+        return MasterBranch::get();
     }
 
     static function segment()
     {
-        $segment=MasterSegment::get();
-
-        return $segment;
+        return MasterSegment::get();
     }
 
 
 //time sheet
     static function serviceRequestNo()
     {
-        $serviceRequestNo=Service::get();
-
-        return $serviceRequestNo;
+        return Service::get();
     }
 
     static function workOrderNo()
     {
-        $workOrderNo=Service::select('*')
+        return Service::select('*')
             ->where('work_orderno','!=',Null)->get();
-
-        return $workOrderNo;
     }
     static function projects()
     {
-        $projects=ProjectPlanMaster::select('*')->get();
-
-        return $projects;
+        return ProjectPlanMaster::select('*')->get();
     }
 
     static function tasks()
     {
-        $tasks=MasterTask::select('*')->get();
-
-        return $tasks;
+        return MasterTask::select('*')->get();
     }
     static function checkgatequestion()
     {
-        $question=MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','1')->get();
-
-        return $question;
+        return MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','1')->get();
     }
     static function checkgatequestiontwo()
     {
-        $checktwoquestion=MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','2')->get();
-
-        return $checktwoquestion;
+        return MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','2')->get();
     }
     static function checkgatequestionthree()
     {
-        $checkthreequestion=MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','3')->get();
-
-        return $checkthreequestion;
+        return MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','3')->get();
     }
     static function checkgatequestionfour()
     {
-        $checkfourquestion=MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','4')->get();
-
-        return $checkfourquestion;
+        return MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','4')->get();
     }
 
     static function checkgateonefollowby()
     {
-        $checkgateonefollow=MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','5')->get();
-
-        return $checkgateonefollow;
+        return MasterCheckGateInspectionQuestion::select('*')->where('check_gate_id','=','5')->get();
     }
     static function servicerequest()
     {
-        $servicereq=Service::get();
-
-        return $servicereq;
+        return Service::get();
     }
 
     static function arrangementno()
     {
-        $arrno=MasterComponentArrangementNo::get();
-
-        return $arrno;
+        return MasterComponentArrangementNo::get();
     }
     static function machinemodelno()
     {
-        $mchmodel=MasterMCModel::get();
-
-        return $mchmodel;
+        return MasterMCModel::get();
     }
     static function mastermachineserialno()
     {
@@ -329,181 +288,136 @@ class UserHelper extends HelperServiceProvider{
 
     static function machineserialno($model_no)
     {
-        $mchserial=MasterMCSerialNumber::where('mc_model_id','=',$model_no)->get();
-        return $mchserial;
+        return MasterMCSerialNumber::where('mc_model_id','=',$model_no)->get();
     }
     static function getmachineserialnoById($id)
     {
-        $mchserial=MasterMCModel::find($id);
-        return $mchserial;
+        return MasterMCModel::find($id);
     }
     static function getmodelnoById($id)
     {
-        $mchmodel=MasterComponentDetails::find($id);
-        return $mchmodel;
+        return MasterComponentDetails::find($id);
     }
 
 
     static function componentdetails($comserial)
     {
-        $compdet=MasterComponentDetails::where('mc_model_id','=',$comserial)->get();
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         //dd($mchserial);*/
-        return $compdet;
+        return MasterComponentDetails::where('mc_model_id','=',$comserial)->get();
     }
 
     static function componentserial($serialcomp)
     {
-        $compse=MasterComponentDetails::where('mc_model_id','=',$serialcomp)->get();
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         //dd($mchserial);*/
-        return $compse;
+        return MasterComponentDetails::where('mc_model_id','=',$serialcomp)->get();
     }
 
 
 
     static function ccinspexternalwash()
     {
-        $exterwash=CcInspectionAfterExternalwashDis::get();
-
-        return $exterwash;
+        return CcInspectionAfterExternalwashDis::get();
     }
     static function commertciallogistic()
     {
-        $commercial=MasterCommercialLogisticDetails::get();
-
-        return $commercial;
+        return MasterCommercialLogisticDetails::get();
     }
     static function ccpartclean()
     {
-        $ccpartclean=CcInspectionAfterPartCleaningDis::get();
-
-        return $ccpartclean;
+        return CcInspectionAfterPartCleaningDis::get();
     }
 
     static function partinspectioncylinderhead()
     {
-        $cylinderhead=MasterPartinspectionCylinderHeadDetails::get();
-
-        return $cylinderhead;
+        return MasterPartinspectionCylinderHeadDetails::get();
     }
 
      static function partothercompbasicengine($dept_id,$model_id)
     {
-        $basicengine=MasterPartOthercomponentBasicEngine::where('dept_id','=',$dept_id)->where('model_id','=',$model_id)->get();
-
-        return $basicengine;
+        return MasterPartOthercomponentBasicEngine::where('dept_id','=',$dept_id)->where('model_id','=',$model_id)->get();
     }
     static function partothercomplubrication()
     {
-        $lubri=MasterPartOthercomponentLubricationSystem::get();
-
-        return $lubri;
+        return MasterPartOthercomponentLubricationSystem::get();
     }
     static function partothercompcooler()
     {
-        $cooler=MasterPartOthercomponentCoolingSystem::get();
-
-        return $cooler;
+        return MasterPartOthercomponentCoolingSystem::get();
     }
     static function partothercompfuel()
     {
-        $fuel=MasterPartOthercomponentFuelSystem::get();
-
-        return $fuel;
+        return MasterPartOthercomponentFuelSystem::get();
     }
     static function partconnectingrod()
     {
-        $conrod=MasterPartConnectingRodDetails::get();
-
-        return $conrod;
+        return MasterPartConnectingRodDetails::get();
     }
     static function partcylinderhead()
     {
-        $cylinhed=MasterPartCylinderHeadDetails::get();
-
-        return $cylinhed;
+        return MasterPartCylinderHeadDetails::get();
     }
 
     static function partcrankshaft()
     {
 
-        $camshaft=MasterPartCrankshaftDetails::get();
-
-        return $camshaft;
+        return MasterPartCrankshaftDetails::get();
     }
     static function partcamshaftdetails()
     {
-        $cmsftdetails=MasterPartCamshaftDetails::get();
-
-        return $cmsftdetails;
+        return MasterPartCamshaftDetails::get();
     }
     //cylinder block top deck
     static function partcylinderTop()
     {
-        $cylindertop=MasterPartCylinderBlockTopDeckDetails::get();
-
-        return $cylindertop;
+        return MasterPartCylinderBlockTopDeckDetails::get();
     }
 
 //cylinder block top deck
     static function partcylinderThread()
     {
-        $cylinderthred=MasterPartCylinderBlockThreadDetails::get();
-
-        return $cylinderthred;
+        return MasterPartCylinderBlockThreadDetails::get();
     }
 //cylinder block cap clear
     static function partcylinderCapClear()
     {
-        $cylindercapclr=MasterPartCylinderBlockCapNODetails::get();
-
-        return $cylindercapclr;
+        return MasterPartCylinderBlockCapNODetails::get();
     }
 
 
     static function partcamshaftbushbore()
     {
-        $bushbore=MasterPartCamshaftBushboreDetails::get();
-
-        return $bushbore;
+        return MasterPartCamshaftBushboreDetails::get();
     }
     static function roles()
 
     {
-        $roles=Masterrole::get();
-
-        return $roles;
+        return Masterrole::get();
     }
     static function menus()
     {
-        $menus = Menu::get();
-
-
-        return $menus;
+        return Menu::get();
     }
 
     static function menuaccess()
     {
-        $menuaccess=Menuaccess::get();
-        return $menuaccess;
+        return Menuaccess::get();
     }
     static function checkmenu()
     {
-        $checkmenu=Menu::select('*');
-        return $checkmenu;
+        return Menu::select('*');
     }
 
     static function machinemodeltask()
     {
-        $machinemodeltask=MasterTask::get();
-        return $machinemodeltask;
+        return MasterTask::get();
 
 
 
@@ -512,45 +426,38 @@ class UserHelper extends HelperServiceProvider{
 
     static function section()
     {
-        $section=MasterSection::get();
-        return $section;
+        return MasterSection::get();
     }
     static function beforestartassembly()
     {
-        $beforestart=InspectionBeforeStartAssembly::get();
-        return $beforestart;
+        return InspectionBeforeStartAssembly::get();
     }
 
      static function ComponentInspectionReport($dept_id,$model_id)
     {
-        $cominspreport=ComponentInspectionReport::where('dept_id','=',$dept_id)->where('model_id','=',$model_id)->get();
-        return $cominspreport;
+        return ComponentInspectionReport::where('dept_id','=',$dept_id)->where('model_id','=',$model_id)->get();
     }
 
     static function designation()
     {
-        $designation=MasterDesignation::get();
-        return $designation;
+        return MasterDesignation::get();
     }
 
     static function jobrole()
     {
-        $jobrole=Role::get();
         //dd($jobrole);exit;
-        return $jobrole;
+        return Role::get();
     }
 
     //url encode
     static function urlEncode($str)
     {
-        $encrypted = Crypt::encryptString($str);
-        return $encrypted;
+        return Crypt::encryptString($str);
     }
     //url decode
     static function urlDecode($str)
     {
-        $decrypted = Crypt::decryptString($str);
-        return $decrypted;
+        return Crypt::decryptString($str);
     }
 
 
@@ -564,23 +471,20 @@ class UserHelper extends HelperServiceProvider{
 
     static function designation1()
     {
-        $masterdesignation=MasterDesignation::get();
-        return $masterdesignation;
+        return MasterDesignation::get();
 
     }
     //transmission
     static function TransmissionComponent($dept_id,$model_id)
     {
-        $transmiss=TransmissionComponentDetails::where('dept_id','=',$dept_id)->where('model_id','=',$model_id)
+        return TransmissionComponentDetails::where('dept_id','=',$dept_id)->where('model_id','=',$model_id)
 		->get();
-        return $transmiss;
     }
 
     //rooler measured
     static function RoolerMeasued()
     {
-        $roolermea=RoolerMeasuredDetails::get();
-        return $roolermea;
+        return RoolerMeasuredDetails::get();
     }
 
 
@@ -607,20 +511,17 @@ class UserHelper extends HelperServiceProvider{
 
     static function dropdownpartnumber()
     {
-        $partno=MasterComponentDetails::  get();
-            //select('id','comp_serial_no')
+        //select('id','comp_serial_no')
             //->groupby('comp_serial_no')
 
 
-        return $partno;
+        return MasterComponentDetails::  get();
     }
 
 
     static function dropdownpartnumber_1()
     {
-        $partno=MasterComponentDetails::get();
-
-        return $partno;
+        return MasterComponentDetails::get();
     }
 
 
@@ -632,8 +533,10 @@ class UserHelper extends HelperServiceProvider{
         $subj = $subj;
 
         //$msg = view('admin.mail.checkgateOneNotificationMail', ['url'=>$url])->render();
-        $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $headers  = 'MIME-Version: 1.0
+';
+        $headers .= 'Content-type: text/html; charset=iso-8859-1
+';
         $headers .= 'From:' . \Config::get('env.service_mail')."\r\n";
         mail($to, $subj, $msg, $headers);
 
@@ -641,132 +544,89 @@ class UserHelper extends HelperServiceProvider{
 
     static function checkmenulisting()
     {
-        $checkmenu=Menuaccess::select('*')->get();
-
-
-        return $checkmenu;
+        return Menuaccess::select('*')->get();
     }
 
     //parts cooler inspection
     static function coolerinsp()
     {
-        $cooler=MasterCoolerInspection::select('*')->get();
-
-        return $cooler;
+        return MasterCoolerInspection::select('*')->get();
     }
     static function pdichecksheet()
     {
-        $pdienginevisual=PdiChecksheetDetails::select('*')->get();
-
-        return $pdienginevisual;
+        return PdiChecksheetDetails::select('*')->get();
     }
 
     static function pdichecksheetengineassy()
     {
-        $pdienginevisual=PdiChecksheetEngineAssy::select('*')->get();
-
-        return $pdienginevisual;
+        return PdiChecksheetEngineAssy::select('*')->get();
     }
 
     static function pdichecksheettransmissionassy()
     {
-        $pdienginevisual=PdiChecksheetTransmissionAssy::select('*')->get();
-
-        return $pdienginevisual;
+        return PdiChecksheetTransmissionAssy::select('*')->get();
     }
 
     static function departmentforchecksheet()
     {
-        $dept=MasterDepartment::get();
-
-
-        return $dept;
+        return MasterDepartment::get();
     }
     static function sectionforchecksheet()
     {
-        $sect=MasterCheckSheetSection::get();
-
-
-        return $sect;
+        return MasterCheckSheetSection::get();
     }
     static function childsectionforchecksheet()
     {
-        $ch_sect=ChecksheetChildSection::get();
-
-        return $ch_sect;
+        return ChecksheetChildSection::get();
     }
     static function subchildsectionforchecksheet()
     {
-        $sub_ch_sect=ChecksheetSubChildSection::get();
-
-
-        return $sub_ch_sect;
+        return ChecksheetSubChildSection::get();
     }
     //fan drive
     static function partsfandrive()
     {
-        $fandri=MasterPartFanDriveDetails::get();
-
-
-        return $fandri;
+        return MasterPartFanDriveDetails::get();
     }
     //oil pump
     static function partsoilpump()
     {
-        $oilpump=MasterPartOilPumpDetails::get();
-
-
-        return $oilpump;
+        return MasterPartOilPumpDetails::get();
     }
 
     //Master Location
     static function location()
     {
-        $location=MasterLocation::get();
-
-
-        return $location;
+        return MasterLocation::get();
     }
 
     //air compressor
     static function partaircompressor()
     {
-        $aircompressor=MasterPartAirCompressorDetails::get();
-
-
-        return $aircompressor;
+        return MasterPartAirCompressorDetails::get();
     }
     //water pump
     static function partwaterpump()
     {
-        $waterpump=MasterPartWaterPumpDetails::get();
-
-
-        return $waterpump;
+        return MasterPartWaterPumpDetails::get();
     }
     //Con Rod After Bush Replacement
     static function conrodbushreplacemnt()
     {
-        $conrodbush=MasterConRodBushReplacementDetails::get();
-
-
-        return $conrodbush;
+        return MasterConRodBushReplacementDetails::get();
     }
 
 
     static function childsectionchecksheet($child)
     {
-        $childsection=ChecksheetChildSection::where('section_id','=',$child)->get();
-
         //dd($childsection);
-        return $childsection;
+        return ChecksheetChildSection::where('section_id','=',$child)->get();
     }
     static function subChildsectionchecksheet($subchild)
     {
-        $subchildsection=ChecksheetSubChildSection::where('child_id','=',$subchild)->get();
         //echo '<pre>';print_r($subchildsection);exit;
         //dd($childsection);
-        return $subchildsection;
+        return ChecksheetSubChildSection::where('child_id','=',$subchild)->get();
     }
     
    static function subchildpopulate ()
@@ -787,16 +647,14 @@ class UserHelper extends HelperServiceProvider{
 
     static function childpopulate ()
     {
-        $subchildsecnew=ChecksheetChildSection::get();
         //echo '<pre>';print_r($subchilddemo);exit;
         //dd($childsection);
-        return $subchildsecnew;
+        return ChecksheetChildSection::get();
     }
 	
 	 static function columnpopulate ()
     {
-        $subchildsecnew = ChecksheetColumn::get();
-//        where(function ($query) {
+        //        where(function ($query) {
 //            $query->where('child_id', '1')
 //                ->orWhere('child_id', '3')
 //                ->orWhere('child_id', '19')
@@ -805,7 +663,7 @@ class UserHelper extends HelperServiceProvider{
 
         //echo '<pre>';print_r($subchilddemo);exit;
         //dd($childsection);
-        return $subchildsecnew;
+        return ChecksheetColumn::get();
     }
 
     static function columnforchecksheet($chkshtcolumn)
@@ -857,20 +715,18 @@ class UserHelper extends HelperServiceProvider{
     }
     static function sectionname($secti){
 
-        $sec=MasterCheckSheetSection::select('gw_master_checksheet_section.name as secname')
+        //dd($sec);
+        return MasterCheckSheetSection::select('gw_master_checksheet_section.name as secname')
             ->leftjoin('model_wise_checksheet', 'model_wise_checksheet.section_id', '=', 'gw_master_checksheet_section.id')
 //->where('model_wise_checksheet.section_id','=',$secti)
             ->get()->toArray();
-        //dd($sec);
-        return $sec;
     }
     static function deptName($dtname){
-        $dept=MasterDepartment::select('gw_master_department.name as deptname')
+        //dd($sec);
+        return MasterDepartment::select('gw_master_department.name as deptname')
 
 
             ->get();
-        //dd($sec);
-        return $dept;
     }
     static function dynamicchkshtdemo($dept_id,$model_id)
     {
@@ -914,10 +770,9 @@ class UserHelper extends HelperServiceProvider{
     }
     static function assemblychecksheet($dept_id,$model_id)
     { 
-	$engineassembly=EngineAssembly::where('dept_id','=',$dept_id)
-            ->where('model_id','=',$model_id)
-            ->get();
-        return $engineassembly;
+	return EngineAssembly::where('dept_id','=',$dept_id)
+                   ->where('model_id','=',$model_id)
+                   ->get();
     }
     static function dynamicchildsec($dept_id,$model_id)
     {
@@ -1030,7 +885,7 @@ class UserHelper extends HelperServiceProvider{
 			->where('dept_id','=',$dept_id)
                ->where('model_id','=',$model_id)
                 ->get()->toArray();
-         //echo "<pre>";print_r($section);
+         //echo "<pre>";print_r($section); die();
             if(!empty($section)){
                 $j =0;
 
@@ -1131,9 +986,8 @@ static function columndynamic1($model_id,$section_id)
     // Get Department Name
     static function getDeptName($dept_id)
     {
-        $dept_name = MasterDepartment::where('id','=',$dept_id)
+        return MasterDepartment::where('id','=',$dept_id)
             ->get()->toArray();
-        return $dept_name;
     }
 
     // Get Department Wise Employee
@@ -1167,34 +1021,30 @@ static function columndynamic1($model_id,$section_id)
     // Get Department Wise Tasks
     static function getDeptTask($dept_id,$model_id)
     {
-        $task_det = MasterTask::where('dept_id','=',$dept_id)->where('model_no','=',$model_id)
+        return MasterTask::where('dept_id','=',$dept_id)->where('model_no','=',$model_id)
             ->get()->toArray();
-        return $task_det;
     }
 
     static function getTaskName($task_id)
     {
-        $task_name = MasterTask::select('*')->where('id','=',$task_id)
+        return MasterTask::select('*')->where('id','=',$task_id)
             ->get()->toArray();
-        return $task_name;
     }
 
     // Get Employee Details
 
     static function checkParentTask($id,$dept_id,$model_id){
 
-        $child_task=MasterTask::where('parent','=',$id)->where('dept_id','=',$dept_id)->where('model_no','=',$model_id)
+        return MasterTask::where('parent','=',$id)->where('dept_id','=',$dept_id)->where('model_no','=',$model_id)
             ->get()->toArray();
-        return $child_task;
     }
 
     // Task User Details
     static function taskUserDet($id,$prj_id){
-        $task_det=TaskUser::where('task','=',$id)
+        // echo "<pre>";print_r($task_det);exit;
+        return TaskUser::where('task','=',$id)
             ->where('prj_id','=',$prj_id)
             ->get()->toArray();
-        // echo "<pre>";print_r($task_det);exit;
-        return $task_det;
     }
     // Task User Details
     static function empDetails($codes){
@@ -1205,65 +1055,59 @@ static function columndynamic1($model_id,$section_id)
             foreach ($codess as $key => $code) {
                 //$emp_det[$c]=MasterEmployee::where('emp_code','=',$code)
                  $emp_det[$c]=User::where('emp_code','=',$code)
-                    ->get()->toArray()[0];
+                    ->get()->toArray();
                 $c++;
             }
-            return $emp_det;
+            return array_filter($emp_det);
         }
 
     }
     
      static function countService(){
-        $serviceCount=Service::all()->toArray();
-        return $serviceCount;
+        return Service::all()->toArray();
     }
     
     static function totalservicecount(){
         $data = Session::all();
         //echo '<pre>';print_r($data);exit;
         $location=$data['user']['location_id'];
-        $serCount=Service::select('service_request.id')
+        return Service::select('service_request.id')
             ->where('service_request.location_id','=',$location)
             ->get()->count();
-        return $serCount;
     }
      static function totalquotationcount(){
          $data = Session::all();
          //echo '<pre>';print_r($data);exit;
          $location=$data['user']['location_id'];
-        $serquotation=Service::select('service_request.id')
+        return Service::select('service_request.id')
             ->where('service_request.location_id','=',$location)
             ->where('service_request.quotation','!=','NULL')->get()->count();
-        return $serquotation;
     }
     static function ongoingservice(){
         $data = Session::all();
         //echo '<pre>';print_r($data);exit;
         $location=$data['user']['location_id'];
-        $onservice=Service::select('service_request.id')
+        return Service::select('service_request.id')
             ->where('service_request.location_id','=',$location)
             ->where('service_request.status','!=','Closed')->get()->count();
-        return $onservice;
     }
 
    static function totalcg1count(){
        $data = Session::all();
        //echo '<pre>';print_r($data);exit;
        $location=$data['user']['location_id'];
-        $cg1=Service::select('service_request.id')
+        return Service::select('service_request.id')
             ->where('service_request.location_id','=',$location)
             ->where('service_request.checkgate1','!=','NULL')->get()->count();
-        return $cg1;
     
     }
     static function leftcg1count(){
         $data = Session::all();
         //echo '<pre>';print_r($data);exit;
         $location=$data['user']['location_id'];
-        $leftcg1=Service::select('service_request.id')
+        return Service::select('service_request.id')
             ->where('service_request.location_id','=',$location)
             ->where('service_request.checkgate1','=','NULL')->get()->count();
-        return $leftcg1;
     
     }
 
@@ -1271,10 +1115,9 @@ static function columndynamic1($model_id,$section_id)
             $data = Session::all();
             //echo '<pre>';print_r($data);exit;
             $location=$data['user']['location_id'];
-                $woCount=Service::select('service_request.id')
+                return Service::select('service_request.id')
                     ->where('service_request.location_id','=',$location)
                     ->where('service_request.work_orderno','!=',NULL)->get()->count();
-                return $woCount;
             }
 
             //section count
@@ -1645,9 +1488,8 @@ static function columndynamic1($model_id,$section_id)
     static function tableassycount($dept_id,$service_id){
         $var1 = ChecksheetAssembly::select('*')->where('service_request_id','=',$service_id)
             ->where('dept_id','=',$dept_id)->count();
-        $totalassytable = $var1;
 
-        return $totalassytable;
+        return $var1;
     }
 
 
@@ -1758,9 +1600,8 @@ static function columndynamic1($model_id,$section_id)
     {
        
        
-        $emp_mail = User::select('*')->where('section_id','=',$dept)
+        return User::select('*')->where('section_id','=',$dept)
             ->get()->toArray();
-        return $emp_mail;
     }
     
     //task table update
@@ -1841,10 +1682,8 @@ static function columndynamic1($model_id,$section_id)
 
             if(!empty($projid) && !empty($sec)) {
 
-                if(empty($taskuser[0]['actual_strt_dt'])) {
-                    if ($sortsubmin == $suborchildif) {
-                        $acdat = DB::table('gw_task_users')->where('project_id', '=', $projid[0]['project_id'])->where('task', '=', $sec[0]['task_id'])->update(array('actual_strt_dt' => $actual_start_date));
-                    }
+                if(empty($taskuser[0]['actual_strt_dt']) && $sortsubmin == $suborchildif) {
+                    $acdat = DB::table('gw_task_users')->where('project_id', '=', $projid[0]['project_id'])->where('task', '=', $sec[0]['task_id'])->update(array('actual_strt_dt' => $actual_start_date));
                 }
 
                     if ($sortsubmax == $suborchildif) {
@@ -1860,19 +1699,13 @@ static function columndynamic1($model_id,$section_id)
     //store status
     static function storeStatus()
     {
-        $store=StoreStatus::where('status','=','Active')->get();
-
-
-        return $store;
+        return StoreStatus::where('status','=','Active')->get();
     }
     
 //tat report
     static function locationfind($id)
     {
-        $loc_name=MasterLocation::select('description')->where('id','=',$id)->get()->toarray();
-
-
-        return $loc_name;
+        return MasterLocation::select('description')->where('id','=',$id)->get()->toarray();
     }
 
 
@@ -1880,41 +1713,33 @@ static function columndynamic1($model_id,$section_id)
 
     static function sectionfind($id)
     {
-        $section = MasterDepartment::select('name')->where('id','=',$id)->get()->toarray();
-
-
-        return $section;
+        return MasterDepartment::select('name')->where('id','=',$id)->get()->toarray();
     }
 
 
     static function countcomponentReceived($service_id)
     {
-        $section = MasterMissingdamagePartDis::select('part_no')->where('service_request_id','=',$service_id)->count();
-        return $section;
+        return MasterMissingdamagePartDis::select('part_no')->where('service_request_id','=',$service_id)->count();
     }
 
     static function countcomponentDespatch($service_id)
     {
-        $section = MasterMissingdamagePartDis::select('gw_master_disa_missing_damaged_part.part_no')
+        return MasterMissingdamagePartDis::select('gw_master_disa_missing_damaged_part.part_no')
             ->leftjoin('service_request','service_request.id', '=', 'gw_master_disa_missing_damaged_part.service_request_id')
             ->where('service_request_id','=',$service_id)
             ->where('service_request.status','=','Closed')
             ->count();
-
-        return $section;
     }
     static function created_datefind($service_id)
     {
-        $section = MasterMissingdamagePartDis::select('created_at')->where('service_request_id','=',$service_id)->get()->toArray();
-        return $section;
+        return MasterMissingdamagePartDis::select('created_at')->where('service_request_id','=',$service_id)->get()->toArray();
     }
 static function predicessorfind($task_id,$dept_id,$project_id)
     {
-        $task_det = TaskUser::where('task','=',$task_id)
+        return TaskUser::where('task','=',$task_id)
             ->where('dept_id','=',$dept_id)
             ->where('project_id','=',$project_id)
             ->get()->toArray();
-        return $task_det;
     }
 	
 	//high deviation in project plan
@@ -1928,14 +1753,10 @@ static function predicessorfind($task_id,$dept_id,$project_id)
         $count=0;
 
         foreach($task_det as $key => $val){
-            if(!empty($val['est_end_date']) && !empty($val['end_dt'])){
-                if ($val['end_dt'] > $val['est_end_date']){
-
-                    $array[] =$val['end_dt'];
-                    $count = count($array);
-
-                }
-            }
+            if (!empty($val['est_end_date']) && !empty($val['end_dt']) && $val['end_dt'] > $val['est_end_date']) {
+													$array[] =$val['end_dt'];
+													$count = count($array);
+												}
 
 
         }
@@ -1975,7 +1796,7 @@ static function predicessorfind($task_id,$dept_id,$project_id)
 
     static function predecessorfind($dept_id,$model_id){
 
-        $task_det = MasterTask::where('dept_id','=',$dept_id)->where('model_no','=',$model_id)
+        return MasterTask::where('dept_id','=',$dept_id)->where('model_no','=',$model_id)
             ->where(function($query) {
                 $query->where('parent', NULL)
                      ->orWhere('parent', ' ')
@@ -1983,8 +1804,6 @@ static function predicessorfind($task_id,$dept_id,$project_id)
             })
 
             ->get()->toArray();
-
-        return $task_det;
     }
 
 
@@ -1992,120 +1811,160 @@ static function predicessorfind($task_id,$dept_id,$project_id)
     //taskname add
     static function taskname(){
 
-        $task_det = MasterTaskName::where('parent_task','=','1')->get()->toArray();
-        return $task_det;
+        return MasterTaskName::where('parent_task','=','1')->get()->toArray();
     }
 
     //sub taskname add
     static function subtaskname(){
 
-        $task_det = MasterTaskName::where('parent_task','=',Null)->get()->toArray();
-        return $task_det;
+        return MasterTaskName::where('parent_task','=',Null)->get()->toArray();
     }
 
 
     static function prediorparentname($id){
 
-        $task_det = MasterTask::where('id','=',$id)->get()->toArray();
-
-        return $task_det;
+        return MasterTask::where('id','=',$id)->get()->toArray();
     }
 	
 	 static function sectionforcolumn()
     {
-        $dept=MasterCheckSheetSection::where(function($query) {
+        return MasterCheckSheetSection::where(function($query) {
             $query->where('id','7')
                 ->orWhere('id', '8')
                 ->orWhere('id', '9');
         })
 
             ->get();
-
-
-        return $dept;
     }
 	
 	 static function viewstdData()
     {
-        $std=MasterStdData::get();
-
-
-        return $std;
+        return MasterStdData::get();
     }
     static function viewstdDataName()
     {
-        $stdname=MasterStdData::where('name','!=',Null)->get();
-
-
-        return $stdname;
+        return MasterStdData::where('name','!=',Null)->get();
     }
 	//code optimize customer
     static function codeOptimizeCustomer($customer)
     {
-        $compse=MasterCustomer::where('name','LIKE', "" . $customer . "%")->get();
-
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         dd($mchserial);*/
 
-        return $compse;
+        return MasterCustomer::where('name','LIKE', "" . $customer . "%")->get();
     }
     //code optimize machine model
     static function codeOptimizeMachmodel($customer)
     {
-        $compse=MasterMCModel::where('model_no','LIKE', "%" . $customer . "%")->get();
-
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         dd($mchserial);*/
 
-        return $compse;
+        return MasterMCModel::where('model_no','LIKE', "%" . $customer . "%")->get();
     }
 
     //code optimize machine serial
     static function codeOptimizeMachserial($customer)
     {
-        $compse=MasterMCSerialNumber::where('serial_no','LIKE', "%" . $customer . "%")->get();
-
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         dd($mchserial);*/
 
-        return $compse;
+        return MasterMCSerialNumber::where('serial_no','LIKE', "%" . $customer . "%")->get();
     }
 
     //code optimize component model
     static function codeOptimizeCompmodel($customer)
     {
-        $compse=MasterComponentDetails::where('comp_model_no','LIKE', "%" . $customer . "%")->get();
-
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         dd($mchserial);*/
 
-        return $compse;
+        return MasterComponentDetails::where('comp_model_no','LIKE', "%" . $customer . "%")->get();
     }
 
     //code optimize component serial
     static function codeOptimizeCompserial($customer)
     {
-        $compse=MasterComponentDetails::where('comp_serial_no','LIKE', "%" . $customer . "%")->get();
-
         /*$compdet=MasterComponentDetails::select('gw_master_comp_details.*')
             ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_comp_details.mc_model_id')
             //->where('mc_model_id','=','gw_master_mc_model.id')
             ->get();
         dd($mchserial);*/
 
-        return $compse;
+        return MasterComponentDetails::where('comp_serial_no','LIKE', "%" . $customer . "%")->get();
+    }
+
+    static function columnforchecksheetnew($chkshtcolumn)
+    {
+        //$colfrchksht=ChecksheetSectionWiseColumn::where('section_id','=',$chkshtcolumn)->get()->toArray();
+         $colfrchksht=ChecksheetColumnStore::where('section_id','=',$chkshtcolumn)->get()->toArray();
+            
+        /*$columnId = explode(',', $colfrchksht->section_id);
+
+        $i=0;
+        foreach($columnId as $columnIdArr){
+            $section=ChecksheetColumn::find($columnIdArr);
+            $column[$i]['column_id']=$section->id;
+            $column[$i]['column_name']=$section->columns;
+
+            $i++;
+        }
+        return $column;*/
+        //$sectionId = explode(',', $colfrchksht->section_id);
+
+       // $i=0;
+        $columnsection = array();
+        $j=0;
+        //foreach($sectionId as $sectionIdArr){
+            $section=ChecksheetColumnStore::find($colfrchksht);
+            
+           // echo '<pre>';print_r($section);exit;
+            
+
+            if(isset($section) && isset($section[0])) {
+                
+                $columnId = explode(',', $section[0]['column_id']);
+
+                foreach ($columnId as $columnIdArr) {
+
+                    $columnfind = ChecksheetColumn::find($columnIdArr);
+                    $columnsection[$j]['column_id'] = $columnfind['id'];
+                    $columnsection[$j]['column_name'] = $columnfind['columns'];
+                    $j++;
+                }
+                //echo '<pre>';print_r($columnsection);exit;
+            }else{
+
+                $allcolumns = ChecksheetColumn::get()->toArray();
+                // echo "<pre>";print_r($allcolumns); exit;
+                $k=0;
+
+                foreach ($allcolumns as $column_one) {
+
+                    $columnsection[$k]['column_id'] = $column_one['id'];
+                    $columnsection[$k]['column_name'] = $column_one['columns'];
+                    $k++;
+                }
+            }
+            //$i++;
+       // }
+
+
+        // echo "<pre>";print_r($columns); exit;
+        return $columnsection;
+
+
+
     }
 
 }

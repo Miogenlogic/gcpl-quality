@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2|^8.1",
+        "php": "^7.4",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "box/spout": "^3.3",
         "fideloper/proxy": "^4.0",
@@ -25,7 +25,8 @@
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.0",
+        "rector/rector": "^0.12.18"
     },
     "config": {
         "optimize-autoloader": true,

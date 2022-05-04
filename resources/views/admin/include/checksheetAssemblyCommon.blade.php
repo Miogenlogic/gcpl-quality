@@ -1399,7 +1399,7 @@
                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                             data-target="#collapsemissingDamagedPart" aria-expanded="false" aria-controls="collapsemissingDamagedPart">
                         @foreach($compdet as $dynamicsectionname)
-
+                        
                             @if($dynamicsectionname['section_id']==7)
                                 {{$dynamicsectionname['section_name']}}
                             @endif
@@ -4685,6 +4685,7 @@
                                     </button>
                                 </h2>
                             </div>
+                            
                             <div id="connectionRodInspection" class="collapse" aria-labelledby="connectionRodReport" data-parent="#cylinder-collape">
                                 <div class="card-body">
                                     <form method="post" action="{{url('admin/check-gate-partinspection-connectingrod-dis-save')}}" enctype="multipart/form-data">

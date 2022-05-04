@@ -182,6 +182,7 @@
                                     <th scope="col" class="sort" data-sort="name">JOB Status</th>
                                     {{----}}
                                     <th scope="col" class="sort" data-sort="name">Remarks</th>
+                                    <th scope="col" class="sort" data-sort="name">CREATED AT</th>
 
                                 </tr>
                                 </thead>
@@ -285,7 +286,7 @@
                     {data: 'job_status', name: 'job_status'},
                    // {data: 'dept', name: 'dept'},
                      {data: 'remarks', name: 'remarks'},
-
+                     {data: 'createdatformat', name: 'createdatformat'},
                     //{data: 'action', name: 'action', orderable: false, searchable: false} ,
                 ],
                 // pageLength: 25,
@@ -334,6 +335,7 @@
                     {data: 'job_status', name: 'job_status'},
                     // {data: 'dept', name: 'dept'},
                     {data: 'remarks', name: 'remarks'},
+                    {data: 'createdatformat', name: 'createdatformat'},
                 ],
                 // pageLength: 25,
                 // order: [[ 2, "asc" ]]
@@ -390,6 +392,7 @@
                     {data: 'job_status', name: 'job_status'},
                     // {data: 'dept', name: 'dept'},
                     {data: 'remarks', name: 'remarks'},
+                    {data: 'createdatformat', name: 'createdatformat'},
                 ],
                 // pageLength: 25,
                 // order: [[ 2, "asc" ]]

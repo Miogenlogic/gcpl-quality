@@ -304,7 +304,6 @@ Route::group(['prefix' => 'admin'], function(){
 
         Route::get('/projects-open-list', ['uses' => 'ServiceController@projectsOpenList']);
         Route::get('/projects-open-list-table', ['uses' => 'ServiceController@getTableProjectMaster']);
-
         Route::post('/projects-open-list-table-download', ['uses' => 'ServiceController@getTableProjectMasterDownload']);
 
          Route::get('/projects-filter-list-table', ['uses' => 'ServiceController@projectMasterFilter']);
@@ -381,7 +380,7 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/fetchdata/{id}',['uses' => 'MasterController@fetchdata']);
         Route::post('/update', ['uses' => 'MasterController@update']);
         Route::get('/model-delete/{id}', ['uses' => 'MasterController@modelDelete']);
-
+        Route::post('/column-section-show-new', ['uses' => 'MasterController@columnSectionShowNew']);
         // component serial_no
         Route::get('/showcomponentserial' ,['uses' => 'MasterComponentSerialController@showcomponentserial']);
         Route::post('/insert-serial', ['uses' => 'MasterComponentSerialController@insertdata']);
@@ -688,7 +687,7 @@ Route::group(['prefix' => 'admin'], function(){
         Route::post('/checksheetcolumn-edit-save', ['uses' => 'MasterController@checksheetcolumnEditSave']);
         Route::get('/checksheetcolumn-listing', ['uses' =>'MasterController@checksheetcolumnlisting']);
         Route::get('/checksheetcolumn-get-table', ['uses' =>'MasterController@fetchchecksheetcolumn']);
-       Route::post('/checksheetcolumn-get-table-download', ['uses' =>'MasterController@fetchchecksheetcolumnDownload']);
+        Route::post('/checksheetcolumn-get-table-download', ['uses' =>'MasterController@fetchchecksheetcolumnDownload']);
 
         Route::get('/checksheetcolumn-delete/{id}', ['uses' => 'MasterController@checksheetcolumnDelete']);
 		
@@ -887,7 +886,17 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/mor-assign/{id}', ['uses' =>'CheckSheetController@morAssign']);
         Route::post('/mor-assign-save', ['uses' =>'CheckSheetController@morAssignSave']);
 
+        Route::get('/checksheetcolumn-add-new', ['uses' => 'MasterController@checksheetcolumnAddnew']);
+        Route::post('/checksheetcolumn-add-save-new', ['uses' => 'MasterController@checksheetcolumnAddSavenew']);
+        Route::get('/checksheetcolumn-edit-new/{id}', ['uses' => 'MasterController@checksheetcolumnEditnew']);
+        Route::post('/checksheetcolumn-edit-save-new', ['uses' => 'MasterController@checksheetcolumnEditSavenew']);
+        Route::get('/checksheetcolumn-listing-new', ['uses' =>'MasterController@checksheetcolumnlistingnew']);
+        Route::get('/checksheetcolumn-get-table-new', ['uses' =>'MasterController@fetchchecksheetcolumnnew']);
+        Route::post('/checksheetcolumn-get-table-download-new', ['uses' =>'MasterController@fetchchecksheetcolumnDownloadnew']);
 
+        Route::get('/checksheetcolumn-delete=new/{id}', ['uses' => 'MasterController@checksheetcolumnDeletenew']);
+
+        Route::post('/get-section-for-column-new', ['uses' => 'MasterController@GetSectionForColumnNew']); 
     });
 });
 

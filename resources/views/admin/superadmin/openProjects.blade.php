@@ -225,7 +225,7 @@
                                 </div>
                         </div>
 
-                        <div class="table-responsive" style="overflow-x: hidden;">
+                        <div class="table-responsive">
 
                             <table class="table align-items-center table-flush" id="tabe1">
 
@@ -235,6 +235,8 @@
 
                                     <th scope="col">Project Id</th>
                                     <th scope="col">WO No</th>
+                                    <th scope="col">Model No</th>
+                                    <th scope="col">Customer Name</th>
                                     <th scope="col">Location</th>
                                     <th scope="col">Assigned to</th>
                                     <th scope="col" class="sort" data-sort="startend-date">Estm. start & end date</th>
@@ -352,6 +354,8 @@
                 columns: [
                     {data: 'project_id', name: 'project_id',orderable: false, searchable: false},
                     {data: 'work_orderno', name: 'work_orderno'},
+                    {data: 'model_name', name: 'model_name'},
+                    {data: 'customer_name', name: 'customer_name'},
                     {data: 'description', name: 'description'},
                     {data: 'dept_name', name: 'dept_name'},
                     {data: 'date_duration', name: 'date_duration'},

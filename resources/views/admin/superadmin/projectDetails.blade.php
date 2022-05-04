@@ -141,6 +141,48 @@
                                                         </div>
                                                     </div>
                                                 </li>
+                                                <li class="list-group-item px-0 py-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-6">
+                                                            <h4 class="mb-0 font-weight-500">Model No</h4>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            @if(isset($model_name->model_name))
+                                                            <h4 class="mb-0 font-weight-600">{{$model_name->model_name}}</h4>
+                                                            @else
+                                                             <h4 class="mb-0 font-weight-600"></h4>
+                                                             @endif
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-0 py-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-6">
+                                                            <h4 class="mb-0 font-weight-500">Customer Name</h4>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            @if(isset($project_plan['customer_name']))
+                                                            <h4 class="mb-0 font-weight-600">{{$project_plan['customer_name']}}</h4>
+                                                            @else
+                                                             <h4 class="mb-0 font-weight-600"></h4>
+                                                             @endif
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                 <li class="list-group-item px-0 py-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-6">
+                                                            <h4 class="mb-0 font-weight-500">Dept Name</h4>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            @if(isset($project_plan['dept_name']))
+                                                            <h4 class="mb-0 font-weight-600">{{$project_plan['dept_name']}}</h4>
+                                                            @else
+                                                             <h4 class="mb-0 font-weight-600"></h4>
+                                                             @endif
+                                                        </div>
+                                                    </div>
+                                                </li>
 
                                                 <!--<li class="list-group-item px-0 py-2">-->
                                                 <!--    <div class="row align-items-center">-->
@@ -397,7 +439,7 @@
                                                                         if(!empty($emp_det)){
                                                                         foreach ($emp_det as $key => $emp) {
                                                                         ?>
-                                                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="{{$emp['name']}}">
+                                                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="{{$emp[0]['name']}}">
                                                                             <i class="far fa-user"></i>
                                                                         </a>
                                                                         <?php }} } ?>
