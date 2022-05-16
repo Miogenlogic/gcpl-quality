@@ -92,8 +92,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="form-group " style="height: 335px;
-    overflow-x: scroll">
+                            <div class="form-group " style="">
                                 <label for="section_id" class="form-control-label  mainsection">Section</label>
                                 <select name="section_id" id="section_id" class="form-control mainsection" disabled>
                                     <option value=''>Select Section</option>
@@ -117,7 +116,56 @@
                             </div>
                         </div>
 
+                        <div class="col-md-3">
+                            <div class="form-group " style="">
+                                <label for="child_section_id" class="form-control-label  mainsection">Child Section</label>
+                                <select name="child_section_id" id="child_section_id" class="form-control childsection" disabled>
+                                    <option value=''>Select Child Section</option>
+                                    @php
+                                        $childsect=App\Helpers\UserHelper::childsectionforcolumnnew($errors->dept_id,$errors->model_id);
+                                        $i=1;
+                                    @endphp
 
+                                    @foreach($childsect as $sec)
+
+                                        <option value="{{$sec->id}}" {{($errors->child_section_id==$sec->id)? 'selected=selected':''}}>{{$sec->child_section}}</option>
+                                    
+                                    @php
+                                        $i++;
+                                    @endphp
+                                        
+                                    @endforeach
+
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group " style="">
+                                <label for="sub_child_section_id" class="form-control-label  mainsection">Sub Child Section</label>
+                                <select name="sub_child_section_id" id="sub_child_section_id" class="form-control subchildsection" disabled>
+                                    <option value=''>Select Sub Child Section</option>
+                                    @php
+                                        $subchildsect=App\Helpers\UserHelper::subchildsectionforcolumnnew($errors->dept_id,$errors->model_id);
+                                        $i=1;
+                                    @endphp
+
+                                    @foreach($subchildsect as $sec)
+
+                                        <option value="{{$sec->id}}" {{($errors->sub_child_section_id==$sec->id)? 'selected=selected':''}}>{{$sec->sub_child_section}}</option>
+                                    
+                                    @php
+                                        $i++;
+                                    @endphp
+                                        
+                                    @endforeach
+
+                                </select>
+
+                            </div>
+                        </div>
                         <div class="col-md-3 " >
                             <div class="form-group"  style="height: 335px;
         overflow-x: scroll">

@@ -50,15 +50,30 @@
                         <label for='status'>Status</label>
                         <input type='checkbox' name='status' id='status' value='1' class='toggleswitch' />
                     </div>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label" for="customer">Select Type</label>
+                            <select name="type" class="form-control" required>
+                                <option value="">Select Type</option>
+                                @foreach($type as $type)
+                                    <option value="{{$type['id']}}" >{{$type['name']}}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="invalid-feedback" style="display:block;">{{$errors->first('type')}}</div>
+                            @endif
+                        </div>
+                    </div>
                 </div><!-- /row -->
                 <div class="row">
                      <div id="clone-container">
 
                     
                         <div class="mb-3 row border p-4 main-parent" style="margin-left: 0;">
-                            <div class="col-md-8">
+                            <div class="col-md-5">
                                 <input type="text" name="parent[0][name]" placeholder="Enter Child Section Name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
+                            
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-success add" >Add</button>
                             </div>

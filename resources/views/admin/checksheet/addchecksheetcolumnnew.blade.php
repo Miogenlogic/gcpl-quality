@@ -90,8 +90,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="form-group " style="height: 335px;
-    overflow-x: scroll">
+                        <div class="form-group " style="">
                             <label for="section_id" class="form-control-label  originalsection">Section</label>
                             <select name="section_id" id="section_id" class="form-control mainsection">
                                 <option value=''>Select Section</option>
@@ -115,7 +114,25 @@
 
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group " style="">
+                            <label for="child_section_id" class="form-control-label  originalsection">Child Section</label>
+                            <select name="child_section_id" id="child_section_id" class="form-control childsection">
+                                <option value=''>Select Child Section</option>
+                            </select>
+                        </div>
+                    </div>        
 
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group " style="">
+                            <label for="sub_child_section_id" class="form-control-label  originalsection">Sub Child Section</label>
+                            <select name="sub_child_section_id" id="sub_child_section_id" class="form-control subchildsection">
+                                <option value=''>Select Child Section</option>
+                            </select>
+                        </div>
+                    </div>    
 
 
 
@@ -263,6 +280,73 @@
                 // $('.childsection').show();
 
                 $('#section_id').html(response);
+
+                //$('.compserial').show();
+
+                // $('#compserial').html(response);
+
+                //mctype= jQuery.parseJSON(response);
+
+                console.log("success");
+
+            }).fail(function() {
+
+                console.log("error");
+
+            }).always(function() {
+
+                console.log("complete");
+
+            });
+        // alert(model_id);
+    });
+    $('#section_id').change(function(event) {
+        var model_id = $('#model_id').val();
+        var dept_id = $('#dept_id').val();
+        var section_id = $('#section_id').val();
+        $.ajax({
+                url: '{{ url("/admin/get-child-section-for-column-new") }}',
+                type: 'POST',
+                data: {model_id:model_id,dept_id:dept_id,section_id:section_id,'_token':'{{csrf_token()}}'},
+
+            }).done(function(response) {
+                console.log(response);
+                // $('.childsection').show();
+
+                $('#child_section_id').html(response);
+
+                //$('.compserial').show();
+
+                // $('#compserial').html(response);
+
+                //mctype= jQuery.parseJSON(response);
+
+                console.log("success");
+
+            }).fail(function() {
+
+                console.log("error");
+
+            }).always(function() {
+
+                console.log("complete");
+
+            });
+        // alert(model_id);
+    });
+    $('#child_section_id').change(function(event) {
+        var model_id = $('#model_id').val();
+        var dept_id = $('#dept_id').val();
+        $.ajax({
+                url: '{{ url("/admin/get-sub-child-section-for-column-new") }}',
+                type: 'POST',
+                data: {model_id:model_id,dept_id:dept_id,'_token':'{{csrf_token()}}'},
+
+            }).done(function(response) {
+                console.log(response);
+                // $('.childsection').show();
+
+                $('#sub_child_section_id').html(response);
 
                 //$('.compserial').show();
 

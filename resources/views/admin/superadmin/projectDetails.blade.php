@@ -124,6 +124,34 @@
                                                 <li class="list-group-item px-0 py-2">
                                                     <div class="row align-items-center">
                                                         <div class="col-6">
+                                                            <h4 class="mb-0 font-weight-500">Component sl. No.</h4>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            @if(isset($compserialno))
+                                                            <h4 class="mb-0 font-weight-600">{{$compserialno[0]['comp_serial_no']}}</h4>
+                                                            @else
+                                                             <h4 class="mb-0 font-weight-600"></h4>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-0 py-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-6">
+                                                            <h4 class="mb-0 font-weight-500">Machine sl. No.</h4>
+                                                        </div>
+                                                        <div class="col-6">
+                                                             @if(isset($compmodelno))
+                                                            <h4 class="mb-0 font-weight-600">{{$compmodelno[0]['comp_model_no']}}</h4>
+                                                            @else
+                                                             <h4 class="mb-0 font-weight-600"></h4>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-0 py-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-6">
                                                             <h4 class="mb-0 font-weight-500">Project ID</h4>
                                                         </div>
                                                         <div class="col-6">
@@ -149,6 +177,20 @@
                                                         <div class="col-6">
                                                             @if(isset($model_name->model_name))
                                                             <h4 class="mb-0 font-weight-600">{{$model_name->model_name}}</h4>
+                                                            @else
+                                                             <h4 class="mb-0 font-weight-600"></h4>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-0 py-2">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-6">
+                                                            <h4 class="mb-0 font-weight-500">Component</h4>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            @if(isset($service_details['component_name']))
+                                                            <h4 class="mb-0 font-weight-600">{{$service_details['component_name']}}</h4>
                                                             @else
                                                              <h4 class="mb-0 font-weight-600"></h4>
                                                              @endif
@@ -183,7 +225,6 @@
                                                         </div>
                                                     </div>
                                                 </li>
-
                                                 <!--<li class="list-group-item px-0 py-2">-->
                                                 <!--    <div class="row align-items-center">-->
                                                 <!--        <div class="col-6">-->
@@ -261,7 +302,9 @@
                                                                 </a>
                                                             </div>
                                                             <div class="col">
+                                                               
                                                                 <h5>{{$emp_detail['name']}} - {{$emp_detail['emp_code']}}</h5>
+                                                           
                                                             </div>
                                                         </div>
                                                     </li>
@@ -343,7 +386,7 @@
                                                     @endphp
                                                     <?php if(!empty($tasks)){
                                                      $type='' ;
-                                                  $usr=0;
+$usr=0;
                                                     $parentTask=[];
                                                     foreach ($tasks as $key=>$task) {
 
@@ -363,6 +406,7 @@
                                                             }
 
                                                        }
+
 
                                                     //dd($parentTask);
                                                     $parent_task_tat = 0;
@@ -411,7 +455,7 @@
                                                     //dd($task_user_det);
                                                     if(!empty($task_user_det) && !empty($task_user_det[0]['users'])){
                                                         $emp_det=App\Helpers\UserHelper::empDetails($task_user_det[0]['users']);
-                                                         //echo "<pre>";print_r($task);exit;
+                                                         //echo "<pre>";print_r($emp_det);exit;
                                                     }
 
                                                     ?>
@@ -424,7 +468,7 @@
                                                             <!-- Use this action if there`s subtask exsited on the task thread -->
                                                                 <div class="comment-head">
 
-                                                                    <h6 class="comment-name">@if($task['dept_id'] == '4')  Engine  @elseif($task['dept_id'] == '5')  Transmission @elseif($task['dept_id'] == '7')  Undercarriage @elseif($task['dept_id'] == '13')  Hydraulic @elseif($task['dept_id'] == '25')  Used Parts @endif {{$task['name'] }}</h6>
+                                                                    <h6 class="comment-name">@if($task['dept_id'] == '4')  Engine  @elseif($task['dept_id'] == '5')  Transmission @elseif($task['dept_id'] == '7')  Undercarriage @elseif($task['dept_id'] == '13')  Hydraulic @endif {{$task['name']}}</h6>
                                                                     <span class="badge badge-success">created date: {{date('d/m/Y',strtotime($project_plan['estm_start_date']))}}</span>
                                                                    <span class="badge badge-info">estmd start end date: {{date('d/m/Y',strtotime($task_user_det[0]['est_start_date']))}}-<?php echo(!empty($task_user_det[0]['est_end_date']) ? date('d/m/Y',strtotime($task_user_det[0]['est_end_date'])) : date('d/m/Y',strtotime($project_plan['estm_end_date']))); ?></span>
                                                                     @if (request()->session()->get('user')['section_id'] == $task['dept_id'])
@@ -439,7 +483,7 @@
                                                                         if(!empty($emp_det)){
                                                                         foreach ($emp_det as $key => $emp) {
                                                                         ?>
-                                                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="{{$emp[0]['name']}}">
+                                                                        <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="{{$emp['name']}}">
                                                                             <i class="far fa-user"></i>
                                                                         </a>
                                                                         <?php }} } ?>
@@ -480,7 +524,6 @@
                                                                                 </div>-->
 
                                                                                 <div class="col-3">
-                                                                        
                                                                                     @if (request()->session()->get('user')['section_id'] == $task['subdept_id'])
                                                                                         @if(request()->session()->get('user')['role_id'] == '2')
                                                                                             {{--<button class="btn btn-default btn-sm" type="submit">update</button>--}}
@@ -678,37 +721,37 @@
                                                                                     <div class="card-header bg-transparent">
                                                                                         <h4 class="text-primary text-center">Assign user</h4>
                                                                                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4"> <small>You can select/tag one or more user from the below select box for this       project</small>
-                        </div>
-                        <?php $prj_emp_codes=explode( ',',$project_user[ 'users']); ?>
-                        <form action="{{url('admin/assign-user-project-task')}}" method="post" enctype="multipart/form-data">
-                            <div class="form-group mb-3">
-                                <div class="input-group input-group-alternative">
-                                    <input type="hidden" name="prj_user_id" value="{{$project_user['id']}}">
-                                    <input type="hidden" name="prj_id" value="{{$project_plan['id']}}">
-                                    <input type="hidden" name="project_id" value="{{$project_plan['project_id']}}">
-                                    <input type="hidden" name="dept_id" value="{{$project_plan['dept_id']}}">
-                                    <input type="hidden" name="parent_task_id" value="{{$parent['id']}}">
-                                    <select name="asign_user_task[]" id="" data-toggle="select" class="form-control" multiple="multiple">
-                                        <option selected disabled>--select users--</option>
-                                        <?php if(!empty($dept_employees)){ foreach ($dept_employees as $key=>$dept_employee) { if(in_array($dept_employee['emp_code'],$prj_emp_codes)){ $select="selected"; }else{ $select=""; } ?>
-                                        <option value="{{$dept_employee['emp_code']}}" {{$select}}>{{$dept_employee['name']}} - {{$dept_employee['emp_code']}}</option>
-                                        <?php }} ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="custom-control custom-control-alternative custom-checkbox">
-                                <input class="custom-control-input" id=" customCheckLogin1" type="checkbox" name="" value="notify">
-                                <label class="custom-control-label" for=" customCheckLogin1"> <span class="text-muted">Notify user</span>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <button type="submit" class="btn btn-primary my-4">Assign</button>
-                            </div>
-                        </form>
-                    </div>
+                                                                                    <div class="card-body px-lg-5 py-lg-5">
+                                                                                        <div class="text-center text-muted mb-4"> <small>You can select/tag one or more user from the below select box for this       project</small>
+                                                                                        </div>
+                                                                                        <?php $prj_emp_codes=explode( ',',$project_user[ 'users']); ?>
+                                                                                        <form action="{{url('admin/assign-user-project-task')}}" method="post" enctype="multipart/form-data">
+                                                                                            <div class="form-group mb-3">
+                                                                                                <div class="input-group input-group-alternative">
+                                                                                                    <input type="hidden" name="prj_user_id" value="{{$project_user['id']}}">
+                                                                                                    <input type="hidden" name="prj_id" value="{{$project_plan['id']}}">
+                                                                                                    <input type="hidden" name="project_id" value="{{$project_plan['project_id']}}">
+                                                                                                    <input type="hidden" name="dept_id" value="{{$project_plan['dept_id']}}">
+                                                                                                    <input type="hidden" name="parent_task_id" value="{{$parent['id']}}">
+                                                                                                    <select name="asign_user_task[]" id="" data-toggle="select" class="form-control" multiple="multiple">
+                                                                                                        <option selected disabled>--select users--</option>
+                                                                                                        <?php if(!empty($dept_employees)){ foreach ($dept_employees as $key=>$dept_employee) { if(in_array($dept_employee['emp_code'],$prj_emp_codes)){ $select="selected"; }else{ $select=""; } ?>
+                                                                                                        <option value="{{$dept_employee['emp_code']}}" {{$select}}>{{$dept_employee['name']}} - {{$dept_employee['emp_code']}}</option>
+                                                                                                        <?php }} ?>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="custom-control custom-control-alternative custom-checkbox">
+                                                                                                <input class="custom-control-input" id=" customCheckLogin1" type="checkbox" name="" value="notify">
+                                                                                                <label class="custom-control-label" for=" customCheckLogin1"> <span class="text-muted">Notify user</span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                            <div class="text-center">
+                                                                                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                                                                <button type="submit" class="btn btn-primary my-4">Assign</button>
+                                                                                            </div>
+                                                                                        </form>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

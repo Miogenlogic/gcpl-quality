@@ -201,7 +201,6 @@ class CheckSheetController extends Controller
     $dept_id=$data['user']['section_id'];
         $location=$data['user']['location_id'];
          $emp_code=$data['user']['emp_code'];
-        dd($data);
         if (request()->session()->get('user')['section_id'] == '4') {
 
             if (request()->session()->get('user')['role_id'] == '2'){
@@ -20657,7 +20656,7 @@ $sec=8;
     }
 
     //assembly chechsheet approved/reject by det head
-     public function headApproveAssemblyChecksheetSave(Request $request)
+    public function headApproveAssemblyChecksheetSave(Request $request)
     {
 
         $data = Session::all();
@@ -20704,16 +20703,16 @@ $sec=8;
 		
 		
 
-  $countapprv = ChecksheetStatus::Select('assembly_status')->where('service_request_id','=',$request['service_id'])
+        $countapprv = ChecksheetStatus::Select('assembly_status')->where('service_request_id','=',$request['service_id'])
 
             ->get()->toArray();
 
 
        $final=array_search('Rejected',array_column($countapprv, 'assembly_status'));
-     $final1=array_search('Pending',array_column($countapprv, 'assembly_status'));
+        $final1=array_search('Pending',array_column($countapprv, 'assembly_status'));
           $final2=array_search('Submitted',array_column($countapprv, 'assembly_status'));
        
-      //dd($final2);
+        //dd($final2);
         if(($final===false) && ($final1===false) && ($final2===false)){
 
             $service->asc_status='Approved';
@@ -20790,6 +20789,11 @@ $sec=8;
 
             return redirect('admin/hyd-ass-list');
         }
+    }
+
+    public function checkShetCommonFileUpload(Request $request)
+    {
+        dd($request->all());
     }
 
 }

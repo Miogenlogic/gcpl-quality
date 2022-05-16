@@ -33,7 +33,7 @@
         <!-- Card body -->
         <div class="card-body">
             <!-- Form groups used in grid -->
-            <form method="post" action="{{url('admin/employee-detsils-add-save')}}" enctype="multipart/form-data">
+            <form method="post" action="{{url('admin/component-models-add-save')}}" enctype="multipart/form-data">
                 <div class="row">
                      <div class="col-sm-6 col-md-3">
                         <div class="form-group">
@@ -44,48 +44,12 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-5">
-                        <div class="form-group">
-                            <label class="form-control-label" for="section">Select Section</label>
-                            <select name="section_id[]" id ="section" data-toggle="select" multiple="multiple" class="form-control select2" required>
-                                @php
-                                    $sects=App\Helpers\UserHelper::sectionforchecksheet();
-                                @endphp
-
-                                @foreach($sects as $sect)
-                                    <option value="{{$sect->id}}">{{$sect->name}}</option>
-
-                                @endforeach
-                            </select>
-                            @if($errors->has('sect_id'))
-                                <div class="invalid-feedback" style="display:block;">{{$errors->first('sect_id')}}</div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-5">
-                        <div class="form-group">
-                            <label class="form-control-label" for="section">Child Section</label>
-                            <select name="child_id[]" id ="child"  data-toggle="select" multiple="multiple" class="form-control select2" required>
-                                 @php
-                                    $childsecnew=App\Helpers\UserHelper::childsectionchecksheet($sect->id);
-                                 @endphp
-                                @foreach($childsecnew as $child)
-
-                                    <option value="{{$child->id}}">{{$child->name}}</option>
-
-                                @endforeach
-                            </select>
-                            @if($errors->has('child_id'))
-                                <div class="invalid-feedback" style="display:block;">{{$errors->first('child_id')}}</div>
-                            @endif
-                        </div>
-                    </div>
 
                 </div><!-- /row -->
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <button class="btn btn-primary" type="submit">Save</button>
 
-                <button type="reset" class="btn btn-warning" onclick='location.href ="{{url('admin/employee-detsils-list')}}"'>Cancel</button>
+                <button type="reset" class="btn btn-warning" onclick='location.href ="{{url('admin/fetch')}}"'>Cancel</button>
             </form>
         </div>
     </div>
