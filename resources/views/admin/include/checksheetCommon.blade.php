@@ -1046,11 +1046,12 @@
                                  form_data.append("child_section_id",child_section_id);
                                  form_data.append("service_request_id",service_request_id);
 
-                                 console.log('formData',form_data);
+                                 console.log(form_data);
                                  $.ajax({
 
                                         url: '{{ url("/admin/check-sheet-common-file-upload") }}',
                                         type: 'POST',
+                                        processData: false,
                                         data: {form_data:form_data,"_token": "{{ csrf_token() }}"},
 
                                     })
