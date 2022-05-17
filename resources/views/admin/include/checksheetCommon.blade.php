@@ -803,11 +803,9 @@
 
 
                         <!-- Pre-history -->
-
                             @if(!empty($sec_pre))
                                 @php
-
-                                        $prehisthiddden = '';
+                                    $prehisthiddden = '';
 
                                 @endphp
                             @else
@@ -838,6 +836,7 @@
 
 
                                         <!-- repair mode -->
+                                        <form method="post" action="#" enctype="multipart/form-data" id="prehistoryform">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="" class="form-control-label">Repair mode</label>
@@ -956,7 +955,15 @@
                                                     @endif
                                                 </div>
                                             </div>
-
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="arnumber">Upload Pre History</label>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="files[]" class="form-control" id="prehistoryfileupload" onchange="prehistoryfile('{{$prehist->id}}','{{$prehist->service_request_id}}')" lang="en">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <!--<div class="col-md-12">
                                                 <h4 class="border-bottom">Major Component Details (If the components were changed in the Field & SMU)</h4>
                                             </div>
@@ -1025,9 +1032,53 @@
                                     <!--</form>-->
                                     <!-- pre-history form end -->
                                 </div>
+                            </form>
                             </div>
                         </div>
+                        <script type="text/javascript">
+                           function prehistoryfile(child_section_id,service_request_id) {
+                                console.log('child_section_id',child_section_id);
+                                console.log('service_request_id',service_request_id);
+                                
+                                var files = document.getElementById('prehistoryfileupload').files[0];
+                                var form_data = new FormData();
+                                 form_data.append("file",files);
+                                 form_data.append("child_section_id",child_section_id);
+                                 form_data.append("service_request_id",service_request_id);
 
+                                 console.log(form_data);
+                                 $.ajax({
+
+                                        url: '{{ url("/admin/check-sheet-common-file-upload") }}',
+                                        type: 'POST',
+                                        processData: false,
+                                        data: {form_data:form_data,"_token": "{{ csrf_token() }}"},
+
+                                    })
+
+                                    .done(function(response) {
+                                        //console.log(response);
+
+                                        //mctype= jQuery.parseJSON(response);
+
+                                        console.log("success");
+
+                                    })
+
+                                    .fail(function() {
+
+                                        console.log("error");
+
+                                    })
+
+                                    .always(function() {
+
+                                        console.log("complete");
+
+                                    });
+                                //uploadfile();
+                            };
+                        </script>
 
                         <!-- Commercial & Logistics Report -->
 
@@ -2029,7 +2080,7 @@
                                         <div class="missing-damaged-part-repeat">
                                         @php
                                             $columnsection_2=App\Helpers\UserHelper::columndynamic($deptid,$service->machine_modelno,7);
-                                            
+
                                             $cl = 0;
                                         @endphp
 									@if(!empty($columnsection_2))
@@ -2301,7 +2352,7 @@
                                                 <div class="row no-gutters">
                                                     <div class="col-md-2">
                                                         <div class="form-group">
-                                                            <label for="" class="form-control-label">Part NO dsf</label>
+                                                            <label for="" class="form-control-label">Part NO</label>
                                                             <span style="position: relative;top: -4px;"><i style="color: red;font-size: 5px;" class="fas fa-star"></i></span>
 
                                                             <textarea type="text" name="part_no[]" class="form-control" placeholder="Part Description" rows="1" required></textarea>
@@ -2651,6 +2702,7 @@
                                                                                 </div>
 
                                                                             </td>
+
 
                                                                             <?php if($child_section_row_column_value >= 1){ ?>    
                                                                             <td>
@@ -5269,7 +5321,7 @@
                                                                     <div class="col-3"><h4 class="mb-0">Center line of the bore checked</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($rearcenteryes!=Null)
                                                                                 <input name="centerresult[{{$i}}]" class="custom-control-input" id="rearyes{{$i}}" type="radio" value="yes" {{$rearcenteryes[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="centerresult[{{$i}}]" class="custom-control-input" id="rearyes{{$i}}" type="radio" value="yes">
@@ -5277,7 +5329,7 @@
                                                                             <label class="custom-control-label" for="rearyes{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($rearcenteryes!=Null)
                                                                                 <input name="centerresult[{{$i}}]" class="custom-control-input" id="rearno{{$i}}" type="radio" value="no" {{$rearcenteryes[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="centerresult[{{$i}}]" class="custom-control-input" id="rearno{{$i}}" type="radio" value="no">
@@ -5288,7 +5340,7 @@
                                                                     <div class="col-1"><h4 class="mb-0">Results</h4></div>
                                                                     <div class="col-2">
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($rearresyes!=Null)
                                                                                 <input name="rearresults[{{$i}}]" class="custom-control-input" id="reresul{{$i}}" type="radio" value="yes" {{$rearresyes[3]=='yes'?'checked':''}}>
                                                                             @else
                                                                                 <input name="rearresults[{{$i}}]" class="custom-control-input" id="reresul{{$i}}" type="radio" value="yes" >
@@ -5296,7 +5348,7 @@
                                                                             <label class="custom-control-label" for="reresul{{$i}}">Yes</label>
                                                                         </div>
                                                                         <div class="custom-control custom-control custom-radio">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($rearresyes!=Null)
                                                                                 <input name="rearresults[{{$i}}]" class="custom-control-input" id="reresulno{{$i}}" type="radio" value="no" {{$rearresyes[3]=='no'?'checked':''}}>
                                                                             @else
                                                                                 <input name="rearresults[{{$i}}]" class="custom-control-input" id="reresulno{{$i}}" type="radio" value="no" >
@@ -5306,7 +5358,7 @@
                                                                     </div>
                                                                     <div class="col-4">
                                                                         <div class="form-group mb-0">
-                                                                            @if($showcylinderblock!=Null)
+                                                                            @if($rearremaryes!=Null)
                                                                             <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks">{{$rearremaryes[3]}}</textarea>
                                                                             @else
                                                                              <textarea placeholder="Remarks" name="mainfrontremarks[{{$i}}]" class="form-control" rows="1" id="Remarks"></textarea>

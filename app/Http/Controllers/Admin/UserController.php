@@ -6937,6 +6937,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 
     public function timeSheetlisting()
     {
+
         return view('admin.report.timeSheetList');
     }
 
@@ -6949,7 +6950,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         $location=$data['user']['location_id'];
 
         if($location == '1' || $location == '2') {
-            $table = TimeSheetEntry::select('time_sheet_entry.emp_name', 'emp_id', 'id', 'shift', 'dated', 'work_order', 'start_time', 'end_time','hours')
+            $table = TimeSheetEntry::select('time_sheet_entry.emp_name', 'emp_id', 'id', 'shift', 'dated', 'work_order', 'start_time', 'end_time','hours','created_at')
                 //select('gw_project_plan_master.id', 'machine_modelno', 'gw_master_mc_model.model_no')
                 //->leftjoin('gw_project_plan_master','gw_project_plan_master.service_id', '=', 'service_request.id')
                 // ->leftjoin('gw_master_customer','gw_master_customer.id', '=', 'service_request.customer')
@@ -7000,8 +7001,15 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 return $formatted_dt1;
 
             })
+            ->addColumn('datetimeformat', function ($table) {
 
-            ->rawColumns(['action','roles','dateformat']);
+                
+                $formatted_dt1=Carbon::parse($table['created_at'])->format('d/m/Y H:i:s');
+
+                return $formatted_dt1;
+
+            })
+            ->rawColumns(['action','roles','dateformat','datetimeformat']);
 
 
         return $datatables->make(true);
@@ -7281,7 +7289,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+      //echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7302,7 +7310,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
             })
 			->addColumn('dateformat', function ($table) {
 
-         //dd($table['dated']);
+                //dd($table['dated']);
                 
                 $formatted_dt1=Carbon::parse($table['dated'])->format('d/m/Y');
 
@@ -7771,7 +7779,7 @@ public function labourJobActivityGetTable(Request $request)
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+     //echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7792,16 +7800,24 @@ public function labourJobActivityGetTable(Request $request)
             })
 			->addColumn('dateformat', function ($table) {
 
-         //dd($table['dated']);
+            //dd($table['']);
                 
                 $formatted_dt1=Carbon::parse($table['dated'])->format('d/m/Y');
 
                 return $formatted_dt1;
 
             })
+            ->addColumn('createdatformat', function ($table) {
+
+                
+                $formatted_dt1=Carbon::parse($table['created_at'])->format('d/m/Y H:i:s');
+
+                return $formatted_dt1;
+
+            })
 			
 
-            ->rawColumns(['action','roles','dateformat']);
+            ->rawColumns(['action','roles','dateformat','createdatformat']);
 
 
         return $datatables->make(true);
@@ -7863,8 +7879,17 @@ public function labourJobActivityGetTable(Request $request)
                 return $formatted_dt1;
 
             })
+            ->addColumn('createdatformat', function ($table) {
 
-            ->rawColumns(['action','roles','dateformat']);
+                
+                $formatted_dt1=Carbon::parse($table['created_at'])->format('d/m/Y H:i:s');
+
+                return $formatted_dt1;
+
+            })
+            
+
+            ->rawColumns(['action','roles','dateformat','createdatformat']);
 
 
         return $datatables->make(true);
@@ -7985,8 +8010,17 @@ public function labourJobActivityGetTable(Request $request)
                 return $formatted_dt1;
 
             })
+            ->addColumn('createdatformat', function ($table) {
 
-            ->rawColumns(['action','roles','dateformat']);
+                
+                $formatted_dt1=Carbon::parse($table['created_at'])->format('d/m/Y H:i:s');
+
+                return $formatted_dt1;
+
+            })
+        
+            ->rawColumns(['action','roles','dateformat','createdatformat']);
+           
 
 
         return $datatables->make(true);

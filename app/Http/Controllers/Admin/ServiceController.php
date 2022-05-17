@@ -44,7 +44,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-use Box\Spout\Writer\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
 
 
 use Carbon\Carbon;
@@ -425,14 +425,13 @@ class ServiceController extends Controller
                     ->get();
             }
         }
-
-
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();
         $path = 'C:/Apache24/htdocs/gcpl-quality/template files/BranchList.xlsx';
 
         (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
+
             return [
                 'Sr No' => $table['id'],
                 'SERVICE  NO' => $table['service_request_no'],
@@ -1290,12 +1289,34 @@ public function serviceRequestGetTable(Request $request)
 
     public function serviceRequestAdd()
     {
+         /*$path = 'C:\xampp\htdocs\gcpl-quality\template files/BranchDetailsGCPL.xlsx';
+         //dd($path);
+         (new FastExcel)->import($path, function ($brances) {
+            
+                foreach ($brances as $key => $value) 
+                { 
+                   if (!$branch = MasterBranch::where('sales_ofc',$value)->first()) 
+                    $branch = new MasterBranch;
+                    $branch->sales_ofc = $value;
+                    $branch->save();
+                }
+                
+        });*/
+       /* $path = 'C:\xampp\htdocs\gcpl-quality\template files/EmployeeDetsilsList to delete.xlsx';
+         
+         (new FastExcel)->import($path, function ($user) {
+
+               $user_delete = User::where('emp_code',$user['EMP CODE'])->delete();
+                
+        });*/
+       
         $status = MasterStatus::select('gw_master_status.*')->get();
         //$employee = MasterEmployee::select('gw_master_employee.*')->get();
          $employee = User::select('*')->get();
         return view('admin.branchengineer.newserviceRequest')
             ->with('employee',$employee)
             ->with('status',$status);
+
     }
 
     public function serviceRequestAddSave(BranchServiceRequest $request)
@@ -1304,7 +1325,7 @@ public function serviceRequestGetTable(Request $request)
         //echo '<pre>';print_r($data);exit;
         $location=$data['user']['location_id'];
         $service = mt_rand(100000,999999);
-
+        //dd($request);
         //$ser="SR";
 		if(!empty($request['machserial_notmain'])){
             $equ_ser = new MasterMCSerialNumber();
@@ -1411,7 +1432,7 @@ public function serviceRequestGetTable(Request $request)
             $incre=1;
             $serviceID = $getServiceId[0]['serviceID'] + $incre;
             //dd($serviceID);exit;
-            if ($line[' Arrange no']) {
+            if (isset($line[' Arrange no'])) {
                 $mcModel = MasterPreHistoryDis::get();
                 if (!isset($mcModel->id)) {
                     $mcModel = new MasterPreHistoryDis();
@@ -1520,15 +1541,17 @@ public function serviceRequestGetTable(Request $request)
 			
 			foreach ($mailsend as $mailone){
 				$tomail = $mailone['email'];
+                //$tomail = 'sd.dev94@gmail.com';
+
 				//echo '<pre>';print_r($tomail);exit;
             $data=['subject'=>'Service Create Mail','email'=>$tomail,'serviceno' => $obj->service_request_no,'url'=>$url];
 
 
             Mail::send('admin.mail.serviceNotificationMail', $data, function($message) use ($data) {
-
+                //dd($data);
                 $message->to($data['email'])->subject($data['subject']);
-                //dd($message);
                 $message->from(env('service_mail'),'QMS');
+                
                 //$message->from(\Config::get('env.service_mail'),'loyalty@gainwellindia.com');
              });
            }
@@ -1620,7 +1643,7 @@ public function serviceRequestGetTable(Request $request)
         $machinemodel = Service::select('gw_master_mc_model.*')->leftjoin('gw_master_mc_model',
             'gw_master_mc_model.id', '=', 'service_request.machine_modelno')->where('service_request.id', '=', $id)->get();
 			
-			//echo '<pre>';print_r($machinemodel[0]['id']);
+		//echo '<pre>';print_r($machinemodel->toArray());exit();
 
         $status = MasterStatus::select('gw_master_status.*')->get();
         
@@ -1633,7 +1656,7 @@ public function serviceRequestGetTable(Request $request)
 		   //exit;
 
         //$employee = MasterEmployee::select('gw_master_employee.name')->get();
-         $employee = User::select('users.name')->get();
+         $employee = User::select('users.name','users.id')->get();
 
         $compmodelno = Service::select('gw_master_comp_details.*')->leftjoin('gw_master_comp_details',
 
@@ -5747,8 +5770,17 @@ public function AssignUserProjectTask(Request $request){
         $title='Project Details';
         $emp_details=[];
         $tasks=[];
-        $project_plan=ProjectPlanMaster::find($id)->toArray();
-        
+        $project_plan=ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno','service_request.machine_modelno', 'gw_master_location.description','gw_master_customer.name as customer_name')
+                ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
+                ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')->find($id)->toArray();
+         $model_name = MasterMachineModelNo::select('gw_master_machine_model_no.model_no as model_name')->find($project_plan['machine_modelno']);
+         $compmodelno = Service::select('gw_master_comp_details.*')->leftjoin('gw_master_comp_details',
+
+            'gw_master_comp_details.id', '=', 'service_request.comp_model_no')->where('service_request.id', '=', $project_plan['service_id'])->get();
+         $compserialno = Service::select('gw_master_comp_details.*')
+            ->leftjoin('gw_master_comp_details', 'gw_master_comp_details.id', '=', 'service_request.component_serial_no')->where('service_request.id',
+                '=' , $project_plan['service_id'])->get();
         $project_task=ProjectTask::where('prj_id','=',$id)
             ->get()->toArray()[0];
         $project_user=ProjectUser::where('prj_id','=',$id)
@@ -5764,7 +5796,6 @@ public function AssignUserProjectTask(Request $request){
             $explode_user=explode(',',$assignuser_service);
             $service_assigned_user =count($explode_user);
         }
-
 
         if($project_plan['dept_id'] != '6') {
             $getDeptTasks = UserHelper::getDeptTask($project_plan['dept_id'], $service_details['machine_modelno']);
@@ -5796,7 +5827,10 @@ public function AssignUserProjectTask(Request $request){
             date_add($estm_end_date, date_interval_create_from_date_string($number));
 
 
-            $project_plan = ProjectPlanMaster::find($id);
+            $project_plan = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno','service_request.machine_modelno', 'gw_master_location.description','gw_master_customer.name as customer_name')
+                ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
+                ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')->find($id);
             ///$project_plan->estm_end_date = date_format($estm_end_date, "Y-m-d");
             //$project_plan->estm_days = $task_tat_cal;
             $project_plan->save();
@@ -5914,7 +5948,11 @@ public function AssignUserProjectTask(Request $request){
                 date_add($estm_end_date, date_interval_create_from_date_string($number));
 
                 if($rim == 0) {
-                    $project_plan = ProjectPlanMaster::find($id);
+                    $project_plan = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno','service_request.machine_modelno', 'gw_master_location.description','gw_master_customer.name as customer_name')
+                    ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
+                    ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                    ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
+                    ->find($id);
                     //$project_plan->estm_end_date = date_format($estm_end_date, "Y-m-d");
                     //$project_plan->estm_days = $task_tat_cal;
                     $project_plan->save();
@@ -5986,7 +6024,10 @@ public function AssignUserProjectTask(Request $request){
                     ->with('task_user', $task_user)
                     ->with('result', $result)
 					->with('service_assigned_user', $service_assigned_user)
-                    ->with('service_details', $service_details);
+                    ->with('service_details', $service_details)
+                    ->with('compmodelno',$compmodelno)
+                    ->with('compserialno',$compserialno)
+                    ->with('model_name',$model_name);
             }else{
 
                 return view('admin.superadmin.projectDetails')
@@ -6000,7 +6041,10 @@ public function AssignUserProjectTask(Request $request){
                     ->with('task_user', $task_user)
                     ->with('result', $result)
 					->with('service_assigned_user', $service_assigned_user)
-                    ->with('service_details', $service_details);
+                    ->with('service_details', $service_details)
+                    ->with('compmodelno',$compmodelno)
+                    ->with('compserialno',$compserialno)
+                    ->with('model_name',$model_name);
             } 
 
 
@@ -6014,21 +6058,22 @@ public function AssignUserProjectTask(Request $request){
 
         $location=$data['user']['location_id'];
         if($location != '3') {
-            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno', 'gw_master_location.description')
+            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno', 'gw_master_location.description','gw_master_customer.name as customer_name')
                 ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
                 ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
                 ->where('service_request.location_id', '=', $location)
                 ->get();
         }
         if($location == '3'){
-            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno', 'gw_master_location.description')
+            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno', 'gw_master_location.description','gw_master_customer.name as customer_name')
                 ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
                 ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
                 //->where('service_request.location_id', '=', $location)
                 ->get();
         }
-
-        // echo "<pre>";print_r($table);exit();
+        //echo "<pre>";print_r($table);exit();
         $datatables =  Datatables::of($table)
 
             ->addColumn('action', function ($table) {
@@ -6131,7 +6176,7 @@ public function AssignUserProjectTask(Request $request){
                 ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
                 ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
                 ->where('service_request.location_id', '=', $location)
-                // ->where('gw_project_plan_master.dept_id', '=', $section_id)
+                ->where('gw_project_plan_master.dept_id', '=', $section_id)
                 ->get();
         }
         if($location == '3'){
@@ -6139,7 +6184,7 @@ public function AssignUserProjectTask(Request $request){
                 ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
                 ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
                 //->where('service_request.location_id', '=', $location)
-                // ->where('gw_project_plan_master.dept_id', '=', $section_id)
+                 ->where('gw_project_plan_master.dept_id', '=', $section_id)
                 ->get();
         }
 
@@ -6178,26 +6223,64 @@ public function getTableProjectMaster(Request $request)
         $location=$data['user']['location_id'];
         $section_id=$data['user']['section_id'];
 
-        if($location != '3') {
+        if($location != '3' && $section_id != 9) {
 
 
-            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno', 'gw_master_location.description')
+            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno','service_request.machine_modelno','service_request.component_name', 'service_request.machine_serialno','service_request.component_serial_no','gw_master_location.description','gw_master_customer.name as customer_name')
                 ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
                 ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
                 ->where('service_request.location_id', '=', $location)
                  ->where('gw_project_plan_master.dept_id', '=', $section_id)
                 ->get();
+                $table->map(function($item, $key){
+                    $modelno = MasterMachineModelNo::select('gw_master_machine_model_no.model_no as model_name')->find($item->machine_modelno);
+                    if (!empty($modelno['model_name'])) 
+                         $item['model_name'] = $modelno['model_name'];
+                     else
+                         $item['model_name'] = '';
+                    return $item;
+                });
         }
-        if($location == '3'){
-            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno', 'gw_master_location.description')
+        if($location != '3' && $section_id == 9) {
+
+
+            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno','service_request.machine_modelno','service_request.component_name', 'service_request.machine_serialno','service_request.component_serial_no','gw_master_location.description','gw_master_customer.name as customer_name')
                 ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
                 ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
+                ->where('service_request.location_id', '=', $location)
+                //->where('gw_project_plan_master.dept_id', '=', $section_id)
+                ->get();
+                $table->map(function($item, $key){
+                    $modelno = MasterMachineModelNo::select('gw_master_machine_model_no.model_no as model_name')->find($item->machine_modelno);
+                    if (!empty($modelno['model_name'])) 
+                         $item['model_name'] = $modelno['model_name'];
+                     else
+                         $item['model_name'] = '';
+                    return $item;
+                });
+        }
+        if($location == '3'){
+            $table = ProjectPlanMaster::select('gw_project_plan_master.*', 'service_request.work_orderno','service_request.machine_modelno','service_request.component_name', 'service_request.machine_serialno','service_request.component_serial_no','gw_master_location.description','gw_master_customer.name as customer_name')
+                ->join('service_request', 'service_request.id', '=', 'gw_project_plan_master.service_id')
+                ->leftjoin('gw_master_location', 'gw_master_location.id', '=', 'service_request.location_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
+                ->leftjoin('gw_master_customer','gw_master_customer.id','=','gw_project_plan_master.customer_id')
                 //->where('service_request.location_id', '=', $location)
                  ->where('gw_project_plan_master.dept_id', '=', $section_id)
                 ->get();
+                $table->map(function($item, $key){
+                     $modelno = MasterMachineModelNo::select('gw_master_machine_model_no.model_no as model_name')->find($item->machine_modelno);
+                     if (!empty($modelno['model_name'])) 
+                         $item['model_name'] = $modelno['model_name'];
+                     else
+                         $item['model_name'] = '';
+                    return $item;
+                });
         }
-
-        // echo "<pre>";print_r($table);exit();
+        //dd($table);
+         //echo "<pre>";print_r($table);exit();
         $datatables =  Datatables::of($table)
 
             ->addColumn('action', function ($table) {
@@ -7504,7 +7587,7 @@ public function getTableProjectMaster(Request $request)
         // $machserial = UserHelper::machineserialno();
         $compse = UserHelper::codeOptimizeCompserial($request['compserial']);
         //$compse = UserHelper::componentserialno();
-//dd($compse);exit;
+        //dd($compse);exit;
         $comser = '<option selected="selected" disabled="disabled" value="">Select Component Serial</option>';
 		$comser .= '<option  value="0">Not Maintained</option>';
         if (!isset($compse->comp_serial_no)) {

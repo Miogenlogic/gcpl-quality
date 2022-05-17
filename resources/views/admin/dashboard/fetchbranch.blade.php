@@ -35,7 +35,9 @@
                         <div class="card-header border-0">
                             <h3 class="mb-0">All Component Model Details</h3>
                         </div>
-
+                         <div class="text-right mb-1" style="padding-right: 70px">
+                            <a class="btn btn-info text-white" href="{{url('admin/component-models-add')}}">Add Component Model</a>
+                        </div>
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush" id="tabe1">
                                 <thead class="thead-light">

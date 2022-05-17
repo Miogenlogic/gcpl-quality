@@ -24,6 +24,11 @@ class ChecksheetChildSection extends Model
         public $incrementing = false;
         public $timestamps = false;
     */
+
+         public function sub_child_section()
+        {
+            return $this->hasMany('App\Models\ChecksheetSubChildSection','child_id','id');
+        }
 }
 
 

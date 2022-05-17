@@ -2657,6 +2657,306 @@ public function userEdit($id)
         return redirect('admin/fetch-assembly');
     }
 
+        //component engine models
+
+    public function componentModelsAdd()
+    {
+        return view('admin.master.addComponentEngineModels');
+
+
+    }
+
+   
+    public function componentModelsAddSave(Request $request)
+    {
+        // $data = $request->input();
+        // dd($data);
+        $obj =  new MasterComponentModelNo();
+        $obj->model_no=$request['model_code'];
+        $obj->save();
+        // echo '<pre>';print_r($obj);exit;
+        return redirect('admin/component-models-list');
+
+    }
+
+    public function componentModelsEdit($id)
+    {
+        $title='Edit Component Model';
+
+        $user=User::find($id);
+
+        return view('admin.master.editComponentEngineModel')
+            ->with('user',$user);
+    }
+    public function componentModelsEditStore(Request $request)
+    {
+        //  $myrequest=$request->all();
+        //dd($request);
+
+        $obj = User::find($request['id']);
+        $obj->name = $request['name'];
+        $obj->location_id = $request['location_id'];
+        $obj->emp_code = $request['emp_code'];
+        $obj->email = $request['email'];
+        $obj->section_id = $request['section_id'];
+        $obj->designation_id = $request['designation_id'];
+        $obj->role_id = $request['role_id'];
+
+
+             $obj->password = Hash::make($request['password']);
+
+        $obj->save();
+        return redirect('admin/component-models-list');
+    }
+    public function componentmodelsdelete($user_id)
+    {
+        $sr = User::find($user_id);
+
+
+        $sr->delete();
+
+        return redirect('admin/component-models-list');
+    }
+
+    public function componentModelsList()
+    {
+        return view('admin.master.listComponentEngineModels');
+
+
+    }
+
+   
+    public function componentModelsGetTableDownload(){
+       
+       $table = User::select('users.*','users.name as username','gw_master_department.name as dept_name','gw_master_designation.designation as desg_name','roles.name as jobrole')
+            ->join('gw_master_department','gw_master_department.id','=','users.section_id')
+            ->join('gw_master_designation','gw_master_designation.id','=','users.designation_id')
+            ->join('roles','roles.id','=','users.role_id')
+            //->groupby('gw_master_employee.section_id')
+            ->get();
+
+        $style = (new StyleBuilder())
+            ->setFontBold()
+            ->build();
+        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/EmployeeDetsilsList.xlsx';
+
+        (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
+            return [
+                'Sr No' => $table['id'],
+                'USERNAME' => $table['username'],
+                'EMP CODE' => $table['emp_code'],                       
+                'DEPARTMENT' => $table['dept_name'],
+                'DESIGNATION' => $table['desg_name'],
+                'ROLE' => $table['jobrole'],
+                
+            ];
+        });
+        $file = $path;
+        $name = basename($file);
+        return response()->download($file, $name);    
+
+
+    }
+
+    public function componentModelsGetTable(Request $request)
+    {
+        //$table = User::select('*')->get();
+       $table = MasterComponentModelNo::select('*')->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/fetchdata/' . $table->id) . '">Edit</a>
+                                 <a class="dropdown-item" href="' . url('admin/model-delete/') . "/". "$table->id" . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>                              </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
+
+     //component model section
+
+    public function componentSectionAdd()
+    {
+        $type = array(array('id'=>1,'name'=>'Text'),
+                      array('id'=>2,'name'=>'TextEditor'),
+                      array('id'=>3,'name'=>'Radio'),
+                      array('id'=>4,'name'=>'Dropdown'),
+                      array('id'=>5,'name'=>'checkbox'),
+                );
+        return view('admin.master.addComponentEngineSection')
+                ->with('type',$type);
+
+
+    }
+
+   
+    public function componentSectionAddSave(Request $request)
+    {
+         $data = $request->input();
+        // dd($data);
+            $section = new MasterCheckSheetSection;
+            $section->name = $data['name'];
+            $section->status = 'Active';
+            if($section->save()==TRUE)
+            {
+                if (count( $data['parent'] ) > 0) 
+                {
+
+                    foreach ($data['parent'] as $p_sec)
+                    {
+                        $child = new ChecksheetChildSection;
+                        $child->section_id = $section->id;
+                        $child->child_section = $p_sec['name'];
+                        if($child->save() == TRUE)
+                        {
+                             foreach ($p_sec['child'] as $pc_sec)
+                             {
+                                $sub_child = new ChecksheetSubChildSection;
+                                $sub_child->section_id = $section->id;
+                                $sub_child->child_id = $child->id;
+                                $sub_child->sub_child_section = $pc_sec;
+                                $sub_child->save();
+                            }
+                        }
+                    }
+                }
+            }
+        return redirect('admin/component-section-list');
+
+    }
+
+    public function componentSectionEdit($id)
+    {
+        $title='Edit Component Section';
+        $type = array(array('id'=>1,'name'=>'Text'),
+                      array('id'=>2,'name'=>'TextEditor'),
+                      array('id'=>3,'name'=>'Radio'),
+                      array('id'=>4,'name'=>'Dropdown'),
+                      array('id'=>5,'name'=>'checkbox'),
+                    );
+        $section=MasterCheckSheetSection::with('child_section.sub_child_section')->find($id);
+        return view('admin.master.editComponentEngineSection')
+            ->with('section',$section,'type',$type);
+    }
+    public function componentSectionEditStore(Request $request)
+    {
+        $data = $request->input();
+        // dd($data);
+        $section = MasterCheckSheetSection::find($request['id']);
+        $section->name = $data['name'];
+        $section->status = 'Active';
+        if($section->save()==TRUE)
+        {
+            if (count( $data['parent'] ) > 0) 
+            {
+               $ch = ChecksheetChildSection::where('section_id',$request['id'])->delete();
+               $sub_ch = ChecksheetSubChildSection::where('section_id',$request['id'])->delete();
+                foreach ($data['parent'] as $p_sec)
+                {
+                    $child = new ChecksheetChildSection;
+                    $child->section_id = $section->id;
+                    $child->child_section = $p_sec['name'];
+                    if($child->save() == TRUE)
+                    {
+                         foreach ($p_sec['child'] as $pc_sec)
+                         {
+                            $sub_child = new ChecksheetSubChildSection;
+                            $sub_child->section_id = $section->id;
+                            $sub_child->child_id = $child->id;
+                            $sub_child->sub_child_section = $pc_sec;
+                            $sub_child->save();
+                        }
+                    }
+                }
+            }
+        }
+        return redirect('admin/component-section-list');
+    }
+    public function componentSectiondelete($user_id)
+    {
+        $sr = MasterCheckSheetSection::find($user_id);
+        $sr->delete();
+        $ch = ChecksheetChildSection::where('section_id',$user_id)->delete();
+        $sub_ch = ChecksheetSubChildSection::where('section_id',$user_id)->delete();
+
+        return redirect('admin/component-section-list');
+    }
+
+    public function componentSectionList()
+    {
+        return view('admin.master.listComponentEngineSection');
+
+
+    }
+
+   
+    public function componentSectionGetTableDownload(){
+       
+       $table = User::select('users.*','users.name as username','gw_master_department.name as dept_name','gw_master_designation.designation as desg_name','roles.name as jobrole')
+            ->join('gw_master_department','gw_master_department.id','=','users.section_id')
+            ->join('gw_master_designation','gw_master_designation.id','=','users.designation_id')
+            ->join('roles','roles.id','=','users.role_id')
+            //->groupby('gw_master_employee.section_id')
+            ->get();
+
+        $style = (new StyleBuilder())
+            ->setFontBold()
+            ->build();
+        $path = 'C:/Apache24/htdocs/gcpl-quality/template files/EmployeeDetsilsList.xlsx';
+
+        (new FastExcel($table))->headerStyle($style)->export($path, function ($table) {
+            return [
+                'Sr No' => $table['id'],
+                'USERNAME' => $table['username'],
+                'EMP CODE' => $table['emp_code'],                       
+                'DEPARTMENT' => $table['dept_name'],
+                'DESIGNATION' => $table['desg_name'],
+                'ROLE' => $table['jobrole'],
+                
+            ];
+        });
+        $file = $path;
+        $name = basename($file);
+        return response()->download($file, $name);    
+
+
+    }
+
+    public function componentSectionGetTable(Request $request)
+    {
+        //$table = User::select('*')->get();
+       $table = MasterCheckSheetSection::select('*')->orderBy('created_at','DESC')->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/component-section-edit/' . $table->id) . '">Edit</a>
+                                 <a class="dropdown-item" href="' . url('admin/componentsectiondelete/') . "/". "$table->id" . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>                              </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
+
     public function checksheetcolumnlistingnew()
     {
         return view('admin.checksheet.listchecksheetcolumnnew');
@@ -2706,7 +3006,7 @@ public function userEdit($id)
     public function checksheetcolumnAddSavenew(Request $request)
     {
 
-    //$data = $request->input();
+        //$data = $request->input();
 
             // print_r($request);die();
             //$obj1 = new ChecksheetColumnStore();
@@ -2869,7 +3169,7 @@ public function userEdit($id)
         }
 
         return $section_html;
-    }        
+    }
 
 
 }

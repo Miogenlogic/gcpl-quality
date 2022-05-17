@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Providers\HelperServiceProvider;
 class CheckGateController extends Controller
 {
-
+    
   //super admin
     public function checkGateQuestionAdd()
     {
@@ -78,7 +78,7 @@ class CheckGateController extends Controller
             })*/
 
             ->addColumn('action', function ($table) {
-                $btns = ' <div class="dropdown">
+                return ' <div class="dropdown">
                                             <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
@@ -88,8 +88,6 @@ class CheckGateController extends Controller
                                                 <a class="dropdown-item" href="' . url('admin/check-gate-question-delete')."/"."$table->id".'">DELETE</a>
                                             </div>
                                         </div>';
-
-                return $btns;
                 //$btns = ' <a href="' . url('admin/check-gate-question-edit/' . $table->id) . '" class="btn btn-outline-success" >EDIT</a>';
                   //$btns .=' <a href="' . url('admin/check-gate-question-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
                 //return $btns;
@@ -248,17 +246,17 @@ class CheckGateController extends Controller
         $url=url('/');
         $location=$data['user']['location_id'];
         $dpt= $service->chkonedept;
-        if($dpt == 4){
-            $sectionid = 10;
-        }else if($dpt == 5){
-            $sectionid = 11;
-        }else if($dpt == 7){
-            $sectionid = 15;
-        }else if($dpt == 6){
-            $sectionid = 6;
-        }else if($dpt == 13){
-            $sectionid = 12;
-        }
+        if ($dpt == 4) {
+									$sectionid = 10;
+								} elseif ($dpt == 5) {
+									$sectionid = 11;
+								} elseif ($dpt == 7) {
+									$sectionid = 15;
+								} elseif ($dpt == 6) {
+									$sectionid = 6;
+								} elseif ($dpt == 13) {
+									$sectionid = 12;
+								}
 
 
 
@@ -382,17 +380,17 @@ class CheckGateController extends Controller
         $url=url('/');
         $location=$data['user']['location_id'];
         $dpt= $service->chkonedept;
-        if($dpt == 4){
-            $sectionid = 10;
-        }else if($dpt == 5){
-            $sectionid = 11;
-        }else if($dpt == 7){
-            $sectionid = 15;
-        }else if($dpt == 6){
-            $sectionid = 6;
-        }else if($dpt == 13){
-            $sectionid = 12;
-        }
+        if ($dpt == 4) {
+									$sectionid = 10;
+								} elseif ($dpt == 5) {
+									$sectionid = 11;
+								} elseif ($dpt == 7) {
+									$sectionid = 15;
+								} elseif ($dpt == 6) {
+									$sectionid = 6;
+								} elseif ($dpt == 13) {
+									$sectionid = 12;
+								}
         $mailsend=User::select('email')
 
             ->where(function($query) use($location) {
@@ -473,17 +471,17 @@ class CheckGateController extends Controller
         $url=url('/');
         $location=$data['user']['location_id'];
         $dpt= $service->chkonedept;
-        if($dpt == 4){
-            $sectionid = 10;
-        }else if($dpt == 5){
-            $sectionid = 11;
-        }else if($dpt == 7){
-            $sectionid = 15;
-        }else if($dpt == 6){
-            $sectionid = 6;
-        }else if($dpt == 13){
-            $sectionid = 12;
-        }
+        if ($dpt == 4) {
+									$sectionid = 10;
+								} elseif ($dpt == 5) {
+									$sectionid = 11;
+								} elseif ($dpt == 7) {
+									$sectionid = 15;
+								} elseif ($dpt == 6) {
+									$sectionid = 6;
+								} elseif ($dpt == 13) {
+									$sectionid = 12;
+								}
         $mailsend=User::select('email')
 
 
@@ -567,17 +565,17 @@ class CheckGateController extends Controller
         $url=url('/');
         $location=$data['user']['location_id'];
         $dpt= $service->chkonedept;
-        if($dpt == 4){
-            $sectionid = 10;
-        }else if($dpt == 5){
-            $sectionid = 11;
-        }else if($dpt == 7){
-            $sectionid = 15;
-        }else if($dpt == 6){
-            $sectionid = 6;
-        }else if($dpt == 13){
-            $sectionid = 12;
-        }
+        if ($dpt == 4) {
+									$sectionid = 10;
+								} elseif ($dpt == 5) {
+									$sectionid = 11;
+								} elseif ($dpt == 7) {
+									$sectionid = 15;
+								} elseif ($dpt == 6) {
+									$sectionid = 6;
+								} elseif ($dpt == 13) {
+									$sectionid = 12;
+								}
         $mailsend=User::select('email')
 
 
