@@ -1356,7 +1356,7 @@ public function serviceRequestGetTable(Request $request)
 
         }
 
-        $customer = MasterCustomer::where('customer_code','=',$request['customer'])->get()->toarray();
+        //$customer = MasterCustomer::where('customer_code','=',$request['customer'])->get()->toarray();
 
 
         $obj = new Service();
@@ -1366,7 +1366,8 @@ public function serviceRequestGetTable(Request $request)
         $obj->empres = $request['empres'];
         $obj->cc_status = $request['cc_status'];
         $obj->impact = $request['impact'];$obj->recom=$request['recom'];
-        $obj->customer=isset($customer[0]['id']) ? $customer[0]['id'] : '';
+        //$obj->customer=isset($customer[0]['id']) ? $customer[0]['id'] : '';
+        $obj->customer=$request['customer'];
         $obj->location_id=$location;
         $obj->job_type=$request['job_type'];
         //$obj->component_serial_no=$request['component_serial_no'];
