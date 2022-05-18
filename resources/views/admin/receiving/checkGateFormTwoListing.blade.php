@@ -162,12 +162,13 @@
                          </div>
                      </div>
                  </div>
+                            @if($checkgatetwolist != Null)
                             @foreach( $checktwoquestion as $comm)
 
                               @php
                               $chk=array_search($comm->inspection_criteria	,$checkgatetwolist->question);
                                 @endphp
-                       <li class="list-group-item px-0">
+                                <li class="list-group-item px-0">
                                     <div class="row align-items-center">
                                         <div class="col-7"><h4 class="mb-0" >{{$comm->inspection_criteria}}</h4></div>
                                         <div class="col-2" >
@@ -190,7 +191,7 @@
                                     $i++;
                                 @endphp
                             @endforeach
-                            
+                            @endif
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">

@@ -1054,11 +1054,15 @@ static function columndynamic1($model_id,$section_id)
             $codess = explode(',', $codes);
             foreach ($codess as $key => $code) {
                 //$emp_det[$c]=MasterEmployee::where('emp_code','=',$code)
-                 $emp_det[$c]=User::where('emp_code','=',$code)
-                    ->get()->toArray();
-                $c++;
+                if (User::where('emp_code','=',$code)->count() > 0) 
+                {
+                    $emp_det[$c]=User::where('emp_code','=',$code)
+                    ->get()->toArray()[0];
+                    $c++;
+                }
+                
             }
-            return array_filter($emp_det);
+            return $emp_det;
         }
 
     }
@@ -1836,6 +1840,111 @@ static function predicessorfind($task_id,$dept_id,$project_id)
 
             ->get();
     }
+
+    static function sectionforcolumnnew($dept_id,$model_id){
+      $dept = ModelWiseCheecksheet::select('model_wise_checksheet.*')
+            ->where('model_id','=',$model_id)
+            ->where('dept_id','=',$dept_id)
+            ->orderBy('id', 'DESC')
+            ->first();
+        if(@$dept->section_id!=''){
+            $section_id = explode(',', $dept->section_id); 
+        }else{
+            $section_id = array();
+        }
+        if(@$dept->child_id!=''){
+            $child_id = explode(',', $dept->child_id);
+        }else{
+            $child_id = array();
+        }
+        if(@$dept->subsection_id!=''){
+            $subsection_id = explode(',', $dept->subsection_id);
+        }else{
+            $subsection_id = array();
+        }   
+        $section = array_unique(array_merge($section_id, $child_id, $subsection_id));
+        $section_id_temp = implode(',', $section);
+        // echo "<pre>";    
+        // print_r($section_id);die();    
+        
+        $section_data = MasterCheckSheetSection::select('gw_master_checksheet_section.*')
+            ->whereIn('id',$section_id)
+            // ->where('status','=','Active')
+            ->get();
+        // echo "<pre>";    
+        // print_r(sizeof($section_data));die();    
+        return $section_data;      
+    }
+
+    static function childsectionforcolumnnew($dept_id,$model_id){
+      $dept = ModelWiseCheecksheet::select('model_wise_checksheet.*')
+            ->where('model_id','=',$model_id)
+            ->where('dept_id','=',$dept_id)
+            ->orderBy('id', 'DESC')
+            ->first();
+        if(@$dept->section_id!=''){
+            $section_id = explode(',', $dept->section_id); 
+        }else{
+            $section_id = array();
+        }
+        if(@$dept->child_id!=''){
+            $child_id = explode(',', $dept->child_id);
+        }else{
+            $child_id = array();
+        }
+        if(@$dept->subsection_id!=''){
+            $subsection_id = explode(',', $dept->subsection_id);
+        }else{
+            $subsection_id = array();
+        }   
+        $section = array_unique(array_merge($section_id, $child_id, $subsection_id));
+        $section_id_temp = implode(',', $section);
+        // echo "<pre>";    
+        // print_r($child_id);die();    
+        
+        $section_data = ChecksheetChildSection::select('checksheet_section_child.*')
+            ->whereIn('id',$child_id)
+            // ->where('status','=','Active')
+            ->get();
+        // echo "<pre>";    
+        // print_r($section_data);die();    
+        return $section_data;      
+    }
+
+    static function subchildsectionforcolumnnew($dept_id,$model_id){
+      $dept = ModelWiseCheecksheet::select('model_wise_checksheet.*')
+            ->where('model_id','=',$model_id)
+            ->where('dept_id','=',$dept_id)
+            ->orderBy('id', 'DESC')
+            ->first();
+        if(@$dept->section_id!=''){
+            $section_id = explode(',', $dept->section_id); 
+        }else{
+            $section_id = array();
+        }
+        if(@$dept->child_id!=''){
+            $child_id = explode(',', $dept->child_id);
+        }else{
+            $child_id = array();
+        }
+        if(@$dept->subsection_id!=''){
+            $subsection_id = explode(',', $dept->subsection_id);
+        }else{
+            $subsection_id = array();
+        }   
+        $section = array_unique(array_merge($section_id, $child_id, $subsection_id));
+        $section_id_temp = implode(',', $section);
+        // echo "<pre>";    
+        // print_r($subsection_id);die();    
+        
+        $section_data = ChecksheetSubChildSection::select('checksheet_subchild_section.*')
+            ->whereIn('id',$subsection_id)
+            // ->where('status','=','Active')
+            ->get();
+        // echo "<pre>";    
+        // print_r(sizeof($section_data));die();    
+        return $section_data;      
+    }    
 	
 	 static function viewstdData()
     {

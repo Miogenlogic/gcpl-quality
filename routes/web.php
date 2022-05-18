@@ -897,6 +897,12 @@ Route::group(['prefix' => 'admin'], function(){
         Route::get('/checksheetcolumn-delete=new/{id}', ['uses' => 'MasterController@checksheetcolumnDeletenew']);
 
         Route::post('/get-section-for-column-new', ['uses' => 'MasterController@GetSectionForColumnNew']); 
+        Route::post('/get-child-section-for-column-new', ['uses' => 'MasterController@GetChildSectionForColumnNew']);
+
+        Route::post('/get-sub-child-section-for-column-new', ['uses' => 'MasterController@GetSubChildSectionForColumnNew']);
+
+        /*26.05.2022*/
+         Route::post('/check-sheet-common-file-upload', ['uses' =>'CheckSheetController@checkShetCommonFileUpload']);
     });
 });
 

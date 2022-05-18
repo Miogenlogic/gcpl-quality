@@ -2657,82 +2657,6 @@ public function userEdit($id)
         return redirect('admin/fetch-assembly');
     }
 
-    public function checksheetcolumnlistingnew()
-    {
-        return view('admin.checksheet.listchecksheetcolumnnew');
-    }
-
-    public function fetchchecksheetcolumnnew(Request $request)
-    {
-        $table = ChecksheetSectionWiseColumnnew::select('gw_master_section_column_new.*','gw_master_department.name as Dept','gw_master_mc_model.model_no as Model','gw_master_checksheet_section.name as Section')
-            ->leftjoin('gw_master_department','gw_master_department.id','=','gw_master_section_column_new.dept_id')
-            ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_section_column_new.model_id')
-            ->leftjoin('gw_master_checksheet_section','gw_master_checksheet_section.id','=','gw_master_section_column_new.section_id')
-            ->get();
-
-        $datatables = Datatables::of($table)
-            ->addColumn('action', function ($table) {
-
-
-
-                $btns = ' <div class="dropdown">
-                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a class="dropdown-item" href="' . url('admin/checksheetcolumn-edit-new/' . $table->id) . '">Edit</a>
-                                <a href="' . url('admin/checksheetcolumn-delete-new/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="dropdown-item">Delete</a>
-                                                             </div>
-                            </div>';
-                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
-                return $btns;
-            })
-            ->rawColumns(['action']);
-
-
-        return $datatables->make(true);
-    }
-
-    public function checksheetcolumnAddnew()
-    {
-        return view('admin.checksheet.addchecksheetcolumnnew');
-
-
-    }
-
-    public function checksheetcolumnAddSavenew(Request $request)
-    {
-
-    //$data = $request->input();
-
-            // print_r($request);die();
-            //$obj1 = new ChecksheetColumnStore();
-            $obj1 = new ChecksheetSectionWiseColumnnew(); //remove comment and change columnSectionShow function's table name to ChecksheetColumnStore
-
-            $obj1->dept_id = $request['dept_id'];
-            $obj1->model_id = $request['model_id'];
-            $obj1->section_id=$request['section_id'];
-        //dd($obj1->section_id);
-        if(!empty($request['columnSection'])){
-            $obj1->column_id = implode(',',$request['columnSection']);
-        }
-        else{
-            $obj1->column_id = Null;
-        }
-
-
-        $obj1->no_of_row_column = $request['no_of_row_column'];
-        
-       //dd($obj1->section_id);
-            $obj1->save();
-
-
-
-        return redirect('admin/checksheetcolumn-listing-new');
-
-    }
-
         //component engine models
 
     public function componentModelsAdd()
@@ -2747,16 +2671,8 @@ public function userEdit($id)
     {
         // $data = $request->input();
         // dd($data);
-        $obj = new User();
-        $obj->name = $request['name'];
-        $obj->location_id = $request['location_id'];
-        $obj->emp_code = $request['emp_code'];
-        $obj->email = $request['email'];
-        $obj->section_id = $request['section_id'];
-        $obj->designation_id = $request['designation_id'];
-        $obj->role_id = $request['role_id'];
-
-        $obj->password=Hash::make($request['password']);
+        $obj =  new MasterComponentModelNo();
+        $obj->model_no=$request['model_code'];
         $obj->save();
         // echo '<pre>';print_r($obj);exit;
         return redirect('admin/component-models-list');
@@ -2871,7 +2787,14 @@ public function userEdit($id)
 
     public function componentSectionAdd()
     {
-        return view('admin.master.addComponentEngineSection');
+        $type = array(array('id'=>1,'name'=>'Text'),
+                      array('id'=>2,'name'=>'TextEditor'),
+                      array('id'=>3,'name'=>'Radio'),
+                      array('id'=>4,'name'=>'Dropdown'),
+                      array('id'=>5,'name'=>'checkbox'),
+                );
+        return view('admin.master.addComponentEngineSection')
+                ->with('type',$type);
 
 
     }
@@ -2915,10 +2838,15 @@ public function userEdit($id)
     public function componentSectionEdit($id)
     {
         $title='Edit Component Section';
-
+        $type = array(array('id'=>1,'name'=>'Text'),
+                      array('id'=>2,'name'=>'TextEditor'),
+                      array('id'=>3,'name'=>'Radio'),
+                      array('id'=>4,'name'=>'Dropdown'),
+                      array('id'=>5,'name'=>'checkbox'),
+                    );
         $section=MasterCheckSheetSection::with('child_section.sub_child_section')->find($id);
         return view('admin.master.editComponentEngineSection')
-            ->with('section',$section);
+            ->with('section',$section,'type',$type);
     }
     public function componentSectionEditStore(Request $request)
     {
@@ -3029,6 +2957,94 @@ public function userEdit($id)
         return $datatables->make(true);
     }
 
+    public function checksheetcolumnlistingnew()
+    {
+        return view('admin.checksheet.listchecksheetcolumnnew');
+    }
+
+    public function fetchchecksheetcolumnnew(Request $request)
+    {
+        $table = ChecksheetSectionWiseColumnnew::select('gw_master_section_column_new.*','gw_master_department.name as Dept','gw_master_mc_model.model_no as Model','gw_master_checksheet_section.name as Section','checksheet_section_child.child_section as ChildSection','checksheet_subchild_section.sub_child_section as SubChildSection')
+            ->leftjoin('gw_master_department','gw_master_department.id','=','gw_master_section_column_new.dept_id')
+            ->leftjoin('gw_master_mc_model','gw_master_mc_model.id','=','gw_master_section_column_new.model_id')
+            ->leftjoin('gw_master_checksheet_section','gw_master_checksheet_section.id','=','gw_master_section_column_new.section_id')
+            ->leftjoin('checksheet_section_child','checksheet_section_child.id','=','gw_master_section_column_new.child_section_id')
+            ->leftjoin('checksheet_subchild_section','checksheet_subchild_section.id','=','gw_master_section_column_new.sub_child_section_id')
+            ->get();
+
+        $datatables = Datatables::of($table)
+            ->addColumn('action', function ($table) {
+
+
+
+                $btns = ' <div class="dropdown">
+                              <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="' . url('admin/checksheetcolumn-edit-new/' . $table->id) . '">Edit</a>
+                                <a href="' . url('admin/checksheetcolumn-delete-new/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="dropdown-item">Delete</a>
+                                                             </div>
+                            </div>';
+                // $btns .=' <a href="' . url('admin/service-delete/' . $table->id) . '" onclick="return confirm(\'Are you sure?\')" class="btn btn-outline-danger">DELETE</a>';
+                return $btns;
+            })
+            ->rawColumns(['action']);
+
+
+        return $datatables->make(true);
+    }
+
+    public function checksheetcolumnAddnew()
+    {
+        return view('admin.checksheet.addchecksheetcolumnnew');
+
+
+    }
+
+    public function checksheetcolumnAddSavenew(Request $request)
+    {
+
+        //$data = $request->input();
+
+            // print_r($request);die();
+            //$obj1 = new ChecksheetColumnStore();
+            $obj1 = new ChecksheetSectionWiseColumnnew(); //remove comment and change columnSectionShow function's table name to ChecksheetColumnStore
+
+            $obj1->dept_id = $request['dept_id'];
+            $obj1->model_id = $request['model_id'];
+            $obj1->section_id=$request['section_id'];
+            if($request['child_section_id']==''){
+                $obj1->child_section_id='';
+            }else{
+                $obj1->child_section_id=$request['child_section_id'];
+            }
+            if($request['sub_child_section_id']==''){
+                $obj1->sub_child_section_id='';
+            }else{
+                $obj1->sub_child_section_id=$request['sub_child_section_id'];
+            }
+        //dd($obj1->section_id);
+        if(!empty($request['columnSection'])){
+            $obj1->column_id = implode(',',$request['columnSection']);
+        }
+        else{
+            $obj1->column_id = Null;
+        }
+
+
+        $obj1->no_of_row_column = $request['no_of_row_column'];
+        
+       //dd($obj1->section_id);
+            $obj1->save();
+
+
+
+        return redirect('admin/checksheetcolumn-listing-new');
+
+    }
+
     public function columnSectionShowNew(Request $request)
     {
 
@@ -3082,14 +3098,14 @@ public function userEdit($id)
 
     public function checksheetcolumnEditSavenew(Request $request)
     {
-//         $data = $request->input();
-//        dd($data);
+        // $data = $request->input();
+       // dd($request['no_of_row_column']);
 
         $obj = ChecksheetSectionWiseColumnnew::find($request['id']);
         //$obj = new ModelWiseCheecksheet();
-        $obj->dept_id = $request['dept_id'];
-        $obj->model_id = $request['model_id'];
-        $obj->section_id=$request['section_id'];
+        // $obj->dept_id = $request['dept_id'];
+        // $obj->model_id = $request['model_id'];
+        // $obj->section_id=$request['section_id'];
 
         if(!empty($request['columnSection'])){
             $obj->column_id = implode(',',$request['columnSection']);
@@ -3097,7 +3113,7 @@ public function userEdit($id)
             $obj->column_id = NULL;
         }
 
-        $obj1->no_of_row_column = $request['no_of_row_column'];
+        $obj->no_of_row_column = $request['no_of_row_column'];
 
         $obj->save();
 
@@ -3123,6 +3139,33 @@ public function userEdit($id)
 
         foreach ($sect as $sect_one) {
             $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->name.'</option>';            
+        }
+
+        return $section_html;
+    }
+
+    public function GetChildSectionForColumnNew(Request $request)
+    {
+        $sect=UserHelper::childsectionforcolumnnew($request['dept_id'],$request['model_id']);
+        // print_r($sect);die();
+        $section_html = '<option value="">Select Section</option>';
+
+        foreach ($sect as $sect_one) {
+            $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->child_section.'</option>';            
+        }
+
+        return $section_html;
+    }
+
+
+    public function GetSubChildSectionForColumnNew(Request $request)
+    {
+        $sect=UserHelper::subchildsectionforcolumnnew($request['dept_id'],$request['model_id']);
+        // print_r($sect);die();
+        $section_html = '<option value="">Select Section</option>';
+
+        foreach ($sect as $sect_one) {
+            $section_html .= '<option value='.$sect_one->id.'>'.$sect_one->sub_child_section.'</option>';            
         }
 
         return $section_html;
