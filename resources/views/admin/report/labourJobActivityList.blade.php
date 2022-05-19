@@ -265,8 +265,6 @@
                 ajax:{
                     url: '{{ url("admin/labourJobActivity-get-table") }}', 
                 },
-
-
                 columns: [
                     {data: 'id', name: 'id',orderable: false, searchable: false},
                     {data: 'shift', name: 'shift'},
