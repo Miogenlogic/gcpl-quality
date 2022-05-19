@@ -189,6 +189,8 @@
             $('#tabe1').DataTable({
                 processing: true,
                 serverSide: true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 ajax:{
                     url: '{{ url("admin/projects-open-list-table") }}',
                 },

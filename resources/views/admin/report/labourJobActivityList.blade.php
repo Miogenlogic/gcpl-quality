@@ -257,6 +257,8 @@
                 buttons: [ { extend: 'excel', text: 'Download in Excel Format' } ],
                 destroy: true,
                 paging:true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 //pageLength: 57,
 
                 searching: true,
@@ -303,6 +305,8 @@
                 buttons: [ { extend: 'excel', text: 'Download in Excel Format' } ],
                 destroy: true,
                 paging:false,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 //pageLength: 57,
 
                 searching: false,
@@ -360,6 +364,8 @@
                 buttons: [ { extend: 'excel', text: 'Download in Excel Format' } ],
                 destroy: true,
                 paging:true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 //pageLength: 57,
 
                 searching: true,
