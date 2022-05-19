@@ -7820,7 +7820,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 
                 $hours=str_replace(':','.',$table['hours']);
 
-                return $hours;
+                return ltrim($hours, 0);
 
             })
 
@@ -7899,7 +7899,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 
                 $hours=str_replace(':','.',$table['hours']);
 
-                return $hours;
+                return ltrim($hours, 0);
 
             })
 
@@ -8037,7 +8037,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 
                 $hours=str_replace(':','.',$table['hours']);
 
-                return $hours;
+                return ltrim($hours, 0);
 
             })
             ->rawColumns(['action','roles','dateformat','createdatformat']);
