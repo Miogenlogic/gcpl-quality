@@ -197,6 +197,8 @@
                 processing: true,
                 searching: false,
                 serverSide: true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 ajax:{
                     url: '{{ url("admin/jobdetails-get-table") }}',
                 },
@@ -250,6 +252,8 @@
                 searching: false,
                 processing: true,
                 serverSide: true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 ajax:{
                     url: '{{ url("admin/jobdetails-get-table-datefilter") }}',
                     type: 'GET',
@@ -289,6 +293,8 @@
                 buttons: [ { extend: 'excel', text: 'Download in Excel Format' } ],
                 destroy: true,
                 paging:true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 //pageLength: 57,
 
                 searching: false,

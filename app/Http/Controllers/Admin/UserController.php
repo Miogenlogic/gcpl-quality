@@ -7264,7 +7264,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 	
 	public function labourJobActivityGetTable_old(Request $request)
     {
-//        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
+        //        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
         $data = Session::all();
         //dd($data);
         $emp_id=$data['user']['emp_code'];
@@ -7282,7 +7282,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         if($location == '3'){
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
- ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
@@ -7327,7 +7327,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 
      public function labourJobActivityFilter_old(Request $request)
     {
-//        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
+        //        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
         $data = Session::all();
         //dd($data);
         $emp_id=$data['user']['emp_code'];
@@ -7336,7 +7336,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         if($locationId != '3') {
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
@@ -7346,14 +7346,14 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         if($locationId == '3'){
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        //        echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7388,7 +7388,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         return $datatables->make(true);
     }
 
-     public function labourJobActivityDateFilter_old(Request $request)
+    public function labourJobActivityDateFilter_old(Request $request)
     {
 
         $data = Session::all();
@@ -7475,7 +7475,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 ->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        // echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7512,9 +7512,9 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 
 
 
-     public function labourJobActivityGetTableold(Request $request)
+    public function labourJobActivityGetTableold(Request $request)
     {
-//        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
+        //        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
         $data = Session::all();
         //dd($data);
         $emp_id=$data['user']['emp_code'];
@@ -7531,13 +7531,13 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         if($location == '3'){
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
- ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                 ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        // echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7575,7 +7575,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 
      public function labourJobActivityFilterold(Request $request)
     {
-//        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
+        //        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
         $data = Session::all();
         //dd($data);
         $emp_id=$data['user']['emp_code'];
@@ -7584,7 +7584,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         if($locationId != '3') {
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->where('time_sheet_entry.location_id', '=', $locationId)
@@ -7593,13 +7593,13 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         if($locationId == '3'){
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        // echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7634,7 +7634,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         return $datatables->make(true);
     }
 
- public function labourJobActivityDateFilterold(Request $request)
+    public function labourJobActivityDateFilterold(Request $request)
     {
 
         $data = Session::all();
@@ -7648,11 +7648,11 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         //$startDate = date('d/m/Y', strtotime($request['startdate']));
         //$endDate =  date('d/m/Y', strtotime($request['enddate']));
 
-//        $startDate = $request['startdate'];
-//        $endDate =  $request['enddate'];
+        //        $startDate = $request['startdate'];
+        //        $endDate =  $request['enddate'];
        //dd($startDate);
 
-     $locationId = $request['location'];
+        $locationId = $request['location'];
         //print_r($locationId);
        //dd($location);
 			if(!empty($startDate) && !empty($endDate)) {
@@ -7717,7 +7717,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 ->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        // echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7752,9 +7752,9 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         return $datatables->make(true);
     }
 
-public function labourJobActivityGetTable(Request $request)
+    public function labourJobActivityGetTable(Request $request)
     {
-//        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
+        //        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
         $data = Session::all();
         //dd($data);
         $emp_id=$data['user']['emp_code'];
@@ -7762,7 +7762,7 @@ public function labourJobActivityGetTable(Request $request)
         if($location != '3') {
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-        ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
@@ -7772,14 +7772,14 @@ public function labourJobActivityGetTable(Request $request)
         if($location == '3'){
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
- ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-     //echo'<pre>';print_r($table);exit();
+        //echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7815,7 +7815,14 @@ public function labourJobActivityGetTable(Request $request)
                 return $formatted_dt1;
 
             })
-			
+			->addColumn('hours', function ($table) {
+
+                
+                $hours=str_replace(':','.',$table['hours']);
+
+                return ltrim($hours, 0);
+
+            })
 
             ->rawColumns(['action','roles','dateformat','createdatformat']);
 
@@ -7823,9 +7830,9 @@ public function labourJobActivityGetTable(Request $request)
         return $datatables->make(true);
     }
 
-     public function labourJobActivityFilter(Request $request)
+    public function labourJobActivityFilter(Request $request)
     {
-//        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
+        //        $table=TimeSheetEntry::select('*')->get();,'service_request.service_request_no as service_request_no','users.name as name','users.emp_code as emp_code','gw_project_plan_master.status as job_status','gw_master_customer.name as cust','users.name as empname'
         $data = Session::all();
         //dd($data);
         $emp_id=$data['user']['emp_code'];
@@ -7834,7 +7841,7 @@ public function labourJobActivityGetTable(Request $request)
         if($locationId != '3') {
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
@@ -7844,14 +7851,14 @@ public function labourJobActivityGetTable(Request $request)
         if($locationId == '3'){
             $table = TimeSheetEntry::select('time_sheet_entry.*', 'gw_master_department.name as dept', 'gw_project_plan_master.status as job_status','gw_master_customer.name as cust','service_request.description')
                 // ->leftjoin('service_request','service_request.service_request_no', '=','time_sheet_entry.service_req' )
-->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
+                ->leftjoin('gw_master_customer', 'gw_master_customer.id', '=', 'time_sheet_entry.cust_name')
                 ->leftjoin('gw_project_plan_master', 'gw_project_plan_master.workorder', '=', 'time_sheet_entry.work_order')
                 ->leftjoin('gw_master_department', 'gw_master_department.id', '=', 'time_sheet_entry.task')
                 ->leftjoin('service_request', 'service_request.work_orderno', '=', 'time_sheet_entry.work_order')
                 //->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        // echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -7887,7 +7894,14 @@ public function labourJobActivityGetTable(Request $request)
                 return $formatted_dt1;
 
             })
-            
+            ->addColumn('hours', function ($table) {
+
+                
+                $hours=str_replace(':','.',$table['hours']);
+
+                return ltrim($hours, 0);
+
+            })
 
             ->rawColumns(['action','roles','dateformat','createdatformat']);
 
@@ -7909,11 +7923,11 @@ public function labourJobActivityGetTable(Request $request)
         //$startDate = date('d/m/Y', strtotime($request['startdate']));
         //$endDate =  date('d/m/Y', strtotime($request['enddate']));
 
-//        $startDate = $request['startdate'];
-//        $endDate =  $request['enddate'];
+        //        $startDate = $request['startdate'];
+        //        $endDate =  $request['enddate'];
        //dd($startDate);
 
-     $locationId = $request['location'];
+        $locationId = $request['location'];
         //print_r($locationId);
        //dd($location);
 			if(!empty($startDate) && !empty($endDate)) {
@@ -7982,7 +7996,7 @@ public function labourJobActivityGetTable(Request $request)
                 ->where('time_sheet_entry.location_id', '=', $location)
                 ->get();
         }
-//        echo'<pre>';print_r($table);exit();
+        //echo'<pre>';print_r($table);exit();
         $datatables =  Datatables::of($table)
 
 
@@ -8018,7 +8032,14 @@ public function labourJobActivityGetTable(Request $request)
                 return $formatted_dt1;
 
             })
-        
+            ->addColumn('hours', function ($table) {
+
+                
+                $hours=str_replace(':','.',$table['hours']);
+
+                return ltrim($hours, 0);
+
+            })
             ->rawColumns(['action','roles','dateformat','createdatformat']);
            
 
@@ -8048,11 +8069,11 @@ public function labourJobActivityGetTable(Request $request)
         //$startDate = date('d/m/Y', strtotime($request['startdate']));
         //$endDate =  date('d/m/Y', strtotime($request['enddate']));
 
-//        $startDate = $request['startdate'];
-//        $endDate =  $request['enddate'];
+        // $startDate = $request['startdate'];
+        // $endDate =  $request['enddate'];
        //dd($startDate);
 
-     $locationId = $request['location'];
+        $locationId = $request['location'];
         //print_r($locationId);
        //dd($location);
       if(!empty($startDate) && !empty($endDate)) {
@@ -8133,7 +8154,6 @@ public function labourJobActivityGetTable(Request $request)
                 'ID' => $table['id'],
                 'SIFT' => $table['shift'],
                 'Dateformat' => $table['dateformat'],
-
                 'DEPT' => $table['dept'],
                 'WORK ORDER' => $table['work_order'],
                 'DESCRIPTION' => $table['description'],
@@ -8438,7 +8458,6 @@ public function labourJobActivityGetTable(Request $request)
             ->leftjoin('gw_master_department','gw_master_department.id', '=','time_sheet_entry.task')
 
             ->get();
-
         $style = (new StyleBuilder())
             ->setFontBold()
             ->build();

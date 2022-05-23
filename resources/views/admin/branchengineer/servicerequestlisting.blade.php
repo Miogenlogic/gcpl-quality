@@ -76,7 +76,7 @@
                             <select name="empres" id="empres" class="form-control">
 							@foreach( $employee as  $emp)
                                 <!--<option selected="selected" value="{{old('empres')?old('empres'):$servicerequest->empres}}">{{$emp->name}}</option>-->
-                                <option value="{{$emp->name}}" {{old('empres')==$emp->id?'Selected':$servicerequest->empres == $emp->id?'Selected':''}}>{{$emp->name}}</option>
+                                <option value="{{$emp->id}}" {{old('empres')==$emp->id?'Selected':$servicerequest->empres == $emp->id?'Selected':''}}>{{$emp->name}}</option>
 										
 
                                     
@@ -115,7 +115,7 @@
                         <div class="form-group">
                             <label class="form-control-label" for="service">Customer Name <span style="color:red">*</span></label>
 							 @php
-
+                                    
                                     $custom=App\Helpers\UserHelper::customer();
                                     //echo '<pre>';print_r($customer);exit;
                                 @endphp

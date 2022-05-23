@@ -347,6 +347,8 @@
                 processing: true,
                 searching: true,
                 serverSide: true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 ajax:{
                     url: '{{ url("admin/projects-open-list-table") }}',
                 },
@@ -397,6 +399,8 @@
                 processing: true,
                 searching: true,
                 serverSide: true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 ajax:{
                     url: '{{ url("admin/projects-filter-list-table") }}',
                     type: 'GET',
@@ -406,6 +410,8 @@
                 columns: [
                     {data: 'project_id', name: 'project_id',orderable: false, searchable: false},
                     {data: 'work_orderno', name: 'work_orderno'},
+                    {data: 'model_name', name: 'model_name'},
+                    {data: 'customer_name', name: 'customer_name'},
                     {data: 'description', name: 'description'},
                     {data: 'dept_name', name: 'dept_name'},
                     {data: 'date_duration', name: 'date_duration'},
@@ -436,6 +442,8 @@
                         columns: ':not(.notexport)'
                     }}, ],
                 destroy: true,
+                aLengthMenu: [[10, 25, 50, 100,200,250,300,400,450,500], [10, 25, 50, 100,200,250,300,400,450,500]],
+                iDisplayLength:10,
                 //paging:false,
                 //pageLength: 57,
 
@@ -451,6 +459,8 @@
                 columns: [
                     {data: 'project_id', name: 'project_id',orderable: false, searchable: false},
                     {data: 'work_orderno', name: 'work_orderno'},
+                    {data: 'model_name', name: 'model_name'},
+                    {data: 'customer_name', name: 'customer_name'},
                     {data: 'description', name: 'description'},
                     {data: 'dept_name', name: 'dept_name'},
                     {data: 'date_duration', name: 'date_duration'},
