@@ -5,6 +5,7 @@
 
 @endphp
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 @section('head')
 
@@ -38341,8 +38342,7 @@
                                                 @endphp
                                             @endif
                                             @php
-                                                $salvage_des=UserHelper::codeOptimizeSalvageComponentDescription();
-                                                dd($salvage_des);
+                                                $salvage_des=App\Helpers\UserHelper::codeOptimizeSalvageComponentDescription();
                                             @endphp
                                             @if($showsalvage!=null && count($showsalvage)!=0)
                                                 @php
@@ -38362,16 +38362,17 @@
                                                         <div class="col" {{$deschiddden}}>
                                                             <div class="form-group">
                                                                 <label for="" class="form-control-label">{{$valdes}}</label>
-                                                                <select name="empres" id="empres" class="form-control">
-                                                                @foreach( $employee as  $emp)
-                                                                    <!--<option selected="selected" value="{{old('empres')?old('empres'):$servicerequest->empres}}">{{$emp->name}}</option>-->
-                                                                    <option value="{{$emp->id}}" {{old('empres')==$emp->id?'Selected':$servicerequest->empres == $emp->id?'Selected':''}}>{{$emp->name}}</option>
-                                                                            
-
-                                                                        
-                                                            
-                                                                @endforeach
-                                                              </select><!-- 
+                                                               <select class="form-control" id="salveg_description_<?=$row?>" name="description">
+                                                                   <option value="">Select Description</option>
+                                                                   <?php
+                                                                   foreach ($salvage_des as $salvage_des_one) {
+                                                                    ?>    
+                                                                       <option value="<?php echo $salvage_des_one->name ?>"><?php echo $salvage_des_one->name ?></option>
+                                                                     <?php   
+                                                                      }
+                                                                     ?>
+                                                               </select>
+                                                               <!-- 
                                                                 <textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1">{{$salvg->description}}</textarea> -->
                                                             </div>
                                                         </div>
@@ -38431,6 +38432,11 @@
                                                     <a href="javascript:void(0);" class="btn btn-default add_button">+</a>
                                                 </div>-->
                                                     </div>
+                                                    <script type="text/javascript">
+                                                        $(document).ready(function() {
+                                                            // $('#salveg_description_<?=$row?>').select2();
+                                                        });
+                                                    </script>
                                                     @php
                                                         $row++;
                                                     @endphp

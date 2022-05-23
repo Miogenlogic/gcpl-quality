@@ -145,6 +145,8 @@ use App\Models\ProjectUser;
 use App\Models\User;
 use App\Models\TaskUser;
 use Carbon\Carbon;
+use App\Models\SalvageComponentDescription;
+use App\Models\FailPartsDescription;
 use DB;
 use Hash;
 use Auth;
