@@ -2013,18 +2013,12 @@ static function predicessorfind($task_id,$dept_id,$project_id)
         return MasterComponentDetails::where('comp_serial_no','LIKE', "%" . $customer . "%")->get();
     }
 
-    static function codeOptimizeFailPartDescription($name)
+    static function codeOptimizeFailPartDescription()
     {
-        if ($name)
-            return FailPartsDescription::where('name','LIKE', "%" . $name . "%")->get();
-        else
             return FailPartsDescription::select('gw_master_fail_parts_description.*')->get();
     }
-    static function codeOptimizeSalvageComponentDescription($name)
+    static function codeOptimizeSalvageComponentDescription()
     {
-        if ($name)
-            return SalvageComponentDescription::where('name','LIKE', "%" . $name . "%")->get();
-        else
             return SalvageComponentDescription::select('gw_master_salvage_comp_description.*')->get();
     }
 
