@@ -1638,6 +1638,7 @@ public function serviceRequestGetTable(Request $request)
 
 
 
+
         $servicerequest = Service::find($id);
 
 
@@ -7569,7 +7570,7 @@ public function getTableProjectMaster(Request $request)
         $comser = '<option selected="selected" disabled="disabled" value="">Select Customer</option>';
         if (!isset($compse->name)) {
             foreach ($compse as $key => $value) {
-                $comser .= '<option value=' . $value['customer_code'] . '>' . $value['name'].'-'. $value['customer_code'] . '</option>';
+                $comser .= '<option value=' . $value['id'] . '>' . $value['name'].'-'. $value['customer_code'] . '</option>';
             }
         }
         echo $comser;
@@ -7649,6 +7650,39 @@ public function getTableProjectMaster(Request $request)
             }
         }
         echo $comser;
+    }
+
+    public function failpartsDropdownFilter(Request $request)
+    {
+
+        // $machserial = UserHelper::machineserialno();
+        $failparts = UserHelper::codeOptimizeFailPartDescription($request['failpartsdes']);
+        //$compse = UserHelper::componentserialno();
+        //dd($compse);exit;
+        $failparts = '<option selected="selected" disabled="disabled" value="">Select Parts Description</option>';
+        $failparts .= '<option  value="0">Not Maintained</option>';
+        if (!isset($failparts->name)) {
+            foreach ($failparts as $key => $value) {
+                $failparts .= '<option value=' . $value['name'] . '>' . $value['name'] . '</option>';
+            }
+        }
+        echo $failparts;
+    }
+    public function salvagedesDropdownFilter(Request $request)
+    {
+
+        // $machserial = UserHelper::machineserialno();
+        $salvage = UserHelper::SalvageComponentDescription($request['salvagedes']);
+        //$compse = UserHelper::componentserialno();
+        //dd($compse);exit;
+        $salvage = '<option selected="selected" disabled="disabled" value="">Select Salvage Description</option>';
+        $salvage .= '<option  value="0">Not Maintained</option>';
+        if (!isset($salvage->name)) {
+            foreach ($salvage as $key => $value) {
+                $salvage .= '<option value=' . $value['name'] . '>' . $value['name'] . '</option>';
+            }
+        }
+        echo $salvage;
     }
    
    

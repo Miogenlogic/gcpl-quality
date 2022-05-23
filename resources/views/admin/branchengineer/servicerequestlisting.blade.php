@@ -76,7 +76,7 @@
                             <select name="empres" id="empres" class="form-control">
 							@foreach( $employee as  $emp)
                                 <!--<option selected="selected" value="{{old('empres')?old('empres'):$servicerequest->empres}}">{{$emp->name}}</option>-->
-                                <option value="{{$emp->name}}" {{old('empres')==$emp->id?'Selected':$servicerequest->empres == $emp->id?'Selected':''}}>{{$emp->name}}</option>
+                                <option value="{{$emp->id}}" {{old('empres')==$emp->id?'Selected':$servicerequest->empres == $emp->id?'Selected':''}}>{{$emp->name}}</option>
 										
 
                                     
