@@ -5,6 +5,7 @@
 
 @endphp
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 @section('head')
 
@@ -38341,8 +38342,7 @@
                                                 @endphp
                                             @endif
                                             @php
-                                                $salvage_des=UserHelper::codeOptimizeSalvageComponentDescription();
-                                                dd($salvage_des);
+                                                $salvage_des=App\Helpers\UserHelper::codeOptimizeSalvageComponentDescription();
                                             @endphp
                                             @if($showsalvage!=null && count($showsalvage)!=0)
                                                 @php
@@ -38362,16 +38362,11 @@
                                                         <div class="col" {{$deschiddden}}>
                                                             <div class="form-group">
                                                                 <label for="" class="form-control-label">{{$valdes}}</label>
-                                                                <select name="empres" id="empres" class="form-control">
-                                                                @foreach( $employee as  $emp)
-                                                                    <!--<option selected="selected" value="{{old('empres')?old('empres'):$servicerequest->empres}}">{{$emp->name}}</option>-->
-                                                                    <option value="{{$emp->id}}" {{old('empres')==$emp->id?'Selected':$servicerequest->empres == $emp->id?'Selected':''}}>{{$emp->name}}</option>
-                                                                            
-
-                                                                        
-                                                            
-                                                                @endforeach
-                                                              </select><!-- 
+                                                                <select class="form-control" id="salveg_description_<?=$row?>"  name="description[]" class="form-control">
+                                                                    <option value="">Please Description</option>@foreach($salvage_des as $id => $salvage_des_one)<option value="{{ $salvage_des_one->name }}" {{ ( $salvage_des_one->name == $salvg->description) ? 'selected' : '' }}>{{ $salvage_des_one->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                               <!-- 
                                                                 <textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1">{{$salvg->description}}</textarea> -->
                                                             </div>
                                                         </div>
@@ -38431,6 +38426,11 @@
                                                     <a href="javascript:void(0);" class="btn btn-default add_button">+</a>
                                                 </div>-->
                                                     </div>
+                                                    <script type="text/javascript">
+                                                        $(document).ready(function() {
+                                                            // $('#salveg_description_<?=$row?>').select2();
+                                                        });
+                                                    </script>
                                                     @php
                                                         $row++;
                                                     @endphp
@@ -38448,7 +38448,10 @@
                                                     <div class="col"{{$deschiddden}}>
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">{{$valdes}}</label>
-                                                            <textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1"></textarea>
+                                                            <select class="form-control" id="salveg_description_<?=$row?>"  name="description[]" class="form-control">
+                                                                    <option value="">Please Description</option>@foreach($salvage_des as $id => $salvage_des_one)<option value="{{ $salvage_des_one->name }}">{{ $salvage_des_one->name }}</option>
+                                                                    @endforeach
+                                                                </select>
                                                         </div>
                                                     </div>
 
@@ -40068,6 +40071,9 @@
 
                         @endphp
                     @endif
+                    @php
+                         $failparts_des=App\Helpers\UserHelper::codeOptimizeFailPartDescription();
+                    @endphp
 
                         <div class="card" {{$failedhiddden}}>
                         <div class="card-header" id="failedPartsList">
@@ -40105,7 +40111,7 @@
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">Part No</label>
                                                             <span style="position: relative;top: -4px;"><i style="color: red;font-size: 5px;" class="fas fa-star"></i></span>
-                                       <textarea type="text" name="part_no[]" class="form-control" placeholder="part_no" rows="1" required>{{$failprt->part_no}}</textarea>
+                                                            <textarea type="text" name="part_no[]" class="form-control" placeholder="part_no" rows="1" required>{{$failprt->part_no}}</textarea>
                                                             
                                                         </div>
                                                     </div>
@@ -40113,7 +40119,10 @@
                                                     <div class="col" >
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">Description</label>
-                                                            <textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1" >{{$failprt->description}}</textarea>
+                                                            <select class="form-control" id="failparts_description_<?=$row?>" name="description[]" class="form-control">
+                                                                    <option value="">Please Description</option>@foreach($failparts_des as $id => $failparts_des_one)<option value="{{ $failparts_des_one->name }}" {{ ( $failparts_des_one->name == $failprt->description) ? 'selected' : '' }}>{{ $failparts_des_one->name }}</option>
+                                                                    @endforeach
+                                                                </select>
                                                         </div>
                                                     </div>
 
@@ -40151,6 +40160,11 @@
                                                                 <a href="javascript:void(0);" class="btn btn-default add_button">+</a>
                                                             </div>-->
                                                 </div>
+                                                <script type="text/javascript">
+                                                        $(document).ready(function() {
+                                                            // $('#failparts_description_<?=$row?>').select2();
+                                                        });
+                                                    </script>
                                                 @php
                                                     $row++;
                                                 @endphp
@@ -40169,7 +40183,10 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label for="" class="form-control-label">Description</label>
-                                                        <textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1"></textarea>
+                                                        <select class="form-control" id="failparts_description_<?=$row?>" name="description[]" class="form-control">
+                                                                <option value="">Please Description</option>@foreach($failparts_des as $id => $failparts_des_one)<option value="{{ $failparts_des_one->name }}">{{ $failparts_des_one->name }}</option>
+                                                                @endforeach
+                                                            </select>
                                                     </div>
                                                 </div>
 
@@ -40982,6 +40999,8 @@
             var maxField = 20; //Input fields increment limitation
             var addButton = $('.add_button'); //Add button selector
             var wrapper = $('.salvage-part-repeat'); //Input field wrapper
+            console.log('wrapper',wrapper);
+            console.log('maxField',maxField);
             var fieldHTML = '<div class="row no-gutters">'+
                 '<div class="col"{{$comnmehiddden}}>'+
                 '<div class="form-group">'+
@@ -40989,9 +41008,13 @@
                 '</div>'+
                 '</div>'+
                 '<div class="col"{{$deschiddden}}>'+
-                '<div class="form-group">'+
-                '<textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1"></textarea>'+
-                '</div>'+
+                '<div class="form-group">';
+                 fieldHTML += '<select name="description[]" class="form-control"><option value="">Please Description</option>';
+                @foreach($salvage_des as $id => $one)
+                    fieldHTML += '<option value="{{ $one->name }}">{{ $one->name }}</option>';
+                 @endforeach
+                fieldHTML +='</select>';
+                fieldHTML +='</div>'+
                 '</div>'+
                 '<div class="col-1"{{$lisqtyhiddden}}>'+
                 '<div class="form-group">'+
@@ -41114,9 +41137,13 @@
                 '</div>'+
                 '</div>'+
                 '<div class="col">'+
-                '<div class="form-group">'+
-                '<textarea type="text" name="description[]" class="form-control" placeholder="Part description" rows="1"></textarea>'+
-                '</div>'+
+                '<div class="form-group">';
+                fieldHTML += '<select name="description[]" class="form-control"><option value="">Please Description</option>';
+                @foreach($failparts_des as $id => $one)
+                    fieldHTML += '<option value="{{ $one->name }}">{{ $one->name }}</option>';
+                 @endforeach
+                fieldHTML +='</select>';
+                fieldHTML +='</div>'+
                 '</div>'+
                 '<div class="col">'+
                 '<div class="form-group">'+
