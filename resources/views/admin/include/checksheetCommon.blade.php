@@ -38362,7 +38362,7 @@
                                                         <div class="col" {{$deschiddden}}>
                                                             <div class="form-group">
                                                                 <label for="" class="form-control-label">{{$valdes}}</label>
-                                                                <select class="form-control" id="salveg_description_<?=$row?>"  name="description[]" class="form-control">
+                                                                <select class="form-control"  name="description[]" class="form-control">
                                                                     <option value="">Please Description</option>@foreach($salvage_des as $id => $salvage_des_one)<option value="{{ $salvage_des_one->name }}" {{ ( $salvage_des_one->name == $salvg->description) ? 'selected' : '' }}>{{ $salvage_des_one->name }}</option>
                                                                     @endforeach
                                                                 </select>
@@ -38413,7 +38413,7 @@
                                                         </div>
                                                         @if($row == 0)
                                                             <div class="col-auto">
-                                                                <a href="javascript:void(0);" class="btn btn-default mt-4 add_button">+</a>
+                                                                <a href="javascript:void(0);" class="btn btn-default mt-4 add_button_sal">+</a>
                                                             </div>
                                                         @else
                                                             <div class="col-auto">
@@ -38448,7 +38448,7 @@
                                                     <div class="col"{{$deschiddden}}>
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">{{$valdes}}</label>
-                                                            <select class="form-control" id="salveg_description_<?=$row?>"  name="description[]" class="form-control">
+                                                            <select class="form-control"  name="description[]" class="form-control">
                                                                     <option value="">Please Description</option>@foreach($salvage_des as $id => $salvage_des_one)<option value="{{ $salvage_des_one->name }}">{{ $salvage_des_one->name }}</option>
                                                                     @endforeach
                                                                 </select>
@@ -38498,7 +38498,7 @@
 
 
                                                     <div class="col-auto">
-                                                        <a href="javascript:void(0);" class="btn btn-default add_button">+</a>
+                                                        <a href="javascript:void(0);" class="btn btn-default add_button_sal">+</a>
                                                     </div>
                                                 </div>
                                             @endif
@@ -40119,7 +40119,7 @@
                                                     <div class="col" >
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">Description</label>
-                                                            <select class="form-control" id="failparts_description_<?=$row?>" name="description[]" class="form-control">
+                                                            <select class="form-control" name="description[]" class="form-control">
                                                                     <option value="">Please Description</option>@foreach($failparts_des as $id => $failparts_des_one)<option value="{{ $failparts_des_one->name }}" {{ ( $failparts_des_one->name == $failprt->description) ? 'selected' : '' }}>{{ $failparts_des_one->name }}</option>
                                                                     @endforeach
                                                                 </select>
@@ -40183,7 +40183,7 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label for="" class="form-control-label">Description</label>
-                                                        <select class="form-control" id="failparts_description_<?=$row?>" name="description[]" class="form-control">
+                                                        <select class="form-control" name="description[]" class="form-control">
                                                                 <option value="">Please Description</option>@foreach($failparts_des as $id => $failparts_des_one)<option value="{{ $failparts_des_one->name }}">{{ $failparts_des_one->name }}</option>
                                                                 @endforeach
                                                             </select>
@@ -40997,7 +40997,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             var maxField = 20; //Input fields increment limitation
-            var addButton = $('.add_button'); //Add button selector
+            var addButton = $('.add_button_sal'); //Add button selector
             var wrapper = $('.salvage-part-repeat'); //Input field wrapper
             console.log('wrapper',wrapper);
             console.log('maxField',maxField);
