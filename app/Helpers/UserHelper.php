@@ -141,7 +141,7 @@ use App\Models\RoolerSpecificationValues;
 use App\Models\RoolerSpecifiEndColValues;
 use App\Models\ProjectPlanMaster;
 use App\Models\ProjectTask;
-use App\Models\ProjectUser; 
+use App\Models\ProjectUser;
 use App\Models\User;
 use App\Models\TaskUser;
 use Carbon\Carbon;
@@ -2017,12 +2017,13 @@ static function predicessorfind($task_id,$dept_id,$project_id)
 
     static function codeOptimizeFailPartDescription()
     {
-            return FailPartsDescription::select('gw_master_fail_parts_description.*')->get();
+        return FailPartsDescription::select('gw_master_fail_parts_description.*')->get();
     }
     static function codeOptimizeSalvageComponentDescription()
     {
-            return SalvageComponentDescription::select('gw_master_salvage_comp_description.*')->get();
+        return SalvageComponentDescription::select('gw_master_salvage_comp_description.*')->get();
     }
+
 
     static function columnforchecksheetnew($chkshtcolumn)
     {
