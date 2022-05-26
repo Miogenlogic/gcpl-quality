@@ -1,6 +1,7 @@
 @extends('admin.include.layout')
 <!-- Project List -->
 @php
+use App\Models\CheckSheetEntryFiles;
     $i=0;
 
 @endphp
@@ -960,7 +961,36 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="arnumber">Upload Pre History</label>
                                                     <div class="custom-file">
-                                                        <input type="file" name="files[]" class="form-control" id="prehistoryfileupload" onchange="prehistoryfile('{{$prehist->id}}','{{$prehist->service_request_id}}')" lang="en">
+                                                        <!-- <input type="file" name="files[]" class="form-control" id="prehistoryfileupload" onchange="prehistoryfile('{{$prehist->id}}','{{$prehist->service_request_id}}')" lang="en"> -->
+                                                        <form id="fileinfo" enctype="multipart/form-data" method="post" name="fileinfo">
+                                                            <input type="file" name="pre_history_file" id="pre_history_file" required />
+                                                            <input type="hidden" name="service_request_id" id="service_request_id" value="<?=$prehist->service_request_id?>">
+                                                            <input type="hidden" name="prehist_id" id="prehist_id" value="<?=$prehist->id?>">
+                                                            <!-- <input type="button" value="Upload" id="uploadBTN"></input> -->
+                                                        </form>
+                                                        
+                                                        <div id="output"></div>
+                                                        <?php
+
+                                                            $saved_pre_history_file=CheckSheetEntryFiles::where([
+                                                                                                ['service_request_id', '=', $prehist->service_request_id],
+                                                                                                ['prehist_id', '=', $prehist->id],
+                                                                                                ['type', '=', 1],    
+                                                                                                ])
+                                                                                                ->get()->toArray();                                                                                                       
+                                                        ?>
+
+                                                        <?php foreach ($saved_pre_history_file as $saved_pre_history_file_one) { 
+                                                              $destinationPath = 'public/assets/uploads/checksheet';
+                                                              $image = $saved_pre_history_file_one['files'];
+                                                        ?>
+
+                                                        <div><a href="<?=url($destinationPath . '/' . $image);?>" target="_blank"><?=$image?></a></div>    
+
+                                                        <?php } ?>
+
+                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -44340,6 +44370,33 @@
 		 
 		 
 
+        </script>
+
+        <script type="text/javascript">
+            $(function(){
+            // $('#uploadBTN').on('click', function(){
+            $("#pre_history_file").change(function(){ 
+                var file_data = $('#pre_history_file').prop('files')[0];   
+                var form_data = new FormData();                  
+                form_data.append('pre_history_file', file_data);
+                form_data.append('service_request_id', $('#service_request_id').val());
+                form_data.append('prehist_id', $('#prehist_id').val());
+                $.ajax({
+                    url: '{{url('admin/check-sheet-common-file-upload')}}',
+                    dataType: 'text', 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,                         
+                    type: 'post',
+                    success: function(json){
+                        var data = JSON.parse(json);
+                        $('#output').html('<a href="'+data.file_url+'"">'+data.image_name+'</a>');
+                        $('#pre_history_file').val('');
+                    }
+                 });
+            });
+        });
         </script>
 		 
 		 

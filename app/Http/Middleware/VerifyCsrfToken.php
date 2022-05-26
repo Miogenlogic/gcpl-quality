@@ -20,5 +20,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //'admin/tat-report'
+        'admin/check-sheet-common-file-upload'
     ];
 }
