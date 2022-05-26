@@ -111,6 +111,7 @@ use Alert;
 use Input;
 use Illuminate\Support\Facades\Crypt;
 use App\Providers\HelperServiceProvider;
+use App\Models\CheckSheetEntryFiles;
 class CheckSheetController extends Controller
 {
 //engine
@@ -1354,7 +1355,7 @@ class CheckSheetController extends Controller
 //        dd($myrequest);
 
 
-        $exterwash_res = SubworkorderStore ::where('service_request_id','=',$request['service_id'])
+        $exterwash_res = SubworkorderStore::where('service_request_id','=',$request['service_id'])
             ->where('workorder','=',$request['work_order'])
             ->where('dept_id','=',$dept_id)
             ->get()->toArray();
@@ -8634,7 +8635,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cmmercial_res = CheckgateOneFollowedUp ::where('dept_id','=',$dept_id)
+            $cmmercial_res = CheckgateOneFollowedUp::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -8652,7 +8653,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cmmercial_res = CheckgateOneFollowedUp ::where('dept_id','=',$dept_id)
+            $cmmercial_res = CheckgateOneFollowedUp::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -8723,7 +8724,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $aggregate_res = MasterAggregate ::where('dept_id','=',$dept_id)
+            $aggregate_res = MasterAggregate::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -8741,7 +8742,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $aggregate_res = MasterAggregate ::where('dept_id','=',$dept_id)
+            $aggregate_res = MasterAggregate::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -8820,7 +8821,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $prehist_res = MasterPreHistoryDis ::where('dept_id','=',$dept_id)
+            $prehist_res = MasterPreHistoryDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -8838,7 +8839,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $prehist_res = MasterPreHistoryDis ::where('dept_id','=',$dept_id)
+            $prehist_res = MasterPreHistoryDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -8904,7 +8905,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartTrackLinkHeight ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackLinkHeight::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -8922,7 +8923,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartTrackLinkHeight ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackLinkHeight::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -8998,7 +8999,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartTrackPitch ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackPitch::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9016,7 +9017,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartTrackPitch ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackPitch::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9092,7 +9093,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartTrackLinkPin ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackLinkPin::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9110,7 +9111,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartTrackLinkPin ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackLinkPin::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9189,7 +9190,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartTrackLinkBush ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackLinkBush::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9207,7 +9208,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartTrackLinkBush ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackLinkBush::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9286,7 +9287,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartTrackShoe ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackShoe::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9304,7 +9305,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartTrackShoe ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartTrackShoe::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9383,7 +9384,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartPinInspMea ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartPinInspMea::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9401,7 +9402,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartPinInspMea ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartPinInspMea::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9479,7 +9480,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = PartBushInspMea ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartBushInspMea::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9497,7 +9498,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = PartBushInspMea ::where('dept_id','=',$dept_id)
+            $loosepart_res = PartBushInspMea::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9572,7 +9573,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cmmercial_res = MasterCommercialValues ::where('dept_id','=',$dept_id)
+            $cmmercial_res = MasterCommercialValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9590,7 +9591,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cmmercial_res = MasterCommercialValues ::where('dept_id','=',$dept_id)
+            $cmmercial_res = MasterCommercialValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9656,7 +9657,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $exterwash_res = MasterCcinspectionExternalWashDetails ::where('dept_id','=',$dept_id)
+            $exterwash_res = MasterCcinspectionExternalWashDetails::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9674,7 +9675,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $exterwash_res = MasterCcinspectionExternalWashDetails ::where('dept_id','=',$dept_id)
+            $exterwash_res = MasterCcinspectionExternalWashDetails::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9744,7 +9745,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $beforeassembly_res = MasterCCinspectionBeforeStartAssembly ::where('dept_id','=',$dept_id)
+            $beforeassembly_res = MasterCCinspectionBeforeStartAssembly::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9762,7 +9763,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $beforeassembly_res = MasterCCinspectionBeforeStartAssembly ::where('dept_id','=',$dept_id)
+            $beforeassembly_res = MasterCCinspectionBeforeStartAssembly::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9821,7 +9822,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cleaning_res = MasterCcinspectionPartCleanDetails ::where('dept_id','=',$dept_id)
+            $cleaning_res = MasterCcinspectionPartCleanDetails::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9839,7 +9840,7 @@ class CheckSheetController extends Controller
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cleaning_res = MasterCcinspectionPartCleanDetails ::where('dept_id','=',$dept_id)
+            $cleaning_res = MasterCcinspectionPartCleanDetails::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9896,7 +9897,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = MasterLoosepartDis ::where('dept_id','=',$dept_id)
+            $loosepart_res = MasterLoosepartDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -9916,7 +9917,7 @@ $sec=6;
 
             $assembly_status = 1;
 
-            $loosepart_res = MasterLoosepartDis ::where('dept_id','=',$dept_id)
+            $loosepart_res = MasterLoosepartDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -9992,7 +9993,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $loosepart_res = MasterMissingdamagePartDis ::where('dept_id','=',$dept_id)
+            $loosepart_res = MasterMissingdamagePartDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10010,7 +10011,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $loosepart_res = MasterMissingdamagePartDis ::where('dept_id','=',$dept_id)
+            $loosepart_res = MasterMissingdamagePartDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10085,7 +10086,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = StatusRevision ::where('dept_id','=',$dept_id)
+            $cylhead_res = StatusRevision::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10103,7 +10104,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = StatusRevision ::where('dept_id','=',$dept_id)
+            $cylhead_res = StatusRevision::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10168,7 +10169,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cleaning_res = MasterDissamblyCleaningInspection ::where('dept_id','=',$dept_id)
+            $cleaning_res = MasterDissamblyCleaningInspection::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10186,7 +10187,7 @@ $sec=6;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cleaning_res = MasterDissamblyCleaningInspection ::where('dept_id','=',$dept_id)
+            $cleaning_res = MasterDissamblyCleaningInspection::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10287,7 +10288,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = MasterListofSalvageDis ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterListofSalvageDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10305,7 +10306,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterListofSalvageDis ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterListofSalvageDis::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10381,7 +10382,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = MasterListofObservation ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterListofObservation::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10399,7 +10400,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterListofObservation ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterListofObservation::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10462,7 +10463,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = MasterListofInspection ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterListofInspection::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10480,7 +10481,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterListofInspection ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterListofInspection::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10545,7 +10546,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cylhead_res = MasterPartsInspectionCylinderHeadValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartsInspectionCylinderHeadValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10563,7 +10564,7 @@ $sec=13;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterPartsInspectionCylinderHeadValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartsInspectionCylinderHeadValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10628,7 +10629,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cylhead_res = CoolerInspectionValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = CoolerInspectionValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10646,7 +10647,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = CoolerInspectionValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = CoolerInspectionValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10710,7 +10711,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $cylhead_res = MasterPartOthercomponentValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartOthercomponentValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10728,7 +10729,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterPartOthercomponentValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartOthercomponentValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10792,7 +10793,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $partfan_res = MasterPartFanDriveValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartFanDriveValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10810,7 +10811,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partfan_res = MasterPartFanDriveValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartFanDriveValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10877,7 +10878,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $partfan_res = MasterPartOilPumpValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartOilPumpValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10895,7 +10896,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partfan_res = MasterPartOilPumpValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartOilPumpValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -10963,7 +10964,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $partfan_res = MasterPartAirCompressorValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartAirCompressorValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -10981,7 +10982,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partfan_res = MasterPartAirCompressorValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartAirCompressorValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11046,7 +11047,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $partfan_res = MasterPartWaterPumpValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartWaterPumpValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11064,7 +11065,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partfan_res = MasterPartWaterPumpValues ::where('dept_id','=',$dept_id)
+            $partfan_res = MasterPartWaterPumpValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11129,7 +11130,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $connectingrod_res = MasterPartConnectingRodValues ::where('dept_id','=',$dept_id)
+            $connectingrod_res = MasterPartConnectingRodValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11147,7 +11148,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $connectingrod_res = MasterPartConnectingRodValues ::where('dept_id','=',$dept_id)
+            $connectingrod_res = MasterPartConnectingRodValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11211,7 +11212,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $partcylinderblock_res = MasterPartCylinderHeadValues ::where('dept_id','=',$dept_id)
+            $partcylinderblock_res = MasterPartCylinderHeadValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11229,7 +11230,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partcylinderblock_res = MasterPartCylinderHeadValues ::where('dept_id','=',$dept_id)
+            $partcylinderblock_res = MasterPartCylinderHeadValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11296,7 +11297,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $partcylinderblock_res = PartCylinderBlockLinearValues ::where('dept_id','=',$dept_id)
+            $partcylinderblock_res = PartCylinderBlockLinearValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11314,7 +11315,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partcylinderblock_res = PartCylinderBlockLinearValues ::where('dept_id','=',$dept_id)
+            $partcylinderblock_res = PartCylinderBlockLinearValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11382,7 +11383,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $partcylinderblock_res = PartCylinderBlockCamboreValues ::where('dept_id','=',$dept_id)
+            $partcylinderblock_res = PartCylinderBlockCamboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11400,7 +11401,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $partcylinderblock_res = PartCylinderBlockCamboreValues ::where('dept_id','=',$dept_id)
+            $partcylinderblock_res = PartCylinderBlockCamboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11458,7 +11459,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartCylinderBlockTopDeckValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockTopDeckValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11476,7 +11477,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartCylinderBlockTopDeckValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockTopDeckValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11536,7 +11537,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartCylinderBlockThreadValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockThreadValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11554,7 +11555,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartCylinderBlockThreadValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockThreadValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11619,7 +11620,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartCylinderBlockBushboreValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockBushboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11637,7 +11638,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartCylinderBlockBushboreValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockBushboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11705,7 +11706,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartCylinderBlockCapNoValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockCapNoValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11723,7 +11724,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartCylinderBlockCapNoValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCylinderBlockCapNoValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11791,7 +11792,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = MasterPartCrankshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartCrankshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11809,7 +11810,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterPartCrankshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartCrankshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11876,7 +11877,7 @@ $sec=8;
 
 
             $disassembly_status = 1;
-            $cylhead_res = MasterPartCamshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartCamshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11893,7 +11894,7 @@ $sec=8;
         if(isset($request['assembly_status'])){
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterPartCamshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterPartCamshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -11961,7 +11962,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartLhCamshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartLhCamshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -11979,7 +11980,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartLhCamshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartLhCamshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12044,7 +12045,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartRhCamshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartRhCamshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12062,7 +12063,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartRhCamshaftValue ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartRhCamshaftValue::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12127,7 +12128,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartCamshaftBushboreValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCamshaftBushboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12145,7 +12146,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartCamshaftBushboreValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCamshaftBushboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12215,7 +12216,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = MasterFailedParts ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterFailedParts::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12233,7 +12234,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = MasterFailedParts ::where('dept_id','=',$dept_id)
+            $cylhead_res = MasterFailedParts::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12300,7 +12301,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = ClutchPackThicknessValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = ClutchPackThicknessValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12318,7 +12319,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = ClutchPackThicknessValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = ClutchPackThicknessValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12388,7 +12389,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = ClutchPlateThicknessValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = ClutchPlateThicknessValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12406,7 +12407,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = ClutchPlateThicknessValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = ClutchPlateThicknessValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12476,7 +12477,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = ClutchPlateFlatnessValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = ClutchPlateFlatnessValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12494,7 +12495,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = ClutchPlateFlatnessValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = ClutchPlateFlatnessValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12564,7 +12565,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = TorqueConverterValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = TorqueConverterValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12582,7 +12583,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = TorqueConverterValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = TorqueConverterValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12657,7 +12658,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $component_res = ComponentInspReport ::where('dept_id','=',$dept_id)
+            $component_res = ComponentInspReport::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12675,7 +12676,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $component_res = ComponentInspReport ::where('dept_id','=',$dept_id)
+            $component_res = ComponentInspReport::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12734,7 +12735,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = RoolerSpecificationValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = RoolerSpecificationValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12752,7 +12753,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = RoolerSpecificationValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = RoolerSpecificationValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12822,7 +12823,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $component_res = RoolerMeasuredValues ::where('dept_id','=',$dept_id)
+            $component_res = RoolerMeasuredValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12840,7 +12841,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $component_res = RoolerMeasuredValues ::where('dept_id','=',$dept_id)
+            $component_res = RoolerMeasuredValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12904,7 +12905,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = RoolerSpecifiEndColValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = RoolerSpecifiEndColValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -12922,7 +12923,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = RoolerSpecifiEndColValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = RoolerSpecifiEndColValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -12995,7 +12996,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = RollerspcClearShaftValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = RollerspcClearShaftValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13013,7 +13014,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = RollerspcClearShaftValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = RollerspcClearShaftValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13087,7 +13088,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = IdlerSpecificationValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerSpecificationValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13105,7 +13106,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = IdlerSpecificationValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerSpecificationValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13174,7 +13175,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = IdlerMeasuredBeforeValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerMeasuredBeforeValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13192,7 +13193,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = IdlerMeasuredBeforeValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerMeasuredBeforeValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13271,7 +13272,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = IdlerMeasuredAfterValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerMeasuredAfterValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13289,7 +13290,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = IdlerMeasuredAfterValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerMeasuredAfterValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13367,7 +13368,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = IdlerSpeciEndcolerValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerSpeciEndcolerValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13385,7 +13386,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = IdlerSpeciEndcolerValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = IdlerSpeciEndcolerValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13462,7 +13463,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
 
             $disassembly_status = 1;
-            $cylhead_res = PartCamshaftBushboreValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCamshaftBushboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13480,7 +13481,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $cylhead_res = PartCamshaftBushboreValues ::where('dept_id','=',$dept_id)
+            $cylhead_res = PartCamshaftBushboreValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13561,7 +13562,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $component_res = TransmissionComponent ::where('dept_id','=',$dept_id)
+            $component_res = TransmissionComponent::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13579,7 +13580,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $component_res = TransmissionComponent ::where('dept_id','=',$dept_id)
+            $component_res = TransmissionComponent::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -13639,7 +13640,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $disassembly_status = 1;
-            $conrodbusrep_res = MasterConRodBushReplacementValues ::where('dept_id','=',$dept_id)
+            $conrodbusrep_res = MasterConRodBushReplacementValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('disassembly_status','=',1)
                 ->get()->toArray();
@@ -13657,7 +13658,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $conrodbusrep_res = MasterConRodBushReplacementValues ::where('dept_id','=',$dept_id)
+            $conrodbusrep_res = MasterConRodBushReplacementValues::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -15660,7 +15661,7 @@ $sec=8;
             $dept_id=$data['user']['section_id'];
             //$srv_id;
             $assembly_status = 1;
-            $assembly_res = ChecksheetAssembly ::where('dept_id','=',$dept_id)
+            $assembly_res = ChecksheetAssembly::where('dept_id','=',$dept_id)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -15676,7 +15677,7 @@ $sec=8;
 
 
 
-            $myentry_data = AssemblyChecksheetPermission ::where('emp_code','=',$empCode)
+            $myentry_data = AssemblyChecksheetPermission::where('emp_code','=',$empCode)
                 ->where('service_request_id','=',$request['service_id'])
                 ->where('assembly_status','=',1)
                 ->get()->toArray();
@@ -20567,7 +20568,7 @@ $sec=8;
         // echo '';print_r($data['user']['section_id']);exit;
         $dept_id=$data['user']['section_id'];
         
-         $status_res = ChecksheetStatus ::where('dept_id','=',$dept_id)
+         $status_res = ChecksheetStatus::where('dept_id','=',$dept_id)
             ->where('service_request_id','=',$request['service_id'])
 
             ->get()->toArray();
@@ -20679,7 +20680,7 @@ $sec=8;
         }
         
         
-         $status_res = ChecksheetStatus ::where('dept_id','=',$dept_id1)
+         $status_res = ChecksheetStatus::where('dept_id','=',$dept_id1)
             ->where('service_request_id','=',$request['service_id'])
 
             ->get()->toArray();
@@ -20793,7 +20794,37 @@ $sec=8;
 
     public function checkShetCommonFileUpload(Request $request)
     {
-        dd($request->all());
+        if ($request->file('pre_history_file')) {
+            $imgfile = $request->file('pre_history_file');
+            $tmp = explode('.', $imgfile->getClientOriginalName());
+            $ext = end($tmp);
+            $save_imgfile = time() . '.' . $ext;
+            $destinationPath = 'public/assets/uploads/checksheet';
+            $imgfile->move($destinationPath, $save_imgfile);
+            $image = $save_imgfile;
+
+            // Save the file in db
+
+            $service_request_id = $request->post('service_request_id');
+            $prehist_id = $request->post('prehist_id');
+
+            // save in db
+            $obj_csef = new CheckSheetEntryFiles();
+
+            $obj_csef->service_request_id = $service_request_id;
+            $obj_csef->prehist_id = $prehist_id;
+            $obj_csef->type=1;  // 1 for pre history
+            $obj_csef->files = $image;
+            // $obj_csef->update_on = date("Y-m-d H:i:s");
+            $obj_csef->save();
+            //
+
+            $fnl_array = array();
+            $fnl_array['file_url'] = url($destinationPath . '/' . $image);
+            $fnl_array['image_name'] = $image;
+            return json_encode($fnl_array);
+
+        }
     }
 
 }
