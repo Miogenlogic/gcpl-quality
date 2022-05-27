@@ -12,6 +12,8 @@
     <!-- Icons -->
     <link rel="stylesheet" type="text/css" href="{{URL::asset('public/assets/vendor/nucleo/css/nucleo.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('public/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/vendor/autocomplete/jquery.auto-complete.css')}}">
+    <link href="{{asset('public/assets/vendor/autocomplete/jquery-ui.css')}}" rel="Stylesheet"></link>
     <!-- Page plugins -->
 
     <link rel="stylesheet" href="{{URL::asset('public/assets/vendor/select2/dist/css/select2.min.css')}}">
@@ -50,6 +52,9 @@
     <!-- Argon Scripts -->
     <!-- Core -->
     <script src="{{URL::asset('public/assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{URL::asset('public/assets/vendor/jquery/dist/jquery-migrate-3.0.0.min.js')}}"></script>
+    <script src="{{URL::asset('public/assets/vendor/autocomplete/jquery.auto-complete.js')}}"></script>
+    <script src="{{URL::asset('public/assets/vendor/autocomplete/jquery-ui.js')}}" ></script>
     <script src="{{URL::asset('public/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{URL::asset('public/assets/vendor/js-cookie/js.cookie.js')}}"></script>
     <script src="{{URL::asset('public/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js')}}"></script>

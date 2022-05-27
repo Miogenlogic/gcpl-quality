@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FailPartsDescription extends Model
 {
-    use HasFactory;
+    //use HasFactory;
     protected $table='gw_master_fail_parts_description';
 }

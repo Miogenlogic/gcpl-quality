@@ -84,6 +84,8 @@ use App\Models\TorqueConverterValues;
 use App\Models\TransmissionComponent;
 use App\Models\SubworkorderStore;
 use App\Models\AssemblyChecksheetPermission;
+use App\Models\SalvageComponentDescription;
+use App\Models\FailPartsDescription;
 
 use Illuminate\Http\Request;
 
@@ -111,6 +113,7 @@ use Alert;
 use Input;
 use Illuminate\Support\Facades\Crypt;
 use App\Providers\HelperServiceProvider;
+use App\Models\CheckSheetEntryFiles;
 class CheckSheetController extends Controller
 {
 //engine
@@ -10331,7 +10334,15 @@ $sec=13;
             foreach ($salvage as $key => $val) {
                 // echo'<pre>';print_r($val);echo'<pre>';
                 $txt= $val;
-
+                if (isset($request['description'][$key]) &&  $request['description'][$key]) 
+                {
+                    if(empty(SalvageComponentDescription::where('name',$request['description'][$key])->first()))
+                    {
+                        $newdes= new SalvageComponentDescription();
+                        $newdes->name = $request['description'][$key];
+                        $newdes->save();
+                    }     
+                }
                 $cylhead = new MasterListofSalvageDis();
                 $cylhead->service_request_id = $service->id;
                 $cylhead->dept_id = $dept_id;
@@ -12258,7 +12269,15 @@ $sec=8;
             foreach ($failed as $key => $val) {
                 // echo'<pre>';print_r($val);echo'<pre>';
                 $txt= $val;
-
+                if (isset($request['description'][$key]) &&  $request['description'][$key]) 
+                {
+                    if(empty(FailPartsDescription::where('name',$request['description'][$key])->first()))
+                    {
+                        $newdes= new FailPartsDescription();
+                        $newdes->name = $request['description'][$key];
+                        $newdes->save();
+                    }     
+                }
                 $cylhead = new MasterFailedParts();
                 $cylhead->service_request_id = $service->id;
                 $cylhead->dept_id = $dept_id;
@@ -20793,7 +20812,67 @@ $sec=8;
 
     public function checkShetCommonFileUpload(Request $request)
     {
-        dd($request->all());
+        if ($request->file('pre_history_file')) {
+            $imgfile = $request->file('pre_history_file');
+            $tmp = explode('.', $imgfile->getClientOriginalName());
+            $ext = end($tmp);
+            $save_imgfile = time() . '.' . $ext;
+            $destinationPath = 'public/assets/uploads/checksheet';
+            $imgfile->move($destinationPath, $save_imgfile);
+            $image = $save_imgfile;
+
+            // Save the file in db
+
+            $service_request_id = $request->post('service_request_id');
+            $prehist_id = $request->post('prehist_id');
+
+            // save in db
+            $obj_csef = new CheckSheetEntryFiles();
+
+            $obj_csef->service_request_id = $service_request_id;
+            $obj_csef->prehist_id = $prehist_id;
+            $obj_csef->type=1;  // 1 for pre history
+            $obj_csef->files = $image;
+            // $obj_csef->update_on = date("Y-m-d H:i:s");
+            $obj_csef->save();
+            //
+
+            $fnl_array = array();
+            $fnl_array['file_url'] = url($destinationPath . '/' . $image);
+            $fnl_array['image_name'] = $image;
+            return json_encode($fnl_array);
+
+        }elseif ($request->file('missing_damage_file')) 
+        {
+            $imgfile = $request->file('missing_damage_file');
+            $tmp = explode('.', $imgfile->getClientOriginalName());
+            $ext = end($tmp);
+            $save_imgfile = time() . '.' . $ext;
+            $destinationPath = 'public/assets/uploads/checksheet';
+            $imgfile->move($destinationPath, $save_imgfile);
+            $image = $save_imgfile;
+
+            // Save the file in db
+
+            $service_request_id = $request->post('service_request_id');
+            $prehist_id = $request->post('prehist_id');
+
+            // save in db
+            $obj_csef = new CheckSheetEntryFiles();
+
+            $obj_csef->service_request_id = $service_request_id;
+            $obj_csef->prehist_id = $prehist_id;
+            $obj_csef->type=2;  // 1 for missing/damage
+            $obj_csef->files = $image;
+            // $obj_csef->update_on = date("Y-m-d H:i:s");
+            $obj_csef->save();
+            //
+
+            $fnl_array = array();
+            $fnl_array['file_url'] = url($destinationPath . '/' . $image);
+            $fnl_array['image_name'] = $image;
+            return json_encode($fnl_array);
+        }
     }
 
 }

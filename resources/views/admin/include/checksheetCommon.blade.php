@@ -1,14 +1,12 @@
 @extends('admin.include.layout')
 <!-- Project List -->
 @php
+    use App\Models\CheckSheetEntryFiles;
     $i=0;
 
 @endphp
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 @section('head')
-
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center py-4">
@@ -946,7 +944,6 @@
                                                     @endif
                                                 </div>
                                             </div>
-
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="faliure-details">Failure Details & nature of failure</label>
@@ -960,7 +957,37 @@
                                                 <div class="form-group">
                                                     <label class="form-control-label" for="arnumber">Upload Pre History</label>
                                                     <div class="custom-file">
-                                                        <input type="file" name="files[]" class="form-control" id="prehistoryfileupload" onchange="prehistoryfile('{{$prehist->id}}','{{$prehist->service_request_id}}')" lang="en">
+                                                        <form id="fileinfo" enctype="multipart/form-data" method="post" name="fileinfo">
+                                                            <input type="file" name="pre_history_file" id="pre_history_file" required />
+                                                            <input type="hidden" name="service_request_id" id="service_request_id" value="{{ request()->segment(3) }}">
+                                                            <input type="hidden" name="prehist_id" id="prehist_id" value="2">
+                                                            <!-- <input type="button" value="Upload" id="uploadBTN"></input> -->
+                                                        </form>
+                                                        
+                                                        <div id="output"></div>
+                                                        <?php
+                                                            
+
+                                                            $saved_pre_history_file=CheckSheetEntryFiles::where([
+                                                                                                ['service_request_id', '=', request()->segment(3)],
+                                                                                                ['prehist_id', '=', 2],
+                                                                                                ['type', '=', 1],    
+                                                                                                ])
+                                                                                                ->get()->toArray();                                                                                                       
+                                                        ?>
+                                                        @if(count($saved_pre_history_file) > 0)
+                                                        <?php foreach ($saved_pre_history_file as $saved_pre_history_file_one) { 
+                                                              $destinationPath = 'public/assets/uploads/checksheet';
+                                                              $image = $saved_pre_history_file_one['files'];
+                                                        ?>
+
+                                                        <div><a href="<?=url($destinationPath . '/' . $image);?>" target="_blank"><?=$image?></a></div>    
+
+                                                        <?php } ?>
+                                                        @endif
+
+                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -1036,7 +1063,7 @@
                             </form>
                             </div>
                         </div>
-                        <script type="text/javascript">
+                       <script type="text/javascript">
                            function prehistoryfile(child_section_id,service_request_id) {
                                 console.log('child_section_id',child_section_id);
                                 console.log('service_request_id',service_request_id);
@@ -2471,6 +2498,43 @@
                                             </div>
                                         </div>
 
+                                        <!-- missing damage part file upload -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-control-label" for="arnumber">Upload Missing/damage Parts</label>
+                                                <div class="custom-file">
+                                                        <input type="file" name="missing_damage_file" id="missing_damage_file" />
+                                                        <input type="hidden" name="service_request_id" id="missing_service_request_id" value="{{ request()->segment(3) }}">
+                                                        <input type="hidden" name="prehist_id" id="missing_id" value="7">
+                                                        <!-- <input type="button" value="Upload" id="uploadBTN"></input> -->
+                                                    
+                                                    <div id="output_missing"></div>
+                                                    <?php
+                                                        
+
+                                                        $saved_missing_damage_file=CheckSheetEntryFiles::where([
+                                                                                            ['service_request_id', '=', request()->segment(3)],
+                                                                                            ['prehist_id', '=', 7],
+                                                                                            ['type', '=', 2],    
+                                                                                            ])
+                                                                                            ->get()->toArray();                                                                                                       
+                                                    ?>
+                                                    @if(count($saved_missing_damage_file) > 0)
+                                                    <?php foreach ($saved_missing_damage_file as $saved_missing_damage_file_one) { 
+                                                          $destinationPath = 'public/assets/uploads/checksheet';
+                                                          $image = $saved_missing_damage_file_one['files'];
+                                                    ?>
+
+                                                    <div><a href="<?=url($destinationPath . '/' . $image);?>" target="_blank"><?=$image?></a></div>    
+
+                                                    <?php } ?>
+                                                    @endif
+
+                                                    
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         </div>
 
 
@@ -38362,10 +38426,11 @@
                                                         <div class="col" {{$deschiddden}}>
                                                             <div class="form-group">
                                                                 <label for="" class="form-control-label">{{$valdes}}</label>
-                                                                <select class="form-control" id="salveg_description_<?=$row?>"  name="description[]" class="form-control">
+                                                                <input type="text" class="form-control autocomplete_salvage" value ="{{$salvg->description}}" name="description[]" id="autocomplete_salvage" placeholder="Description of rework"/>
+                                                               <!--  <select class="form-control select2" >"  name="description[]" class="form-control">
                                                                     <option value="">Please Description</option>@foreach($salvage_des as $id => $salvage_des_one)<option value="{{ $salvage_des_one->name }}" {{ ( $salvage_des_one->name == $salvg->description) ? 'selected' : '' }}>{{ $salvage_des_one->name }}</option>
                                                                     @endforeach
-                                                                </select>
+                                                                </select> -->
                                                                <!-- 
                                                                 <textarea type="text" name="description[]" class="form-control" placeholder="Description of rework" rows="1">{{$salvg->description}}</textarea> -->
                                                             </div>
@@ -38395,7 +38460,7 @@
                                                         <div class="col"{{$venhiddden}}>
                                                             <div class="form-group">
                                                                 <label for="" class="form-control-label">{{$valven}}</label>
-                                                                <input type="text" name="vendor_name[]" class="form-control" placeholder="Vendor name" value="{{$salvg->vendor_name}}" required>
+                                                                <input type="text" name="vendor_name[]" class="form-control" placeholder="Vendor name" value="{{$salvg->vendor_name}}">
                                                             </div>
                                                         </div>
 
@@ -38448,10 +38513,11 @@
                                                     <div class="col"{{$deschiddden}}>
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">{{$valdes}}</label>
-                                                            <select class="form-control" id="salveg_description_<?=$row?>"  name="description[]" class="form-control">
+                                                             <input type="text" class="form-control autocomplete_salvage" name="description[]" id="autocomplete_salvage" placeholder="Description of rework"/>
+                                                            <!-- <select class="form-control select2" name="description[]" class="form-control">
                                                                     <option value="">Please Description</option>@foreach($salvage_des as $id => $salvage_des_one)<option value="{{ $salvage_des_one->name }}">{{ $salvage_des_one->name }}</option>
                                                                     @endforeach
-                                                                </select>
+                                                                </select> -->
                                                         </div>
                                                     </div>
 
@@ -40119,10 +40185,11 @@
                                                     <div class="col" >
                                                         <div class="form-group">
                                                             <label for="" class="form-control-label">Description</label>
-                                                            <select class="form-control" id="failparts_description_<?=$row?>" name="description[]" class="form-control">
+                                                            <input type="text" class="form-control failparts_description" value ="{{$failprt->description}}" name="description[]" id="failparts_description" placeholder="Description of rework"/>
+                                                            <!-- <select class="form-control select2" id="failparts_description>" name="description[]" class="form-control">
                                                                     <option value="">Please Description</option>@foreach($failparts_des as $id => $failparts_des_one)<option value="{{ $failparts_des_one->name }}" {{ ( $failparts_des_one->name == $failprt->description) ? 'selected' : '' }}>{{ $failparts_des_one->name }}</option>
                                                                     @endforeach
-                                                                </select>
+                                                                </select> -->
                                                         </div>
                                                     </div>
 
@@ -40183,10 +40250,11 @@
                                                 <div class="col">
                                                     <div class="form-group">
                                                         <label for="" class="form-control-label">Description</label>
-                                                        <select class="form-control" id="failparts_description_<?=$row?>" name="description[]" class="form-control">
+                                                        <input type="text" class="form-control failparts_description" name="description[]" id="failparts_description" placeholder="Description of rework"/>
+                                                        <!-- <select class="form-control select2" name="description[]" class="form-control">
                                                                 <option value="">Please Description</option>@foreach($failparts_des as $id => $failparts_des_one)<option value="{{ $failparts_des_one->name }}">{{ $failparts_des_one->name }}</option>
                                                                 @endforeach
-                                                            </select>
+                                                            </select> -->
                                                     </div>
                                                 </div>
 
@@ -40810,9 +40878,83 @@
         $('.select2').select2();
 
     </script>
-
-
- <script type="text/javascript">
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $(function () {
+            var salvage_des = {!! $salvage_des->toJson() !!}
+            salvage_des = $.map(salvage_des, function (value, key) { return value.name; });
+            console.log('salvage_des',salvage_des);
+            $('.autocomplete_salvage').autocomplete({
+              source: salvage_des,
+            });
+          });
+        });                              
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          $(function () {
+            var failparts_des = {!! $failparts_des->toJson() !!}
+            failparts_des = $.map(failparts_des, function (value, key) { return value.name; });
+            console.log('failparts_des',failparts_des);
+            $('.failparts_description').autocomplete({
+              source: failparts_des,
+            });
+          });
+        });                              
+    </script>
+    <script type="text/javascript">
+            $(function(){
+            // $('#uploadBTN').on('click', function(){
+            $("#pre_history_file").change(function(){ 
+                var file_data = $('#pre_history_file').prop('files')[0];   
+                var form_data = new FormData();                  
+                form_data.append('pre_history_file', file_data);
+                form_data.append('service_request_id', $('#service_request_id').val());
+                form_data.append('prehist_id', $('#prehist_id').val());
+                $.ajax({
+                    url: '{{url("admin/check-sheet-common-file-upload")}}',
+                    dataType: 'text', 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,                         
+                    type: 'post',
+                    success: function(json){
+                        var data = JSON.parse(json);
+                        $('#output').html('<a href="'+data.file_url+'"">'+data.image_name+'</a>');
+                        $('#pre_history_file').val('');
+                    }
+                 });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+            $(function(){
+            // $('#uploadBTN').on('click', function(){
+            $("#missing_damage_file").change(function(){ 
+                var file_data = $('#missing_damage_file').prop('files')[0];   
+                var form_data = new FormData();                  
+                form_data.append('missing_damage_file', file_data);
+                form_data.append('service_request_id', $('#missing_service_request_id').val());
+                form_data.append('prehist_id', $('#missing_id').val());
+                $.ajax({
+                    url: '{{url("admin/check-sheet-common-file-upload")}}',
+                    dataType: 'text', 
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,                         
+                    type: 'post',
+                    success: function(json){
+                        var data = JSON.parse(json);
+                        $('#output_missing').html('<a href="'+data.file_url+'"">'+data.image_name+'</a>');
+                        $('#missing_damage_file').val('');
+                    }
+                 });
+            });
+        });
+    </script>
+    <script type="text/javascript">
             /*component model no*/
             $('#rejected').click(function(event) {
                 //var commodel = $(this).val();
@@ -41009,11 +41151,7 @@
                 '</div>'+
                 '<div class="col"{{$deschiddden}}>'+
                 '<div class="form-group">';
-                 fieldHTML += '<select name="description[]" class="form-control"><option value="">Please Description</option>';
-                @foreach($salvage_des as $id => $one)
-                    fieldHTML += '<option value="{{ $one->name }}">{{ $one->name }}</option>';
-                 @endforeach
-                fieldHTML +='</select>';
+                fieldHTML += '<input type="text" class="form-control autocomplete_salvage" name="description[]" id="autocomplete_salvage" placeholder="Description of rework"/>';
                 fieldHTML +='</div>'+
                 '</div>'+
                 '<div class="col-1"{{$lisqtyhiddden}}>'+
@@ -41059,6 +41197,12 @@
                 if(x < maxField){
                     x++; //Increment field counter
                     $(wrapper).append(fieldHTML); //Add field html
+                    var salvage_des = {!! $salvage_des->toJson() !!}
+                    salvage_des = $.map(salvage_des, function (value, key) { return value.name; });
+                    console.log('salvage_des',salvage_des);
+                    $('.autocomplete_salvage').autocomplete({
+                      source: salvage_des,
+                    });
                 }
             });
 
@@ -41138,11 +41282,7 @@
                 '</div>'+
                 '<div class="col">'+
                 '<div class="form-group">';
-                fieldHTML += '<select name="description[]" class="form-control"><option value="">Please Description</option>';
-                @foreach($failparts_des as $id => $one)
-                    fieldHTML += '<option value="{{ $one->name }}">{{ $one->name }}</option>';
-                 @endforeach
-                fieldHTML +='</select>';
+                fieldHTML += '<input type="text" class="form-control failparts_description" name="description[]" id="failparts_description" placeholder="Description of rework"/>';
                 fieldHTML +='</div>'+
                 '</div>'+
                 '<div class="col">'+
@@ -41168,6 +41308,12 @@
                 if(x < maxField){
                     x++; //Increment field counter
                     $(wrapper).append(fieldHTML); //Add field html
+                    var failparts_des = {!! $failparts_des->toJson() !!}
+                    failparts_des = $.map(failparts_des, function (value, key) { return value.name; });
+                    console.log('failparts_des',failparts_des);
+                    $('.failparts_description').autocomplete({
+                      source: failparts_des,
+                    });
                 }
             });
             $('.select2').select2();

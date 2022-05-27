@@ -2017,11 +2017,11 @@ static function predicessorfind($task_id,$dept_id,$project_id)
 
     static function codeOptimizeFailPartDescription()
     {
-            return FailPartsDescription::select('gw_master_fail_parts_description.*')->get();
+            return FailPartsDescription::select('gw_master_fail_parts_description.name')->get();
     }
     static function codeOptimizeSalvageComponentDescription()
     {
-            return SalvageComponentDescription::select('gw_master_salvage_comp_description.*')->get();
+            return SalvageComponentDescription::select('gw_master_salvage_comp_description.name')->get();
     }
 
     static function columnforchecksheetnew($chkshtcolumn)

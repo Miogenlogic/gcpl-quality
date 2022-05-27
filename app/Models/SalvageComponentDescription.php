@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SalvageComponentDescription extends Model
 {
-    use HasFactory;
+    //use HasFactory;
     protected $table='gw_master_salvage_comp_description';
 }
