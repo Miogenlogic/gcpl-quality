@@ -120,9 +120,11 @@
 
 
                             @if(request()->session()->get('user')['location_id'] != '3')
+                            @if(request()->session()->get('user')['section_id'] != '20')
                                 <div class="text-right mb-1" style="padding-right: 70px">
                                     <a class="btn btn-info text-white" href="{{url('admin/time-sheet-entry')}}">ADD DAILY SHIFT</a>
                                 </div>
+                            @endif
                             @endif
 
 

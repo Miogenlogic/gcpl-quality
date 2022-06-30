@@ -6813,6 +6813,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 $obj->end_time = $request['end_time'][$key];
                 //$obj->project = $request['project'][$key];
                  $obj->hours = $request['hours'][$key];
+                 $obj->status = $request['status'];
 
                 $obj->save();
             }
@@ -6901,6 +6902,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
                 $obj->end_time = $request['end_time'][$key];
                 //$obj->project = $request['project'][$key];
                 $obj->hours = $request['hours'][$key];
+                $obj->status = $request['status'];
 
                 $obj->save();
             }
@@ -6935,13 +6937,92 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
         return redirect('admin/time-sheet-listing');
     }
 
+    #================
+    # Time Sheet List 
+    #================
     public function timeSheetlisting()
     {
-
         return view('admin.report.timeSheetList');
     }
 
+    #======================
+    # Time Sheet Table Data 
+    #======================
     public function timeSheetGetTable(Request $request)
+    {
+        $data= Session::get('user');    //Get User Session
+
+        $location_id= $data['location_id'];
+        $emp_id= $data['emp_code'];
+        $section_id= $data['section_id'];
+        $designation_id= $data['designation_id'];
+        
+        # Fetch Data
+        $result= TimeSheetEntry::select('time_sheet_entry.*', 'users.section_id');
+        $result->join('users', 'users.emp_code', '=', 'time_sheet_entry.emp_id');
+        
+        if($section_id!=20) //For Other user role 
+        {
+            if($designation_id!=5)  //For Other Expect Supervisior
+            {
+                $result->where('time_sheet_entry.emp_id', '=', $emp_id);
+            }  
+            $result->where('time_sheet_entry.location_id', '=', $location_id);
+            $result->where('users.section_id', '=', $section_id);
+        }
+        else    //For Admin
+        {
+            $result->where('time_sheet_entry.location_id', '=', $location_id);
+            $result->where('time_sheet_entry.status', '=', 'Approved');
+        }
+        $result->groupby('dated');
+        $result->orderby('dated', 'desc');
+        $result->get();
+        # Ended
+
+        # Datatable
+        $datatables = Datatables::of($result)
+
+        # Buttons
+        ->addColumn('action', function ($result) {
+
+            $data= Session::get('user');    //Get User Session
+            $emp_id= $data['emp_code'];
+            $designation_id= $data['designation_id'];
+
+            if($result->emp_id == $emp_id || $designation_id==5)
+            {
+                $btn_name= $designation_id==5?'EDIT/APPROVE':'EDIT';
+                
+                $btns = ' <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        <a class="dropdown-item" href="' . url('admin/time-sheet-edit') . "/" . "$result->id" . '">'.$btn_name.'</a>
+                    </div>';
+                '</div>';
+                return $btns;
+            }
+        })
+
+        ->addColumn('dateformat', function ($result) 
+        {
+            $formatted_dt1=Carbon::parse($result['dated'])->format('d/m/Y');
+            return $formatted_dt1;
+        })
+
+        ->addColumn('datetimeformat', function ($result) 
+        {
+            $formatted_dt1=Carbon::parse($result['created_at'])->format('d/m/Y H:i:s');
+            return $formatted_dt1;
+        })
+        ->rawColumns(['action','roles','dateformat','datetimeformat']);
+        return $datatables->make(true);
+    }
+
+    /*public function timeSheetGetTable(Request $request)
     {
         $data = Session::all();
 
@@ -7013,7 +7094,7 @@ from gw_project_plan_master c inner join gw_task_users s on c.project_id = s.pro
 
 
         return $datatables->make(true);
-    }
+    }*/
     
      public function timeSheetGetTabledatefilter(Request $request)
     {

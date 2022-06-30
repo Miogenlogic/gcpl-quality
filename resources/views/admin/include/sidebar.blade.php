@@ -369,7 +369,6 @@
                                         <li class="nav-item">
                                         <a href="{{url('admin/time-sheet-listing')}}" class="nav-link {{((Request::is('admin/jobdetails-listing')) || (Request::is('admin/master-branch')) )?'active':''}}">Time Sheet Details</a>
                                     </li>
-
                                     @else
                                    
                                     <li class="nav-item">

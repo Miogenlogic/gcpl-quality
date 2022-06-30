@@ -135,7 +135,7 @@ class LoginController extends Controller
 
             $user = Auth::user();
 //dd($user);
-            $user_session=[ 'user_id'=>$user->id,'username'=>$user->name,'email'=>$user->email, 'user_type'=>$user->user_type,'section_id'=>$user->section_id,'location_id'=>$user->location_id,'emp_code' =>$user->emp_code,'role_id' =>$user->role_id ];
+            $user_session=[ 'user_id'=>$user->id,'username'=>$user->name,'email'=>$user->email, 'user_type'=>$user->user_type,'section_id'=>$user->section_id,'location_id'=>$user->location_id,'emp_code' =>$user->emp_code,'role_id' =>$user->role_id, 'designation_id'=>$user->designation_id ];
             Session::put('user',$user_session);
            //dd($user_session);die;
             /*echo"<pre>";

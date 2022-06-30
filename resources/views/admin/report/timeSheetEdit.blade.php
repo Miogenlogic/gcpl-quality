@@ -35,10 +35,6 @@
             <!-- Form groups used in grid -->
             <form method="post" action="{{url('admin/time-sheet-edit-save')}}" enctype="multipart/form-data">
                 <div class="row">
-
-
-
-
                     <div class="col-sm-6 col-md-6">
                         <div class="form-group">
                             <label class="form-control-label compserial" for="serial">Employee Id</label>
@@ -52,10 +48,6 @@
                             <input class="form-control" placeholder="" value="{{$emp_name[0]['name']}}" readonly>
                         </div>
                     </div>
-
-
-
-
 
                     <div class="col-md-5">
                         <div class="form-group">
@@ -79,8 +71,6 @@
 
                         </div>
                     </div>
-
-
 
                     <div class="col-md-7">
                         <div class="form-group">
@@ -271,6 +261,22 @@
                         </div>
                     </div>
 
+                    @php $data= Session::get('user'); @endphp
+                    @if($data['designation_id']==5)
+                        <div class="col-sm-6 col-md-12 ">
+                            <div class="form-group">
+                                <label for="servicedate" class="form-control-label">Status</label>
+                                <select class="form-control form-group" name="status">
+                                    <option value="Submitted" @php echo $timesheet[0]['status']=='Submitted'?'selected':''; @endphp>Submitted</option>
+                                    <option value="Approved" @php echo $timesheet[0]['status']=='Approved'?'selected':''; @endphp>Approved</option>
+                                </status>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 ">
+                        </div>
+                    @endif
+
                 </div><!-- /row -->
                   <input type="hidden" name="id" value="{{$timesheet[0]['id']}}">
                
@@ -281,9 +287,7 @@
 
 
             </form>
-
-
-    </div>
+        </div>
     <!-- Project List -->
 
 
